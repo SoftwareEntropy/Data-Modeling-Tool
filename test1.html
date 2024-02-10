@@ -1,0 +1,178 @@
+<html lang="en">
+
+<head>
+	<title> Maplestory Tools </title>
+	<meta charset="utf-8"/>
+	<meta charset="keywords" content=""/>
+	<link href="base.css" type="text/css" rel="stylesheet"/>
+	<script src="menu.js" type="text/javascript" defer></script>
+	<!-- Bootstrap 5 CDN (Content Delivery Network) -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+
+<body>
+	<!-- .container px max-width/actual | XXL 1320/1400+ | XL 1140/1200+ | L 960/992+ | M 720/768+ | 540/576+ | 100% for <576 ; .container-fluid = 100%-->
+	<div class="container" id="equipmentBox">
+		<img id="equipmentInventory" src="images/Equip.backgrnd._outlink.png" alt="EquipBox"/>
+		<img id="equipmentBackground" src="images/Equip.Equip.backgrnd._outlink.png" alt="background"/>
+		<img id="hat" src="images/Equip.Equip.Slots.1._outlink.png" alt="hat"/>
+		
+	<div class="container">	
+		<img id="faceImage" src="images/Equip.Equip.Slots.2._outlink.png" alt="faceacc"/>
+		<img id="faceImage2" src="images/01012632.img.info.icon._outlink.png"/>
+
+		<!-- bootstrap Modal implementation -->
+		
+		<!-- Button to open Modal -->
+		<button type="button" class="btn btn-primary bg-transparent" id="faceButton" data-bs-toggle="modal" data-bs-target="#modalFace">
+		</button>
+
+		<!-- The Modal -->
+		<div class="modal" id="modalFace">
+			<div class="modal-dialog">
+				<div class="modal-content">
+
+				<!-- Modal Header -->
+					<div class="modal-header">
+						<h5 class="modal-title"> Select options </h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+					</div>
+
+				<!-- Modal body -->
+					<div class="modal-body">
+						<form id="faceAccForm">
+							
+							<!-- Select Face Accessory -->
+							<label for="selectFace" class="form-label"> Face Accessory </label>
+							<select id="selectFace" name="selectFace" class="form-select" onchange="updateStarForceOptions()">
+								<option value="condensedPowerCrystal"> Condensed Power Crystal</option>
+								<option value="twilightMark"> Twilight Mark </option>
+								<option value="sweetwaterTattoo"> Sweetwater Tattoo </option>
+								<option value="berserked" selected> Berserked </option>
+							</select>
+							
+							<!-- Select Face Star Force -->
+							<label for="faceStarForce"> Star Force: </label>
+							<select id="faceStarForce" name="faceStarForce" class="form-select">
+								<option value="22" selected> 22 </option> <!-- Dynamic options in JS -->
+							</select>
+							
+							<!-- Select Face Potentials -->
+							<div class="row">
+							<label> Potentials </label>
+								<div class="col-sm-4">
+									<select id="facePot1" name="facePot1" class=form-select>
+									<option value="13%Str"> 13% Str </option>
+									<option value="13%Dex"> 13% Dex </option>
+									<option value="13%Int"> 13% Int </option>
+									<option value="13%Luk"> 13% Luk </option>
+									<option value="10%All" selected> 10% All Stat </option>
+									<option value="10%Str"> 10% Str </option>
+									<option value="10%Dex"> 10% Dex </option>
+									<option value="10%Int"> 10% Int </option>
+									<option value="10%Luk"> 10% Luk </option>
+									<option value="7%All"> 7% All Stat </option>
+									<option value="7%Str"> 7% Str </option>
+									<option value="7%Dex"> 7% Dex </option>
+									<option value="7%Int"> 7% Int </option>
+									<option value="7%Luk"> 7% Luk </option>
+									<option value="4%All"> 4% All Stat </option>
+									</select>
+								</div>
+								<div class="col-sm-4">
+									<select id="facePot2" name="facePot2" class=form-select>
+									<option value="13%Str"> 13% Str </option>
+									<option value="13%Dex"> 13% Dex </option>
+									<option value="13%Int"> 13% Int </option>
+									<option value="13%Luk"> 13% Luk </option>
+									<option value="10%All"> 10% All Stat </option>
+									<option value="10%Str"> 10% Str </option>
+									<option value="10%Dex"> 10% Dex </option>
+									<option value="10%Int"> 10% Int </option>
+									<option value="10%Luk"> 10% Luk </option>
+									<option value="7%All" selected> 7% All Stat </option>
+									<option value="7%Str"> 7% Str </option>
+									<option value="7%Dex"> 7% Dex </option>
+									<option value="7%Int"> 7% Int </option>
+									<option value="7%Luk"> 7% Luk </option>
+									<option value="4%All"> 4% All Stat </option>
+									</select>
+								</div>
+								<div class="col-sm-4">
+									<select id="facePot3" name="facePot3" class=form-select>
+									<option value="13%Str"> 13% Str </option>
+									<option value="13%Dex"> 13% Dex </option>
+									<option value="13%Int"> 13% Int </option>
+									<option value="13%Luk"> 13% Luk </option>
+									<option value="10%All"> 10% All Stat </option>
+									<option value="10%Str"> 10% Str </option>
+									<option value="10%Dex"> 10% Dex </option>
+									<option value="10%Int"> 10% Int </option>
+									<option value="10%Luk"> 10% Luk </option>
+									<option value="7%All" selected> 7% All Stat </option>
+									<option value="7%Str"> 7% Str </option>
+									<option value="7%Dex"> 7% Dex </option>
+									<option value="7%Int"> 7% Int </option>
+									<option value="7%Luk"> 7% Luk </option>
+									<option value="4%All"> 4% All Stat </option>
+									</select>
+								</div>
+								
+							</div>
+						</form>
+					</div>
+
+				<!-- Modal footer -->
+					<div class="modal-footer">
+						<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		
+	</div>	
+		
+		
+		<img class="img-fluid" id="eye" src="images/Equip.Equip.Slots.3._outlink.png" alt="eyeacc"/>
+		<img class="img-fluid" id="ear" src="images/Equip.Equip.Slots.4._outlink.png" alt="earacc"/>
+		<img class="img-fluid" id="top" src="images/Equip.Equip.Slots.5._outlink.png" alt="top"/>
+		<img class="img-fluid" id="bottom" src="images/Equip.Equip.Slots.6._outlink.png" alt="bottom"/>
+		<img class="img-fluid" id="shoes" src="images/Equip.Equip.Slots.7._outlink.png" alt="shoes"/>
+		<img class="img-fluid" id="gloves" src="images/Equip.Equip.Slots.8._outlink.png" alt="gloves"/>
+		<img class="img-fluid" id="cape" src="images/Equip.Equip.Slots.9._outlink.png" alt="cape"/>
+		<img class="img-fluid" id="sub" src="images/Equip.Equip.Slots.10._outlink.png" alt="subweapon"/>
+		<img class="img-fluid" id="weapon" src="images/Equip.Equip.Slots.11._outlink.png" alt="weapon"/>
+		<img class="img-fluid" id="ring1" src="images/Equip.Equip.Slots.12._outlink.png" alt="ring1"/>
+		<img class="img-fluid" id="ring2" src="images/Equip.Equip.Slots.13._outlink.png" alt="ring2"/>
+		<img class="img-fluid" id="ring3" src="images/Equip.Equip.Slots.15._outlink.png" alt="ring3"/>
+		<img class="img-fluid" id="ring4" src="images/Equip.Equip.Slots.16._outlink.png" alt="ring4"/>
+		<img class="img-fluid" id="pendant1" src="images/Equip.Equip.Slots.17._outlink.png" alt="pendant1"/>
+		<img class="img-fluid" id="pendant2" src="images/Equip.Equip.Slots.65._outlink.png" alt="pendant2"/>
+		<img class="img-fluid" id="medal" src="images/Equip.Equip.Slots.21._outlink.png" alt="medal"/>
+		<img class="img-fluid" id="belt" src="images/Equip.Equip.Slots.22._outlink.png" alt="belt"/>
+		<img class="img-fluid" id="shoulder" src="images/Equip.Equip.Slots.23._outlink.png" alt="shoulder"/>
+		<img class="img-fluid" id="pocket" src="images/Equip.Equip.Slots.26._outlink.png" alt="pocket"/>
+		<img class="img-fluid" id="android" src="images/Equip.Equip.Slots.27._outlink.png" alt="android"/>
+		<img class="img-fluid" id="heart" src="images/Equip.Equip.Slots.28._outlink.png" alt="heart"/>
+		<img class="img-fluid" id="badge" src="images/Equip.Equip.Slots.29._outlink.png" alt="badge"/>
+		<img class="img-fluid" id="emblem" src="images/Equip.Equip.Slots.30._outlink.png" alt="emblem"/>
+	</div>
+	
+	
+	<div class="row">
+		<div class="col-sm-3"> content </div>
+		<div class="col-sm-3"> content </div>
+		<div class="col-sm-3"> content </div>
+		<div class="col-sm-3"> content </div>
+	</div>
+	
+	
+	<footer>
+		
+	</footer>
+	
+</body>
+</html>

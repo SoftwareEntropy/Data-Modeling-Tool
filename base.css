@@ -1,0 +1,267 @@
+@charset "utf-8";
+@font-face{
+   font-family: Verdana;
+   }
+
+/* HTML and Body Styles */
+
+html{
+    display: table;
+    margin: auto;
+	padding: auto;
+	height: 100%;
+	background-image: url(images/background.png);
+	background-size: cover;
+	background-position: center;
+	background-size: 100%;
+	max-width: 1920px;
+	min-width: 900px;
+}
+
+ul {
+  list-style: none;
+}
+
+#equipmentBox {
+	position: relative;  /*keeps children within box*/
+	display: block;
+	width: 233px;
+	height: 374px;
+	float: left;
+}
+
+.dropdown{
+	position: relative;
+	display: inline-block;
+	right: 80%;
+}
+
+#equipmentInventory {
+  display: block;
+  position: absolute;
+  vertical-align: middle;
+  width: 233px;
+  height: 374px;
+}
+
+#equipmentBackground {
+  position: absolute;
+  top: 50px;
+  left: 60px;
+  width: 127px;
+  height: 209px;
+}
+
+#hat {
+  position: absolute;
+  top: 30px; 
+  left: 100px;
+  width: 40px;
+  height: 39px;
+  z-index: 1;
+}
+
+#faceImage, #faceButton{
+  position: absolute;
+  top: 70px; 
+  left: 100px;
+  width: 40px;
+  height: 39px;
+}
+
+#faceImage2, #condensedPowerCrystalImage, #twilightMarkImage, #sweetwaterTattooImage, #berserkedImage { /*Equipment overlay*/
+  position: absolute;
+  top: 70px; 
+  left: 100px;
+  width: 40px;
+  height: 39px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+#eye {
+  position: absolute;
+  top: 110px; 
+  left: 100px;
+  width: 40px;
+  height: 39px;
+}
+
+#top {
+  position: absolute;
+  top: 150px; 
+  left: 100px;
+  width: 40px;
+  height: 39px;
+}
+
+#bottom {
+  position: absolute;
+  top: 190px; 
+  left: 100px;
+  width: 40px;
+  height: 39px;
+}
+
+#shoes {
+  position: absolute;
+  top: 230px; 
+  left: 100px;
+  width: 40px;
+  height: 39px;
+}
+
+#ring1 {
+  position: relative;
+  top: -390px; 
+  left: -600px;
+  width: 40px;
+  height: 39px;
+}
+
+#ring2 {
+  position: relative;
+  top: -435px; 
+  left: -650px;
+  width: 40px;
+  height: 39px;
+}
+
+#ring3 {
+  position: relative;
+  top: -480px; 
+  left: -680px;
+  width: 40px;
+  height: 39px;
+}
+
+#ring4 {
+  position: relative;
+  top: -520px; 
+  left: -730px;
+  width: 40px;
+  height: 39px;
+}
+
+#pocket {
+  position: relative;
+  top: -340px; 
+  left: -995px;
+  width: 40px;
+  height: 39px;
+}
+
+#pendant2 {
+  position: relative;
+  top: -475px; 
+  left: -780px;
+  width: 40px;
+  height: 39px;
+}
+
+#pendant1 {
+  position: relative;
+  top: -435px; 
+  left: -740px;
+  width: 40px;
+  height: 39px;
+}
+
+#weapon {
+  position: relative;
+  top: -395px; 
+  left: -520px;
+  width: 40px;
+  height: 39px;
+}
+
+#belt {
+  position: relative;
+  top: -350px; 
+  left: -880px;
+  width: 40px;
+  height: 39px;
+}
+
+#ear {
+  position: relative;
+  top: -435px; 
+  left: -120px;
+  width: 40px;
+  height: 39px;
+}
+
+#shoulder {
+  position: relative;
+  top: -385px; 
+  left: -820px;
+  width: 40px;
+  height: 39px;
+}
+
+#gloves {
+  position: relative;
+  top: -340px; 
+  left: -300px;
+  width: 40px;
+  height: 39px;
+}
+
+#android {
+  position: relative;
+  top: -300px; 
+  left: -920px;
+  width: 40px;
+  height: 39px;
+}
+
+#emblem {
+  position: relative;
+  top: -520px;
+  left: -1010px;
+  width: 40px;
+  height: 39px;
+}
+
+#badge {
+  position: relative;
+  top: -480px;
+  left: -950px;
+  width: 40px;
+  height: 39px;
+}
+
+#medal {
+  position: relative;
+  top: -435px;
+  left: -695px;
+  width: 40px;
+  height: 39px;
+}
+
+#sub {
+  position: relative;
+  top: -390px;
+  left: -350px;
+  width: 40px;
+  height: 39px;
+}
+
+#cape {
+  position: relative;
+  top: -350px;
+  left: -310px;
+  width: 40px;
+  height: 39px;
+}
+
+#heart {
+  position: relative;
+  top: -310px;
+  left: -910px;
+  width: 40px;
+  height: 39px;
+}
+
+
+
