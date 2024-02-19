@@ -55,7 +55,7 @@ ul {
 #hat {
   position: absolute;
   top: 30px; 
-  left: 100px;
+  left: 110px;
   width: 40px;
   height: 39px;
   z-index: 1;
@@ -63,202 +63,212 @@ ul {
 
 #faceImage, #faceButton{
   position: absolute;
-  top: 70px; 
-  left: 100px;
+  top: 71px; 
+  left: 110px;
   width: 40px;
   height: 39px;
 }
 
 #faceImage2, #condensedPowerCrystalImage, #twilightMarkImage, #sweetwaterTattooImage, #berserkedImage { /*Equipment overlay*/
   position: absolute;
-  top: 70px; 
-  left: 100px;
+  top: 71px; 
+  left: 110px;
   width: 40px;
   height: 39px;
   z-index: 1;
   pointer-events: none;
 }
 
-#eye {
+#eyeImage, #eyeButton {
   position: absolute;
-  top: 110px; 
-  left: 100px;
+  top: 112px; 
+  left: 110px;
   width: 40px;
   height: 39px;
 }
 
+#eyeImage2, #aquaticLetterEyeAccessoryImage, #blackBeanMarkImage, #papulatusMarkImage, #magicEyepatchImage { /*Equipment overlay*/
+  position: absolute;
+  top: 112px; 
+  left: 110px;
+  width: 40px;
+  height: 39px;
+  z-index: 1;
+  pointer-events: none;
+}
+
 #top {
   position: absolute;
-  top: 150px; 
-  left: 100px;
+  top: 153px; 
+  left: 110px;
   width: 40px;
   height: 39px;
 }
 
 #bottom {
   position: absolute;
-  top: 190px; 
-  left: 100px;
+  top: 194px; 
+  left: 110px;
   width: 40px;
   height: 39px;
 }
 
 #shoes {
   position: absolute;
-  top: 230px; 
-  left: 100px;
+  top: 235px; 
+  left: 110px;
   width: 40px;
   height: 39px;
 }
 
 #ring1 {
-  position: relative;
-  top: -390px; 
-  left: -600px;
+  position: absolute;
+  top: 153px; 
+  left: 26px;
   width: 40px;
   height: 39px;
 }
 
 #ring2 {
-  position: relative;
-  top: -435px; 
-  left: -650px;
+  position: absolute;
+  top: 112px; 
+  left: 26px;
   width: 40px;
   height: 39px;
 }
 
 #ring3 {
-  position: relative;
-  top: -480px; 
-  left: -680px;
+  position: absolute;
+  top: 71px; 
+  left: 26px;
   width: 40px;
   height: 39px;
 }
 
 #ring4 {
-  position: relative;
-  top: -520px; 
-  left: -730px;
+  position: absolute;
+  top: 30px; 
+  left: 26px;
   width: 40px;
   height: 39px;
 }
 
 #pocket {
-  position: relative;
-  top: -340px; 
-  left: -995px;
+  position: absolute;
+  top: 194px; 
+  left: 26px;
   width: 40px;
   height: 39px;
 }
 
 #pendant2 {
-  position: relative;
-  top: -475px; 
-  left: -780px;
+  position: absolute;
+  top: 71px; 
+  left: 68px;
   width: 40px;
   height: 39px;
 }
 
 #pendant1 {
-  position: relative;
-  top: -435px; 
-  left: -740px;
+  position: absolute;
+  top: 112px; 
+  left: 68px;
   width: 40px;
   height: 39px;
 }
 
 #weapon {
-  position: relative;
-  top: -395px; 
-  left: -520px;
+  position: absolute;
+  top: 153px; 
+  left: 68px;
   width: 40px;
   height: 39px;
 }
 
 #belt {
-  position: relative;
-  top: -350px; 
-  left: -880px;
+  position: absolute;
+  top: 194px; 
+  left: 68px;
   width: 40px;
   height: 39px;
 }
 
 #ear {
-  position: relative;
-  top: -435px; 
-  left: -120px;
+  position: absolute;
+  top: 112px; 
+  left: 152px;
   width: 40px;
   height: 39px;
 }
 
 #shoulder {
-  position: relative;
-  top: -385px; 
-  left: -820px;
+  position: absolute;
+  top: 153px; 
+  left: 152px;
   width: 40px;
   height: 39px;
 }
 
 #gloves {
-  position: relative;
-  top: -340px; 
-  left: -300px;
+  position: absolute;
+  top: 194px; 
+  left: 152px;
   width: 40px;
   height: 39px;
 }
 
 #android {
-  position: relative;
-  top: -300px; 
-  left: -920px;
+  position: absolute;
+  top: 235px; 
+  left: 152px;
   width: 40px;
   height: 39px;
 }
 
 #emblem {
-  position: relative;
-  top: -520px;
-  left: -1010px;
+  position: absolute;
+  top: 30px; 
+  left: 194px;
   width: 40px;
   height: 39px;
 }
 
 #badge {
-  position: relative;
-  top: -480px;
-  left: -950px;
+  position: absolute;
+  top: 71px; 
+  left: 194px;
   width: 40px;
   height: 39px;
 }
 
 #medal {
-  position: relative;
-  top: -435px;
-  left: -695px;
+  position: absolute;
+  top: 112px; 
+  left: 194px;
   width: 40px;
   height: 39px;
 }
 
 #sub {
-  position: relative;
-  top: -390px;
-  left: -350px;
+  position: absolute;
+  top: 153px; 
+  left: 194px;
   width: 40px;
   height: 39px;
 }
 
 #cape {
-  position: relative;
-  top: -350px;
-  left: -310px;
+  position: absolute;
+  top: 194px; 
+  left: 194px;
   width: 40px;
   height: 39px;
 }
 
 #heart {
-  position: relative;
-  top: -310px;
-  left: -910px;
+  position: absolute;
+  top: 235px; 
+  left: 194px;
   width: 40px;
   height: 39px;
 }

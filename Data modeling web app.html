@@ -1,0 +1,664 @@
+<html lang="en">
+
+<head>
+	<title> Maplestory Tools </title>
+	<meta charset="utf-8"/>
+	<meta charset="keywords" content=""/>
+	<link href="base.css" type="text/css" rel="stylesheet"/>
+	<script src="main.js" type="text/javascript" defer></script>
+	<script src="face.js" type="text/javascript" defer></script>
+	<script src="eye.js" type="text/javascript" defer></script>
+	<!-- Bootstrap 5.3 CDN (Content Delivery Network) -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+
+<body>
+	<!-- .container px max-width/actual | XXL 1320/1400+ | XL 1140/1200+ | L 960/992+ | M 720/768+ | 540/576+ | 100% for <576 ; .container-fluid = 100%-->
+	<div class="container" id="characterBox">
+		<div class="row mb-3">
+			<!-- Select Class -->
+			<h4> Character </h4>
+			<label for="selectClass" class="col-sm-1 col-form-label"> Class </label>
+			<div class="col-sm-2">
+				<select class="form-select" id="selectClass" aria-label="Select Class">
+					  <option selected>Select</option>
+					  <option value="luminous"> Luminous </option>
+					  <option value="2"> Example 2 </option>
+					  <option value="3"> Example 3 </option>
+				</select>
+			</div>
+			<!-- Select Level -->
+			<label for="level" class="col-sm-1 col-form-label"  data-bs-toggle="tooltip" title="Level Range [200-300]"> Level </label>
+			<div class="col-sm-2">
+				<input min="200" max="300" type="number" id="level" class="form-control"/>
+			</div>
+		</div>
+			<!-- Universal stats (inner ability, hyper stats, link skills, legion stats) -->
+		<div class="row mb-3">
+			<!-- Allocate attribute points -->
+			<h4> Attribute points </h4>
+			<div class="row mb-3">
+				<div class="col-sm-2">
+					<input type="text" class="form-control" id="apPoints" placeholder="Error" readonly data-bs-toggle="tooltip" data-bs-html="true" title="+5 per level
++5 third job
++5 fourth job
+*added to base value of 4"/>
+				</div>
+			</div>
+			<label class="col-sm-1 col-form-label"> STR </label>
+			<div class="col-sm-1">
+				<input min="0" max="100" type="number" id="strAP" class="form-control"/>
+			</div>
+			<label class="col-sm-1 col-form-label"> DEX </label>
+			<div class="col-sm-1">
+				<input min="0" max="100" type="number" id="dexAP" class="form-control"/>
+			</div>
+			<label class="col-sm-1 col-form-label"> INT </label>
+			<div class="col-sm-1">
+				<input min="0" max="100" type="number" id="intAP" class="form-control"/>
+			</div>
+			<label class="col-sm-1 col-form-label"> LUK </label>
+			<div class="col-sm-1">
+				<input min="0" max="100" type="number" id="lukAP" class="form-control"/>
+			</div>
+		</div>
+		
+		<div class="row mb-3">
+			<h4> Hyper Stats </h4>
+			<div class="row mb-3">
+				<div class="col-sm-2">
+					<input type="text" class="form-control" id="hsPoints" placeholder="Error" readonly data-bs-toggle="tooltip" data-bs-html="true" title="Hyper Stat costs per level
+[Level][Cost][Total]
+1	1	1
+2	2	3
+3	4	7
+4	8	15
+5	10	25
+6	15	40
+7	20	60
+8	25	85
+9	30	115
+10	35	150
+11	50	200
+12	65	265
+13	80	345
+14	95	440
+15	110	550"/>
+				</div>
+			</div>
+			<label class="col-sm-1 col-form-label" data-bs-toggle="tooltip" title="+30 Str per level"> STR </label>
+			<div class="col-sm-1">
+				<select class="form-select" id="strHS">
+					<option value="0" selected> 0 </option>
+				</select>
+			</div>
+			<label class="col-sm-1 col-form-label" data-bs-toggle="tooltip" title="+30 Dex per level"> DEX </label>
+			<div class="col-sm-1">
+				<select class="form-select" id="dexHS">
+					<option value="0" selected> 0 </option>
+				</select>
+			</div>
+			<label class="col-sm-1 col-form-label" data-bs-toggle="tooltip" title="+30 Int per level"> INT </label>
+			<div class="col-sm-1">
+				<select class="form-select" id="intHS">
+					<option value="0" selected> 0 </option>
+				</select>
+			</div>
+			<label class="col-sm-1 col-form-label" data-bs-toggle="tooltip" title="+30 Luk per level"> LUK </label>
+			<div class="col-sm-1">
+				<select class="form-select" id="lukHS">
+					<option value="0" selected> 0 </option>
+				</select>
+			</div>
+			<label class="col-sm-1 col-form-label" data-bs-toggle="tooltip" title="+2% hp per level"> Max HP% </label>
+			<div class="col-sm-1">
+				<select class="form-select" id="hpHS">
+					<option value="0" selected> 0 </option>
+				</select>
+			</div>
+			<label class="col-sm-1 col-form-label" data-bs-toggle="tooltip" title="+2% mp per level"> Max MP% </label>
+			<div class="col-sm-1">
+				<select class="form-select" id="mpHS">
+					<option value="0" selected> 0 </option>
+				</select>
+			</div>
+		</div>
+		<div class="row mb-3">
+			<label class="col-sm-1 col-form-label" data-bs-toggle="tooltip" title="+10 DF/TF/PF per level"> Max DF/TF/PP </label>
+			<div class="col-sm-1">
+				<select class="form-select" id="altManaHS">
+					<option value="0" selected> 0 </option>
+				</select>
+			</div>
+			<label class="col-sm-1 col-form-label" data-bs-toggle="tooltip" data-bs-html="true" title="[Lv. 1-5] +1% per level
+[Lv. 6-15] +2% per level"> Crit Rate% </label>
+			<div class="col-sm-1">
+				<select class="form-select" id="critRateHS">
+					<option value="0" selected> 0 </option>
+				</select>
+			</div>
+			<label class="col-sm-1 col-form-label" data-bs-toggle="tooltip" title="+1% per level"> Crit Dmg% </label>
+			<div class="col-sm-1">
+				<select class="form-select" id="critDamageHS">
+					<option value="0" selected> 0 </option>
+				</select>
+			</div>
+			<label class="col-sm-1 col-form-label" data-bs-toggle="tooltip" title="+3% per level"> Ignore Def% </label>
+			<div class="col-sm-1">
+				<select class="form-select" id="iedHS">
+					<option value="0" selected> 0 </option>
+				</select>
+			</div>
+			<label class="col-sm-1 col-form-label" data-bs-toggle="tooltip" data-bs-html="true" title="[Lv. 1-5] +3% per level
+[Lv. 6-15] +4% per level"> Boss Dmg% </label>
+			<div class="col-sm-1">
+				<select class="form-select" id="bossHS">
+					<option value="0" selected> 0 </option>
+				</select>
+			</div>
+			<label class="col-sm-1 col-form-label" data-bs-toggle="tooltip" data-bs-html="true" title="[Lv. 1-5] +3% per level
+[Lv. 6-15] +4% per level"> Monster Dmg% </label>
+			<div class="col-sm-1">
+				<select class="form-select" id="normMonDamHS">
+					<option value="0" selected> 0 </option>
+				</select>
+			</div>
+		</div>
+		<div class="row mb-3">
+			<label class="col-sm-1 col-form-label" data-bs-toggle="tooltip" title="+3% per level"> Damage% </label>
+			<div class="col-sm-1">
+				<select class="form-select" id="damHS">
+					<option value="0" selected> 0 </option>
+				</select>
+			</div>
+			<label class="col-sm-1 col-form-label" data-bs-toggle="tooltip" data-bs-html="true" title="[Lv. 1-5] +1 per level
+[Lv. 6-15] +2 per level"> Status Resist </label>
+			<div class="col-sm-1">
+				<select class="form-select" id="abnormalStatusHS">
+					<option value="0" selected> 0 </option>
+				</select>
+			</div>
+			<label class="col-sm-1 col-form-label" data-bs-toggle="tooltip" title="+3 per level"> Weapon Att </label>
+			<div class="col-sm-1">
+				<select class="form-select" id="attHS">
+					<option value="0" selected> 0 </option>
+				</select>
+			</div>
+			<label class="col-sm-1 col-form-label" data-bs-toggle="tooltip" data-bs-html="true" title="[Lv. 1-10] +0.5% per level
+[Lv. 10-15] +1% per level"> Bonus Exp </label>
+			<div class="col-sm-1">
+				<select class="form-select" id="expHS">
+					<option value="0" selected> 0 </option>
+				</select>
+			</div>
+			<label class="col-sm-1 col-form-label" data-bs-toggle="tooltip" data-bs-html="true" title="[Lv. 1-10] +5 per level
+[Lv. 10-15] +10 per level"> Arcane Force </label>
+			<div class="col-sm-1">
+				<select class="form-select" id="arcaneForceHS">
+					<option value="0" selected> 0 </option>
+				</select>
+			</div>
+		</div>
+	
+		<div class="row mb-3">
+			<h4> Legion Board </h4>
+			<label class="col-sm-1 col-form-label" data-bs-toggle="tooltip" title="+5 per level"> Str </label>
+			<div class="col-sm-1">
+				<select class="form-select" id="legionStr">
+					<option value="0" selected> 0 </option>
+				</select>
+			</div>
+			<label class="col-sm-1 col-form-label" data-bs-toggle="tooltip" title="+5 per level"> Dex </label>
+			<div class="col-sm-1">
+				<select class="form-select" id="legionDex">
+					<option value="0" selected> 0 </option>
+				</select>
+			</div>
+			<label class="col-sm-1 col-form-label" data-bs-toggle="tooltip" title="+5 per level"> Int </label>
+			<div class="col-sm-1">
+				<select class="form-select" id="legionInt">
+					<option value="0" selected> 0 </option>
+				</select>
+			</div>
+			<label class="col-sm-1 col-form-label" data-bs-toggle="tooltip" title="+5 per level"> Luk </label>
+			<div class="col-sm-1">
+				<select class="form-select" id="legionLuk">
+					<option value="0" selected> 0 </option>
+				</select>
+			</div>
+			<label class="col-sm-1 col-form-label" data-bs-toggle="tooltip" title="+250 per level"> Hp </label>
+			<div class="col-sm-1">
+				<select class="form-select" id="legionHp">
+					<option value="0" selected> 0 </option>
+				</select>
+			</div>
+			<label class="col-sm-1 col-form-label" data-bs-toggle="tooltip" title="+250 per level"> Mp </label>
+			<div class="col-sm-1">
+				<select class="form-select" id="legionMp">
+					<option value="0" selected> 0 </option>
+				</select>
+			</div>
+		</div>
+		<div class="row mb-3">
+			<label class="col-sm-1 col-form-label" data-bs-toggle="tooltip" title="+1 per level"> Weapon Att </label>
+			<div class="col-sm-1">
+				<select class="form-select" id="legionAtt">
+					<option value="0" selected> 0 </option>
+				</select>
+			</div>
+			<label class="col-sm-1 col-form-label" data-bs-toggle="tooltip" title="+1 per level"> Magic Att </label>
+			<div class="col-sm-1">
+				<select class="form-select" id="legionMagAtt">
+					<option value="0" selected> 0 </option>
+				</select>
+			</div>
+			<label class="col-sm-1 col-form-label" data-bs-toggle="tooltip" title="+1% per level"> Abnormal Status </label>
+			<div class="col-sm-1">
+				<select class="form-select" id="legionAbnormal">
+					<option value="0" selected> 0 </option>
+				</select>
+			</div>
+			<label class="col-sm-1 col-form-label" data-bs-toggle="tooltip" title="+.25% per level"> EXP </label>
+			<div class="col-sm-1">
+				<select class="form-select" id="legionExp">
+					<option value="0" selected> 0 </option>
+				</select>
+			</div>
+			<label class="col-sm-1 col-form-label" data-bs-toggle="tooltip" title="+1% per level"> Crit Rate </label>
+			<div class="col-sm-1">
+				<select class="form-select" id="legionCritRate">
+					<option value="0" selected> 0 </option>
+				</select>
+			</div>
+			<label class="col-sm-1 col-form-label" data-bs-toggle="tooltip" title="+1% per level"> Boss Dmg </label>
+			<div class="col-sm-1">
+				<select class="form-select" id="legionBoss">
+					<option value="0" selected> 0 </option>
+				</select>
+			</div>
+		</div>
+		<div class="row mb-3">
+			<label class="col-sm-1 col-form-label" data-bs-toggle="tooltip" title="+1% per level"> Monster Dmg% </label>
+			<div class="col-sm-1">
+				<select class="form-select" id="legionNormMonDam">
+					<option value="0" selected> 0 </option>
+				</select>
+			</div>
+			<label class="col-sm-1 col-form-label" data-bs-toggle="tooltip" title="+1% per level"> Buff Duration </label>
+			<div class="col-sm-1">
+				<select class="form-select" id="legionBuffDuration">
+					<option value="0" selected> 0 </option>
+				</select>
+			</div>
+			<label class="col-sm-1 col-form-label" data-bs-toggle="tooltip" title="+1% per level"> Ignore Def </label>
+			<div class="col-sm-1">
+				<select class="form-select" id="legionIed">
+					<option value="0" selected> 0 </option>
+				</select>
+			</div>
+			<label class="col-sm-1 col-form-label" data-bs-toggle="tooltip" title="+0.5% per level"> Crit Dmg </label>
+			<div class="col-sm-1">
+				<select class="form-select" id="legionCritDam">
+					<option value="0" selected> 0 </option>
+				</select>
+			</div>
+		</div>
+		
+		</div>
+	</div>
+
+	<div class="container" id="equipmentBox">
+		<img id="equipmentInventory" src="images/Equip.backgrnd._outlink.png" alt="EquipBox"/>
+		<img id="equipmentBackground" src="images/Equip.Equip.backgrnd._outlink.png" alt="background"/>
+		<img id="hat" src="images/Equip.Equip.Slots.1._outlink.png" alt="hat"/>
+	<!-- Face Accessories -->	
+		<div class="container">	
+			<img id="faceImage" src="images/Equip.Equip.Slots.2._outlink.png" alt="faceacc"/>
+			<img id="faceImage2" src="images/01012632.img.info.icon._outlink.png"/>
+			<!-- bootstrap Modal implementation -->
+			<!-- Button to open Modal -->
+			<button type="button" class="btn btn-primary bg-transparent" id="faceButton" data-bs-toggle="modal" data-bs-target="#modalFace">
+			</button>
+			<!-- The Modal -->
+			<div class="modal" id="modalFace">
+				<div class="modal-dialog">
+					<div class="modal-content">
+					<!-- Modal Header -->
+						<div class="modal-header">
+							<h5 class="modal-title"> Select options </h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+						</div>
+					<!-- Modal body -->
+						<div class="modal-body">
+							<form id="faceAccForm">
+								<!-- Select Face Accessory -->
+								<label for="selectFace" class="form-label"> Face Accessory </label>
+								<select id="selectFace" name="selectFace" class="form-select" onchange="updateFaceStarForceOptions()">
+									<option value="condensedPowerCrystal"> Condensed Power Crystal</option>
+									<option value="twilightMark"> Twilight Mark </option>
+									<option value="sweetwaterTattoo"> Sweetwater Tattoo </option>
+									<option value="berserked" selected> Berserked </option>
+								</select>
+								<!-- Select Face Star Force -->
+								<label for="faceStarForce"> Star Force: </label>
+								<select id="faceStarForce" name="faceStarForce" class="form-select" onchange="updateFaceStarForceStats()">
+									<option value="0" selected> 0 </option> <!-- Dynamic options in JS -->
+								</select>
+								<!-- Select Face Potentials -->
+								<div class="row">
+								<label> Potentials </label>
+									<div class="col-sm-4">
+										<select id="facePot1" name="facePot1" class=form-select>
+										<option value="13%Str"> 13% Str </option>
+										<option value="13%Dex"> 13% Dex </option>
+										<option value="13%Int"> 13% Int </option>
+										<option value="13%Luk"> 13% Luk </option>
+										<option value="12%Str"> 12% Str </option>
+										<option value="12%Dex"> 12% Dex </option>
+										<option value="12%Int"> 12% Int </option>
+										<option value="12%Luk"> 12% Luk </option>
+										<option value="10%All" selected> 10% All Stat </option>
+										<option value="10%Str"> 10% Str </option>
+										<option value="10%Dex"> 10% Dex </option>
+										<option value="10%Int"> 10% Int </option>
+										<option value="10%Luk"> 10% Luk </option>
+										<option value="10%All"> 9% All Stat </option>
+										<option value="9%Str"> 9% Str </option>
+										<option value="9%Dex"> 9% Dex </option>
+										<option value="9%Int"> 9% Int </option>
+										<option value="9%Luk"> 9% Luk </option>
+										<option value="7%All"> 7% All Stat </option>
+										<option value="7%Str"> 7% Str </option>
+										<option value="7%Dex"> 7% Dex </option>
+										<option value="7%Int"> 7% Int </option>
+										<option value="7%Luk"> 7% Luk </option>
+										<option value="6%All"> 6% All Stat </option>
+										<option value="6%Str"> 6% Str </option>
+										<option value="6%Dex"> 6% Dex </option>
+										<option value="6%Int"> 6% Int </option>
+										<option value="6%Luk"> 6% Luk </option>
+										<option value="4%All"> 4% All Stat </option>
+										<option value="3%All"> 3% All Stat </option>
+										</select>
+									</div>
+									<div class="col-sm-4">
+										<select id="facePot2" name="facePot2" class=form-select>
+										<option value="13%Str"> 13% Str </option>
+										<option value="13%Dex"> 13% Dex </option>
+										<option value="13%Int"> 13% Int </option>
+										<option value="13%Luk"> 13% Luk </option>
+										<option value="12%Str"> 12% Str </option>
+										<option value="12%Dex"> 12% Dex </option>
+										<option value="12%Int"> 12% Int </option>
+										<option value="12%Luk"> 12% Luk </option>
+										<option value="10%All"> 10% All Stat </option>
+										<option value="10%Str"> 10% Str </option>
+										<option value="10%Dex"> 10% Dex </option>
+										<option value="10%Int"> 10% Int </option>
+										<option value="10%Luk"> 10% Luk </option>
+										<option value="10%All"> 9% All Stat </option>
+										<option value="9%Str"> 9% Str </option>
+										<option value="9%Dex"> 9% Dex </option>
+										<option value="9%Int"> 9% Int </option>
+										<option value="9%Luk"> 9% Luk </option>
+										<option value="7%All" selected> 7% All Stat </option>
+										<option value="7%Str"> 7% Str </option>
+										<option value="7%Dex"> 7% Dex </option>
+										<option value="7%Int"> 7% Int </option>
+										<option value="7%Luk"> 7% Luk </option>
+										<option value="6%All"> 6% All Stat </option>
+										<option value="6%Str"> 6% Str </option>
+										<option value="6%Dex"> 6% Dex </option>
+										<option value="6%Int"> 6% Int </option>
+										<option value="6%Luk"> 6% Luk </option>
+										<option value="4%All"> 4% All Stat </option>
+										<option value="3%All"> 3% All Stat </option>
+										</select>
+									</div>
+									<div class="col-sm-4">
+										<select id="facePot3" name="facePot3" class=form-select>
+										<option value="13%Str"> 13% Str </option>
+										<option value="13%Dex"> 13% Dex </option>
+										<option value="13%Int"> 13% Int </option>
+										<option value="13%Luk"> 13% Luk </option>
+										<option value="12%Str"> 12% Str </option>
+										<option value="12%Dex"> 12% Dex </option>
+										<option value="12%Int"> 12% Int </option>
+										<option value="12%Luk"> 12% Luk </option>
+										<option value="10%All"> 10% All Stat </option>
+										<option value="10%Str"> 10% Str </option>
+										<option value="10%Dex"> 10% Dex </option>
+										<option value="10%Int"> 10% Int </option>
+										<option value="10%Luk"> 10% Luk </option>
+										<option value="10%All"> 9% All Stat </option>
+										<option value="9%Str"> 9% Str </option>
+										<option value="9%Dex"> 9% Dex </option>
+										<option value="9%Int"> 9% Int </option>
+										<option value="9%Luk"> 9% Luk </option>
+										<option value="7%All" selected> 7% All Stat </option>
+										<option value="7%Str"> 7% Str </option>
+										<option value="7%Dex"> 7% Dex </option>
+										<option value="7%Int"> 7% Int </option>
+										<option value="7%Luk"> 7% Luk </option>
+										<option value="6%All"> 6% All Stat </option>
+										<option value="6%Str"> 6% Str </option>
+										<option value="6%Dex"> 6% Dex </option>
+										<option value="6%Int"> 6% Int </option>
+										<option value="6%Luk"> 6% Luk </option>
+										<option value="4%All"> 4% All Stat </option>
+										<option value="3%All"> 3% All Stat </option>
+										</select>
+									</div>
+								</div>
+							</form>
+						</div>
+					<!-- Modal footer -->
+						<div class="modal-footer">
+							<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>	
+	<!-- Eye Accessories -->	
+		<div class="container">	
+			<img id="eyeImage" src="images/Equip.Equip.Slots.3._outlink.png" alt="eyeAcc"/>
+			<img id="eyeImage2" src="images/01022278.img.info.icon._outlink.png"/>
+			<!-- bootstrap Modal implementation -->
+			<!-- Button to open Modal -->
+			<button type="button" class="btn btn-primary bg-transparent" id="eyeButton" data-bs-toggle="modal" data-bs-target="#modalEye">
+			</button>
+			<!-- The Modal -->
+			<div class="modal" id="modalEye">
+				<div class="modal-dialog">
+					<div class="modal-content">
+					<!-- Modal Header -->
+						<div class="modal-header">
+							<h5 class="modal-title"> Select options </h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+						</div>
+					<!-- Modal body -->
+						<div class="modal-body">
+							<form id="eyeAccForm">
+								<!-- Select Eye Accessory -->
+								<label for="selectEye" class="form-label"> Eye Accessory </label>
+								<select id="selectEye" name="selectEye" class="form-select" onchange="updateEyeStarForceOptions()">
+									<option value="aquaticLetterEyeAccessory"> Aquatic Letter Eye Accessory</option>
+									<option value="blackBeanMark"> Black Bean Mark </option>
+									<option value="papulatusMark"> Papulatus Mark </option>
+									<option value="sweetwaterMonocle"> Sweetwater Monocle </option>
+									<option value="magicEyepatch" selected> Magic Eyepatch </option>
+								</select>
+								<!-- Select Eye Star Force -->
+								<label for="eyeStarForce"> Star Force: </label>
+								<select id="eyeStarForce" name="eyeStarForce" class="form-select" onchange="updateEyeStarForceStats()">
+									<option value="0" selected> 0 </option> <!-- Dynamic options in JS -->
+								</select>
+								<!-- Select Eye Potentials -->
+								<div class="row">
+								<label> Potentials </label>
+									<div class="col-sm-4">
+										<select id="eyePot1" name="eyePot1" class=form-select>
+										<option value="13%Str"> 13% Str </option>
+										<option value="13%Dex"> 13% Dex </option>
+										<option value="13%Int"> 13% Int </option>
+										<option value="13%Luk"> 13% Luk </option>
+										<option value="12%Str"> 12% Str </option>
+										<option value="12%Dex"> 12% Dex </option>
+										<option value="12%Int"> 12% Int </option>
+										<option value="12%Luk"> 12% Luk </option>
+										<option value="10%All" selected> 10% All Stat </option>
+										<option value="10%Str"> 10% Str </option>
+										<option value="10%Dex"> 10% Dex </option>
+										<option value="10%Int"> 10% Int </option>
+										<option value="10%Luk"> 10% Luk </option>
+										<option value="10%All"> 9% All Stat </option>
+										<option value="9%Str"> 9% Str </option>
+										<option value="9%Dex"> 9% Dex </option>
+										<option value="9%Int"> 9% Int </option>
+										<option value="9%Luk"> 9% Luk </option>
+										<option value="7%All"> 7% All Stat </option>
+										<option value="7%Str"> 7% Str </option>
+										<option value="7%Dex"> 7% Dex </option>
+										<option value="7%Int"> 7% Int </option>
+										<option value="7%Luk"> 7% Luk </option>
+										<option value="6%All"> 6% All Stat </option>
+										<option value="6%Str"> 6% Str </option>
+										<option value="6%Dex"> 6% Dex </option>
+										<option value="6%Int"> 6% Int </option>
+										<option value="6%Luk"> 6% Luk </option>
+										<option value="4%All"> 4% All Stat </option>
+										<option value="3%All"> 3% All Stat </option>
+										</select>
+									</div>
+									<div class="col-sm-4">
+										<select id="eyePot2" name="eyePot2" class=form-select>
+										<option value="13%Str"> 13% Str </option>
+										<option value="13%Dex"> 13% Dex </option>
+										<option value="13%Int"> 13% Int </option>
+										<option value="13%Luk"> 13% Luk </option>
+										<option value="12%Str"> 12% Str </option>
+										<option value="12%Dex"> 12% Dex </option>
+										<option value="12%Int"> 12% Int </option>
+										<option value="12%Luk"> 12% Luk </option>
+										<option value="10%All"> 10% All Stat </option>
+										<option value="10%Str"> 10% Str </option>
+										<option value="10%Dex"> 10% Dex </option>
+										<option value="10%Int"> 10% Int </option>
+										<option value="10%Luk"> 10% Luk </option>
+										<option value="10%All"> 9% All Stat </option>
+										<option value="9%Str"> 9% Str </option>
+										<option value="9%Dex"> 9% Dex </option>
+										<option value="9%Int"> 9% Int </option>
+										<option value="9%Luk"> 9% Luk </option>
+										<option value="7%All" selected> 7% All Stat </option>
+										<option value="7%Str"> 7% Str </option>
+										<option value="7%Dex"> 7% Dex </option>
+										<option value="7%Int"> 7% Int </option>
+										<option value="7%Luk"> 7% Luk </option>
+										<option value="6%All"> 6% All Stat </option>
+										<option value="6%Str"> 6% Str </option>
+										<option value="6%Dex"> 6% Dex </option>
+										<option value="6%Int"> 6% Int </option>
+										<option value="6%Luk"> 6% Luk </option>
+										<option value="4%All"> 4% All Stat </option>
+										<option value="3%All"> 3% All Stat </option>
+										</select>
+									</div>
+									<div class="col-sm-4">
+										<select id="eyePot3" name="eyePot3" class=form-select>
+										<option value="13%Str"> 13% Str </option>
+										<option value="13%Dex"> 13% Dex </option>
+										<option value="13%Int"> 13% Int </option>
+										<option value="13%Luk"> 13% Luk </option>
+										<option value="12%Str"> 12% Str </option>
+										<option value="12%Dex"> 12% Dex </option>
+										<option value="12%Int"> 12% Int </option>
+										<option value="12%Luk"> 12% Luk </option>
+										<option value="10%All"> 10% All Stat </option>
+										<option value="10%Str"> 10% Str </option>
+										<option value="10%Dex"> 10% Dex </option>
+										<option value="10%Int"> 10% Int </option>
+										<option value="10%Luk"> 10% Luk </option>
+										<option value="10%All"> 9% All Stat </option>
+										<option value="9%Str"> 9% Str </option>
+										<option value="9%Dex"> 9% Dex </option>
+										<option value="9%Int"> 9% Int </option>
+										<option value="9%Luk"> 9% Luk </option>
+										<option value="7%All" selected> 7% All Stat </option>
+										<option value="7%Str"> 7% Str </option>
+										<option value="7%Dex"> 7% Dex </option>
+										<option value="7%Int"> 7% Int </option>
+										<option value="7%Luk"> 7% Luk </option>
+										<option value="6%All"> 6% All Stat </option>
+										<option value="6%Str"> 6% Str </option>
+										<option value="6%Dex"> 6% Dex </option>
+										<option value="6%Int"> 6% Int </option>
+										<option value="6%Luk"> 6% Luk </option>
+										<option value="4%All"> 4% All Stat </option>
+										<option value="3%All"> 3% All Stat </option>
+										</select>
+									</div>
+								</div>
+							</form>
+						</div>
+					<!-- Modal footer -->
+						<div class="modal-footer">
+							<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<img class="img-fluid" id="ear" src="images/Equip.Equip.Slots.4._outlink.png" alt="earacc"/>
+		<img class="img-fluid" id="top" src="images/Equip.Equip.Slots.5._outlink.png" alt="top"/>
+		<img class="img-fluid" id="bottom" src="images/Equip.Equip.Slots.6._outlink.png" alt="bottom"/>
+		<img class="img-fluid" id="shoes" src="images/Equip.Equip.Slots.7._outlink.png" alt="shoes"/>
+		<img class="img-fluid" id="gloves" src="images/Equip.Equip.Slots.8._outlink.png" alt="gloves"/>
+		<img class="img-fluid" id="cape" src="images/Equip.Equip.Slots.9._outlink.png" alt="cape"/>
+		<img class="img-fluid" id="sub" src="images/Equip.Equip.Slots.10._outlink.png" alt="subweapon"/>
+		<img class="img-fluid" id="weapon" src="images/Equip.Equip.Slots.11._outlink.png" alt="weapon"/>
+		<img class="img-fluid" id="ring1" src="images/Equip.Equip.Slots.12._outlink.png" alt="ring1"/>
+		<img class="img-fluid" id="ring2" src="images/Equip.Equip.Slots.13._outlink.png" alt="ring2"/>
+		<img class="img-fluid" id="ring3" src="images/Equip.Equip.Slots.15._outlink.png" alt="ring3"/>
+		<img class="img-fluid" id="ring4" src="images/Equip.Equip.Slots.16._outlink.png" alt="ring4"/>
+		<img class="img-fluid" id="pendant1" src="images/Equip.Equip.Slots.17._outlink.png" alt="pendant1"/>
+		<img class="img-fluid" id="pendant2" src="images/Equip.Equip.Slots.65._outlink.png" alt="pendant2"/>
+		<img class="img-fluid" id="medal" src="images/Equip.Equip.Slots.21._outlink.png" alt="medal"/>
+		<img class="img-fluid" id="belt" src="images/Equip.Equip.Slots.22._outlink.png" alt="belt"/>
+		<img class="img-fluid" id="shoulder" src="images/Equip.Equip.Slots.23._outlink.png" alt="shoulder"/>
+		<img class="img-fluid" id="pocket" src="images/Equip.Equip.Slots.26._outlink.png" alt="pocket"/>
+		<img class="img-fluid" id="android" src="images/Equip.Equip.Slots.27._outlink.png" alt="android"/>
+		<img class="img-fluid" id="heart" src="images/Equip.Equip.Slots.28._outlink.png" alt="heart"/>
+		<img class="img-fluid" id="badge" src="images/Equip.Equip.Slots.29._outlink.png" alt="badge"/>
+		<img class="img-fluid" id="emblem" src="images/Equip.Equip.Slots.30._outlink.png" alt="emblem"/>
+	</div>
+	
+	
+	<div class="row">
+		<div class="col-sm-2" id="faceJobStat"> content </div>
+		<div class="col-sm-2" id="faceAllStat"> content </div>
+		<div class="col-sm-2" id="faceHp"> content </div>
+		<div class="col-sm-2" id="faceMp"> content </div>
+		<div class="col-sm-2" id="faceAtt"> content </div>
+		<div class="col-sm-2" id="faceMAtt"> content </div>
+	</div>
+	<div class="row">
+		<div class="col-sm-2" id="eyeJobStat"> content </div>
+		<div class="col-sm-2" id="eyeAllStat"> content </div>
+		<div class="col-sm-2" id="eyeHp"> content </div>
+		<div class="col-sm-2" id="eyeMp"> content </div>
+		<div class="col-sm-2" id="eyeAtt"> content </div>
+		<div class="col-sm-2" id="eyeMAtt"> content </div>
+	</div>
+	
+	
+	<footer>
+		
+	</footer>
+	
+</body>
+</html>
