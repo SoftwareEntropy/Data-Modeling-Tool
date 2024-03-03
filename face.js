@@ -1,12 +1,10 @@
 /* hold equipment stats */
 var faceJobStat; var faceAllStat; var faceHp; var faceMp; var faceAtt; var faceMAtt;
-/* end equipment stats */
 
-/* (add) on load functions */
 updateFaceStarForceOptions();
 updateFaceStarForceStats();
-/* end on load functions */
 
+/* Update star force options, change image on selection */
 function updateFaceStarForceOptions() {
     var selectedFace = document.getElementById("selectFace").value;
     var starForceSelect = document.getElementById("faceStarForce");
@@ -16,7 +14,7 @@ function updateFaceStarForceOptions() {
     var options;
     switch(selectedFace) {
 		/* [25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0]; 
-		   [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25] */
+		[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25] */
         case "condensedPowerCrystal":
             options = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0];
             faceEquipImage.src = "images/01012478.img.info.icon._outlink.png";
@@ -32,6 +30,10 @@ function updateFaceStarForceOptions() {
         case "berserked":
             options = [25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0];
             faceEquipImage.src = "images/01012632.img.info.icon._outlink.png";
+            break;
+		case "none":
+            options = [0];
+            faceEquipImage.src = "images/Equip.Equip.Slots.2._outlink.png";
             break;
     }
     for (var i = 0; i < options.length; i++) {
@@ -53,7 +55,7 @@ function calculateFaceStarForce(itemLevel, starForceLevel, itemType, itemAllStat
 	var att = itemAttack;
 	var mAtt = itemMagAttack;
 	if (starForceLevel >= 1) {
-		jobStat += 2; hp + 5; mp += 5;
+		jobStat += 2; hp += 5; mp += 5;
 		if (itemType == weapon) {
 			att += 1 + Math.floor(itemAttack * (2 / 100));
 			mAtt += 1 + Math.floor(itemMagAttack * (2 / 100));
@@ -86,7 +88,7 @@ function calculateFaceStarForce(itemLevel, starForceLevel, itemType, itemAllStat
 			att += 1 + Math.floor(itemAttack * (2 / 100));
 			mAtt += 1 + Math.floor(itemMagAttack * (2 / 100));
 		}
-		if (itemType == gloves) {
+		if (itemType == "gloves") {
 			att += 1; mAtt += 1;
 		}
 	}
@@ -103,7 +105,7 @@ function calculateFaceStarForce(itemLevel, starForceLevel, itemType, itemAllStat
 			att += 1 + Math.floor(itemAttack * (2 / 100));
 			mAtt += 1 + Math.floor(itemMagAttack * (2 / 100));
 		}
-		if (itemType == gloves) {
+		if (itemType == "gloves") {
 			att += 1; mAtt += 1;
 		}
 	}
@@ -120,7 +122,7 @@ function calculateFaceStarForce(itemLevel, starForceLevel, itemType, itemAllStat
 			att += 1 + Math.floor(itemAttack * (2 / 100));
 			mAtt += 1 + Math.floor(itemMagAttack * (2 / 100));
 		}
-		if (itemType == gloves) {
+		if (itemType == "gloves") {
 			att += 1; mAtt += 1;
 		}
 	}
@@ -137,7 +139,7 @@ function calculateFaceStarForce(itemLevel, starForceLevel, itemType, itemAllStat
 			att += 1 + Math.floor(itemAttack * (2 / 100));
 			mAtt += 1 + Math.floor(itemMagAttack * (2 / 100));
 		}
-		if (itemType == gloves) {
+		if (itemType == "gloves") {
 			att += 1; mAtt += 1;
 		}	
 	}
@@ -154,7 +156,7 @@ function calculateFaceStarForce(itemLevel, starForceLevel, itemType, itemAllStat
 			att += 1 + Math.floor(itemAttack * (2 / 100));
 			mAtt += 1 + Math.floor(itemMagAttack * (2 / 100));
 		}
-		if (itemType == gloves) {
+		if (itemType == "gloves") {
 			att += 1; mAtt += 1;
 		}	
 	}
@@ -164,7 +166,7 @@ function calculateFaceStarForce(itemLevel, starForceLevel, itemType, itemAllStat
 			att += 1 + Math.floor(itemAttack * (2 / 100));
 			mAtt += 1 + Math.floor(itemMagAttack * (2 / 100));
 		}
-		if (itemType == gloves) {
+		if (itemType == "gloves") {
 			att += 1; mAtt += 1;
 		}
 	}
@@ -174,7 +176,7 @@ function calculateFaceStarForce(itemLevel, starForceLevel, itemType, itemAllStat
 			att += 1 + Math.floor(itemAttack * (2 / 100));
 			mAtt += 1 + Math.floor(itemMagAttack * (2 / 100));
 		}
-		if (itemType == gloves) {
+		if (itemType == "gloves") {
 			att += 1; mAtt += 1;
 		}	
 	}
@@ -601,6 +603,9 @@ function updateFaceStarForceStats() {
         case "berserked":
 			calculateFaceStarForce(160, starForceSelect, "accessory", 10, 0, 0, 10, 10);
             break;
+		case "none":
+			calculateFaceStarForce(0, starForceSelect, "accessory", 0, 0, 0, 0, 0);
+            break;	
     }
 	
 	/* save face accessory stats */

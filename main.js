@@ -1,34 +1,66 @@
-/* On run tools */
-//var numElement = document.querySelector('input[type="number"]')
-//numElement.addEventListener('blur', validateRange);
 
 var levelElem = document.getElementById("level");
 var strElem = document.getElementById("strAP");
 var dexElem = document.getElementById("dexAP");
 var intElem = document.getElementById("intAP");
 var lukElem = document.getElementById("lukAP");
+var hpElem = document.getElementById("hpAP");
+var mpElem = document.getElementById("mpAP");
 
 document.getElementById("level").defaultValue = "200"
 document.getElementById("strAP").defaultValue = "0"
 document.getElementById("dexAP").defaultValue = "0"
 document.getElementById("intAP").defaultValue = "0"
 document.getElementById("lukAP").defaultValue = "0"
+document.getElementById("hpAP").defaultValue = "0"
+document.getElementById("mpAP").defaultValue = "0"
 
 var selectedLevel = parseInt(levelElem.value);
 var totalAp;
+
 updateApPoints();
 updateHyperStatPoints();
 
+document.addEventListener('DOMContentLoaded', function () {
+    var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+    var popoverList = popoverTriggerList.map(function (trigger) {
+        return new bootstrap.Popover(trigger)
+    });
+});
+
+/* Event Listeners for Level change */
 levelElem.addEventListener('blur', validateRange);
-//levelElem.addEventListener('blur', setToDefaults);
 levelElem.addEventListener('blur', updateApPoints);
 levelElem.addEventListener('blur', resetHyperStatsToZero);
 levelElem.addEventListener('blur', updateHyperStatPoints);
 levelElem.addEventListener('blur', calculateHyperStatPoints);
+
+/* Event Listeners for stat change */
 strElem.addEventListener('blur', calculateAttributePoints);
 dexElem.addEventListener('blur', calculateAttributePoints);
 intElem.addEventListener('blur', calculateAttributePoints);
 lukElem.addEventListener('blur', calculateAttributePoints);
+hpElem.addEventListener('blur', calculateAttributePoints);
+mpElem.addEventListener('blur', calculateAttributePoints);
+
+/* Inner ability */
+selectinnerAbility1.addEventListener('change', updateInner);
+selectinnerAbility2.addEventListener('change', updateInner);
+selectinnerAbility3.addEventListener('change', updateInner);
+
+/* Traits */
+var dilligence = document.getElementById("dilligence");
+var insight = document.getElementById("insight");
+var empathy = document.getElementById("empathy");
+var charm = document.getElementById("charm");
+var ambition = document.getElementById("ambition");
+var willpower = document.getElementById("willpower");
+dilligence.addEventListener('blur', validateRange);
+insight.addEventListener('blur', validateRange);
+empathy.addEventListener('blur', validateRange);
+charm.addEventListener('blur', validateRange);
+ambition.addEventListener('blur', validateRange);
+willpower.addEventListener('blur', validateRange);
 
 /* Hyper stat elements */
 var hspPointsElem = document.getElementById("hsPoints");
@@ -50,6 +82,7 @@ var attAllocated = document.getElementById("attHS");
 var expAllocated = document.getElementById("expHS");
 var arcaneForceAllocated = document.getElementById("arcaneForceHS");
 
+/* Event Listeners for hyper stat changes */
 strAllocated.addEventListener('change', calculateHyperStatPoints);
 dexAllocated.addEventListener('change', calculateHyperStatPoints);
 intAllocated.addEventListener('change', calculateHyperStatPoints);
@@ -67,11 +100,12 @@ abnormalStatusAllocated.addEventListener('change', calculateHyperStatPoints);
 attAllocated.addEventListener('change', calculateHyperStatPoints);
 expAllocated.addEventListener('change', calculateHyperStatPoints);
 arcaneForceAllocated.addEventListener('change', calculateHyperStatPoints);
+
 calculateHyperStatPoints();
 legionBoard();
-/* end on run tools */
+createSymbolSelections();
 
-/* number validation*/
+/* Number validation - set new minimum or maximum allowed values */
 function validateRange() {
     var value = parseInt(this.value) || 0;
     if (this.value === "") {
@@ -83,18 +117,7 @@ function validateRange() {
     }
 }
 
-/* reset to start values */
-/*function setToDefaults() {
-	strElem.value = 0;
-	dexElem.value = 0;
-	intElem.value = 0;
-	lukElem.value = 0;
-	validateRange.call(strElem);
-    validateRange.call(dexElem);
-    validateRange.call(intElem);
-    validateRange.call(lukElem);
-}*/
-
+/* Update new maximum Attribute points */
 function updateApPoints() {
 	validateRange.call(this);
 	var apPointsElem = document.getElementById("apPoints");
@@ -105,38 +128,11 @@ function updateApPoints() {
 	dexElem.max = totalAp;
 	intElem.max = totalAp;
 	lukElem.max = totalAp;
+	hpElem.max = totalAp;
+	mpElem.max = totalAp;
 }
 
-/* Old */
-/*function calculateAttributePoints() {
-	validateRange.call(this);
-	var selectedLevel = parseInt(document.getElementById("level").value);
-	var strAllocated = parseInt(document.getElementById("strAP").value);
-	var dexAllocated = parseInt(document.getElementById("dexAP").value);
-	var intAllocated = parseInt(document.getElementById("intAP").value);
-	var lukAllocated = parseInt(document.getElementById("lukAP").value);
-	var allocatedAp = strAllocated + dexAllocated + intAllocated + lukAllocated;
-	var totalAp = 5 + 5 + (selectedLevel * 5);
-	var remainingAp = totalAp - allocatedAp;
-	apPointsElem.placeholder = "Available AP: " + remainingAp;
-	var display = document.getElementById("apPoints");
-	display.placeholder =  totalAp;
-	if (remainingAp > 0) {
-		if (strAllocated < totalAp) {
-			document.getElementById("strAP").max = strAllocated + remainingAp;
-		}
-		if (dexAllocated < totalAp) {
-			document.getElementById("dexAP").max = dexAllocated + remainingAp;
-		}
-		if (intAllocated < totalAp) {
-			document.getElementById("intAP").max = intAllocated + remainingAp;
-		}
-		if (lukAllocated < totalAp) {
-			document.getElementById("lukAP").max = lukAllocated + remainingAp;
-		}
-	}
-}*/
-
+/* Calculate used and remaining attribute points, save to placeholder */
 function calculateAttributePoints() {
     validateRange.call(this);
     var apPointsElem = document.getElementById("apPoints");
@@ -144,16 +140,21 @@ function calculateAttributePoints() {
     var dexAllocated = parseInt(dexElem.value);
     var intAllocated = parseInt(intElem.value);
     var lukAllocated = parseInt(lukElem.value);
-    var allocatedAp = strAllocated + dexAllocated + intAllocated + lukAllocated;
+	var hpAllocated = parseInt(hpElem.value);
+    var mpAllocated = parseInt(mpElem.value);
+    var allocatedAp = strAllocated + dexAllocated + intAllocated + lukAllocated + hpAllocated + mpAllocated;
     var remainingAp = totalAp - allocatedAp;
     apPointsElem.placeholder = remainingAp + " points available";
-	
+	/* set new maximum */
     strElem.max = strAllocated + remainingAp;
     dexElem.max = dexAllocated + remainingAp;
     intElem.max = intAllocated + remainingAp;
     lukElem.max = lukAllocated + remainingAp;
+	hpElem.max = hpAllocated + remainingAp;
+	mpElem.max = mpAllocated + remainingAp;
 }
 
+/* Calculate and set allowable hyper stat points based on selected level */
 function updateHyperStatPoints() {
 	var selectedLevel = parseInt(levelElem.value);
 	var hsPointsElem = document.getElementById("hsPoints");
@@ -193,6 +194,8 @@ function updateHyperStatPoints() {
 	hsPointsElem.placeholder = hyperStatPoints + " points available";
 }
 
+/* Dynamic creation of new select level options for hyper stat */
+/* Parameters: 1)New maximum level allowed, 2)stat element, 3) current level selected */
 function updateNewHyperstatOptions(max, elem, currentVal) {
     elem.innerHTML = '';
     for (let i = max; i >= 0; i--) {
@@ -206,6 +209,7 @@ function updateNewHyperstatOptions(max, elem, currentVal) {
     }
 }
 
+/* Called on level change, reset all selections */
 function resetHyperStatsToZero() {
 	strAllocated.value = 0;
 	dexAllocated.value = 0;
@@ -226,6 +230,7 @@ function resetHyperStatsToZero() {
 	arcaneForceAllocated.value = 0;
 }
 
+/* Calculate total point cost of current level selection */
 function calculateHyperStatAllocation(statLevel) {
 	var level = parseInt(statLevel);
 	var totalCost = 0;
@@ -282,6 +287,7 @@ function calculateHyperStatAllocation(statLevel) {
 	return totalCost;
 }
 
+/* Returns new maximum level based on allocated and remaining points */
 function getNewHyperstatMaximums(remainingPoints, allocatedPoints) {
 	if (remainingPoints + allocatedPoints >= 550) {
 		return 15;
@@ -331,8 +337,9 @@ function getNewHyperstatMaximums(remainingPoints, allocatedPoints) {
 	return 0;
 }
 
-
+/* Calculate total point allocation, new maximums, and updates values */
 function calculateHyperStatPoints() {
+	/* Calculate total assigned points from levels */
     var strAlloc = calculateHyperStatAllocation(parseInt(strAllocated.value));
 	var dexAlloc = calculateHyperStatAllocation(parseInt(dexAllocated.value));
 	var intAlloc = calculateHyperStatAllocation(parseInt(intAllocated.value));
@@ -353,14 +360,14 @@ function calculateHyperStatPoints() {
     var allocatedHS = strAlloc + dexAlloc + intAlloc + lukAlloc + hpAlloc +mpAlloc + altManaAlloc
 		+ critRateAlloc + critDamageAlloc + iedAlloc + bossAlloc + normMonDamAlloc + dmgAlloc
 		+ abnormalStatusAlloc + attAlloc +expAlloc + arcaneForceAlloc;
-    var remainingHsp = hyperStatPoints - allocatedHS;
 	
+	/* Update placeholder value */
+	var remainingHsp = hyperStatPoints - allocatedHS;
     hspPointsElem.placeholder = remainingHsp + " points available";
-
+	
+	/* Get new maximum level selection and updates document */
     var newStrMax = getNewHyperstatMaximums(remainingHsp, strAlloc);
-	
 	updateNewHyperstatOptions(newStrMax, strAllocated, strAllocated.value);
-	
 	var newDexMax = getNewHyperstatMaximums(remainingHsp, dexAlloc);
 	updateNewHyperstatOptions(newDexMax, dexAllocated, dexAllocated.value);
 	var newIntMax = getNewHyperstatMaximums(remainingHsp, intAlloc);
@@ -395,54 +402,59 @@ function calculateHyperStatPoints() {
 	updateNewHyperstatOptions(newArcMax, arcaneForceAllocated, arcaneForceAllocated.value);
 }
 
+/* Create legion board level options */
 function legionBoard() {
 	var strLeg = document.getElementById("legionStr");
-	createLegionBoardSelections(strLeg, 15);
-	var strLeg = document.getElementById("legionDex");
-	createLegionBoardSelections(strLeg, 15);
-	var strLeg = document.getElementById("legionInt");
-	createLegionBoardSelections(strLeg, 15);
-	var strLeg = document.getElementById("legionLuk");
-	createLegionBoardSelections(strLeg, 15);
-	var strLeg = document.getElementById("legionHp");
-	createLegionBoardSelections(strLeg, 15);
-	var strLeg = document.getElementById("legionMp");
-	createLegionBoardSelections(strLeg, 15);
-	var strLeg = document.getElementById("legionAtt");
-	createLegionBoardSelections(strLeg, 15);
-	var strLeg = document.getElementById("legionMagAtt");
-	createLegionBoardSelections(strLeg, 15);
-	var strLeg = document.getElementById("legionAbnormal");
-	createLegionBoardSelections(strLeg, 40);
-	var strLeg = document.getElementById("legionExp");
-	createLegionBoardSelections(strLeg, 40);
-	var strLeg = document.getElementById("legionCritRate");
-	createLegionBoardSelections(strLeg, 40);
-	var strLeg = document.getElementById("legionBoss");
-	createLegionBoardSelections(strLeg, 40);
-	var strLeg = document.getElementById("legionNormMonDam");
-	createLegionBoardSelections(strLeg, 40);
-	var strLeg = document.getElementById("legionBuffDuration");
-	createLegionBoardSelections(strLeg, 40);
-	var strLeg = document.getElementById("legionIed");
-	createLegionBoardSelections(strLeg, 40);
-	var strLeg = document.getElementById("legionCritDam");
-	createLegionBoardSelections(strLeg, 40);
+	createSelections(strLeg, 15, 0);
+	var dexLeg = document.getElementById("legionDex");
+	createSelections(dexLeg, 15, 0);
+	var intLeg = document.getElementById("legionInt");
+	createSelections(intLeg, 15, 0);
+	var lukLeg = document.getElementById("legionLuk");
+	createSelections(lukLeg, 15, 0);
+	var hpLeg = document.getElementById("legionHp");
+	createSelections(hpLeg, 15, 0);
+	var mpLeg = document.getElementById("legionMp");
+	createSelections(mpLeg, 15, 0);
+	var attLeg = document.getElementById("legionAtt");
+	createSelections(attLeg, 15, 0);
+	var mattLeg = document.getElementById("legionMagAtt");
+	createSelections(mattLeg, 15, 0);
+	var abLeg = document.getElementById("legionAbnormal");
+	createSelections(abLeg, 40, 0);
+	var xpLeg = document.getElementById("legionExp");
+	createSelections(xpLeg, 40, 0);
+	var crLeg = document.getElementById("legionCritRate");
+	createSelections(crLeg, 40, 0);
+	var bssLeg = document.getElementById("legionBoss");
+	createSelections(bssLeg, 40, 0);
+	var nmLeg = document.getElementById("legionNormMonDam");
+	createSelections(nmLeg, 40, 0);
+	var bdLeg = document.getElementById("legionBuffDuration");
+	createSelections(bdLeg, 40, 0);
+	var iedLeg = document.getElementById("legionIed");
+	createSelections(iedLeg, 40, 0);
+	var cdLeg = document.getElementById("legionCritDam");
+	createSelections(cdLeg, 40, 0);
 }
 
-function createLegionBoardSelections(elem, max) {
+/* Create descending level options for element */
+/* Parameters: 1)element, 2) maximum level allowed 3) selectedValue */
+function createSelections(elem, max, selectedValue) {
     elem.innerHTML = '';
     for (let i = max; i >= 0; i--) {
         let option = document.createElement('option');
         option.value = i;
         option.text = i;
-        if (i == 0) {
+        if (i == selectedValue) {
             option.selected = true;
         }
         elem.appendChild(option);
     }
 }
 
+/* Count current allocated values */
+/* Currently unused */
 function countLegionBoardSquares() {
 	var strLeg = document.getElementById("legionStr").value;
 	var strLeg = document.getElementById("legionDex").value;
@@ -462,4 +474,134 @@ function countLegionBoardSquares() {
 	var strLeg = document.getElementById("legionCritDam").value;
 }
 
+function createSymbolSelections() {
+	var vjSymbol = document.getElementById("vjSymbol");
+	var chuchuSymbol = document.getElementById("chuchuSymbol");
+	var lachSymbol = document.getElementById("lachSymbol");
+	var arcanaSymbol = document.getElementById("arcanaSymbol");
+	var morassSymbol = document.getElementById("morassSymbol");
+	var esferaSymbol = document.getElementById("esferaSymbol");
+	createSelections(vjSymbol, 20, 20);
+	createSelections(chuchuSymbol, 20, 20);
+	createSelections(lachSymbol, 20, 20);
+	createSelections(arcanaSymbol, 20, 20);
+	createSelections(morassSymbol, 20, 20);
+	createSelections(esferaSymbol, 20, 20);
+	var cerniumSymbol = document.getElementById("cerniumSymbol");
+	var arcusSymbol = document.getElementById("arcusSymbol");
+	var odiumSymbol = document.getElementById("odiumSymbol");
+	var shangSymbol = document.getElementById("shangSymbol");
+	var arteriaSymbol = document.getElementById("arteriaSymbol");
+	var carcionSymbol = document.getElementById("carcionSymbol");
+	createSelections(cerniumSymbol, 11, 11);
+	createSelections(arcusSymbol, 11, 11);
+	createSelections(odiumSymbol, 11, 11);
+	createSelections(shangSymbol, 11, 11);
+	createSelections(arteriaSymbol, 11, 11);
+	createSelections(carcionSymbol, 11, 11);
+}
 
+function updateInner() {
+    var ability1 = document.getElementById("selectinnerAbility1");
+    var ability2 = document.getElementById("selectinnerAbility2");
+    var ability3 = document.getElementById("selectinnerAbility3");
+    var ability1options = document.getElementById("selectinnerAbility1").options;
+    var ability2options = document.getElementById("selectinnerAbility2").options;
+    var ability3options = document.getElementById("selectinnerAbility3").options;
+	/* Reset */
+	for (var i = 0; i < ability1options.length; i++) {
+        ability1options[i].style.display = '';
+    }
+    for (var i = 0; i < ability2options.length; i++) {
+        ability2options[i].style.display = '';
+    }
+    for (var i = 0; i < ability3options.length; i++) {
+        ability3options[i].style.display = '';
+    }
+	/* Prevent duplicate values */
+    if (ability1.value != "none") {
+        for (var i = 0; i < ability2options.length; i++) {
+            var option = ability2options[i];
+            if (ability1.value == option.value) {
+                option.style.display = 'none';
+            } else {
+                option.style.display = '';
+            }
+        }
+        for (var i = 0; i < ability3options.length; i++) {
+            var option = ability3options[i];
+            if (ability1.value == option.value) {
+                option.style.display = 'none';
+            } else {
+                option.style.display = '';
+            }
+        }
+    }
+    if (ability2.value != "none") {
+        for (var i = 0; i < ability1options.length; i++) {
+            var option = ability1options[i];
+            if (ability2.value == option.value) {
+                option.style.display = 'none';
+            } else {
+                option.style.display = '';
+            }
+        }
+        for (var i = 0; i < ability3options.length; i++) {
+            var option = ability3options[i];
+            if (ability2.value == option.value) {
+                option.style.display = 'none';
+            } else {
+                option.style.display = '';
+            }
+        }
+    }
+
+    if (ability3.value != "none") {
+        for (var i = 0; i < ability2options.length; i++) {
+            var option = ability2options[i];
+            if (ability3.value == option.value) {
+                option.style.display = 'none';
+            } else {
+                option.style.display = '';
+            }
+        }
+        for (var i = 0; i < ability1options.length; i++) {
+            var option = ability1options[i];
+            if (ability3.value == option.value) {
+                option.style.display = 'none';
+            } else {
+                option.style.display = '';
+            }
+        }
+    }
+}
+
+/* Old */
+/*function calculateAttributePoints() {
+	validateRange.call(this);
+	var selectedLevel = parseInt(document.getElementById("level").value);
+	var strAllocated = parseInt(document.getElementById("strAP").value);
+	var dexAllocated = parseInt(document.getElementById("dexAP").value);
+	var intAllocated = parseInt(document.getElementById("intAP").value);
+	var lukAllocated = parseInt(document.getElementById("lukAP").value);
+	var allocatedAp = strAllocated + dexAllocated + intAllocated + lukAllocated;
+	var totalAp = 5 + 5 + (selectedLevel * 5);
+	var remainingAp = totalAp - allocatedAp;
+	apPointsElem.placeholder = "Available AP: " + remainingAp;
+	var display = document.getElementById("apPoints");
+	display.placeholder =  totalAp;
+	if (remainingAp > 0) {
+		if (strAllocated < totalAp) {
+			document.getElementById("strAP").max = strAllocated + remainingAp;
+		}
+		if (dexAllocated < totalAp) {
+			document.getElementById("dexAP").max = dexAllocated + remainingAp;
+		}
+		if (intAllocated < totalAp) {
+			document.getElementById("intAP").max = intAllocated + remainingAp;
+		}
+		if (lukAllocated < totalAp) {
+			document.getElementById("lukAP").max = lukAllocated + remainingAp;
+		}
+	}
+}*/

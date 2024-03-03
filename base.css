@@ -30,12 +30,6 @@ ul {
 	float: left;
 }
 
-.dropdown{
-	position: relative;
-	display: inline-block;
-	right: 80%;
-}
-
 #equipmentInventory {
   display: block;
   position: absolute;
@@ -69,7 +63,7 @@ ul {
   height: 39px;
 }
 
-#faceImage2, #condensedPowerCrystalImage, #twilightMarkImage, #sweetwaterTattooImage, #berserkedImage { /*Equipment overlay*/
+#faceImage2 { /*Equipment overlay*/
   position: absolute;
   top: 71px; 
   left: 110px;
@@ -87,7 +81,7 @@ ul {
   height: 39px;
 }
 
-#eyeImage2, #aquaticLetterEyeAccessoryImage, #blackBeanMarkImage, #papulatusMarkImage, #magicEyepatchImage { /*Equipment overlay*/
+#eyeImage2 { /*Equipment overlay*/
   position: absolute;
   top: 112px; 
   left: 110px;
@@ -113,7 +107,7 @@ ul {
   height: 39px;
 }
 
-#shoes {
+#shoeImage, #shoeButton {
   position: absolute;
   top: 235px; 
   left: 110px;
@@ -121,7 +115,17 @@ ul {
   height: 39px;
 }
 
-#ring1 {
+#shoeImage2 { /*Equipment overlay*/
+  position: absolute;
+  top: 235px; 
+  left: 110px;
+  width: 40px;
+  height: 39px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+#ring1Image, #ring1Button {
   position: absolute;
   top: 153px; 
   left: 26px;
@@ -129,7 +133,17 @@ ul {
   height: 39px;
 }
 
-#ring2 {
+#ring1Image2 {
+  position: absolute;
+  top: 153px; 
+  left: 26px;
+  width: 40px;
+  height: 39px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+#ring2Image, #ring2Button {
   position: absolute;
   top: 112px; 
   left: 26px;
@@ -137,7 +151,17 @@ ul {
   height: 39px;
 }
 
-#ring3 {
+#ring2Image2 {
+  position: absolute;
+  top: 112px; 
+  left: 26px;
+  width: 40px;
+  height: 39px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+#ring3Image, #ring3Button {
   position: absolute;
   top: 71px; 
   left: 26px;
@@ -145,7 +169,17 @@ ul {
   height: 39px;
 }
 
-#ring4 {
+#ring3Image2 {
+  position: absolute;
+  top: 71px; 
+  left: 26px;
+  width: 40px;
+  height: 39px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+#ring4Image, #ring4Button {
   position: absolute;
   top: 30px; 
   left: 26px;
@@ -153,7 +187,17 @@ ul {
   height: 39px;
 }
 
-#pocket {
+#ring4Image2 {
+  position: absolute;
+  top: 30px; 
+  left: 26px;
+  width: 40px;
+  height: 39px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+#pocketImage, #pocketButton {
   position: absolute;
   top: 194px; 
   left: 26px;
@@ -161,7 +205,17 @@ ul {
   height: 39px;
 }
 
-#pendant2 {
+#pocketImage2 {
+  position: absolute;
+  top: 194px; 
+  left: 26px;
+  width: 40px;
+  height: 39px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+#pendant2Image, #pendant2Button {
   position: absolute;
   top: 71px; 
   left: 68px;
@@ -169,12 +223,32 @@ ul {
   height: 39px;
 }
 
-#pendant1 {
+#pendant2Image2 {
+  position: absolute;
+  top: 71px; 
+  left: 68px;
+  width: 40px;
+  height: 39px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+#pendant1Image, #pendant1Button {
   position: absolute;
   top: 112px; 
   left: 68px;
   width: 40px;
   height: 39px;
+}
+
+#pendant1Image2 {
+  position: absolute;
+  top: 112px; 
+  left: 68px;
+  width: 40px;
+  height: 39px;
+  z-index: 1;
+  pointer-events: none;
 }
 
 #weapon {
@@ -185,7 +259,7 @@ ul {
   height: 39px;
 }
 
-#belt {
+#beltImage, #beltButton {
   position: absolute;
   top: 194px; 
   left: 68px;
@@ -193,7 +267,17 @@ ul {
   height: 39px;
 }
 
-#ear {
+#beltImage2 { /*Equipment overlay*/
+  position: absolute;
+  top: 194px; 
+  left: 68px;
+  width: 40px;
+  height: 39px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+#earImage, #earButton {
   position: absolute;
   top: 112px; 
   left: 152px;
@@ -201,7 +285,17 @@ ul {
   height: 39px;
 }
 
-#shoulder {
+#earImage2 { /*Equipment overlay*/
+  position: absolute;
+  top: 112px; 
+  left: 152px;
+  width: 40px;
+  height: 39px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+#shoulderImage, #shoulderButton {
   position: absolute;
   top: 153px; 
   left: 152px;
@@ -209,12 +303,32 @@ ul {
   height: 39px;
 }
 
-#gloves {
+#shoulderImage2 { /*Equipment overlay*/
+  position: absolute;
+  top: 153px; 
+  left: 152px;
+  width: 40px;
+  height: 39px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+#gloveImage, #gloveButton {
   position: absolute;
   top: 194px; 
   left: 152px;
   width: 40px;
   height: 39px;
+}
+
+#gloveImage2 { /*Equipment overlay*/
+  position: absolute;
+  top: 194px; 
+  left: 152px;
+  width: 40px;
+  height: 39px;
+  z-index: 1;
+  pointer-events: none;
 }
 
 #android {
@@ -233,12 +347,22 @@ ul {
   height: 39px;
 }
 
-#badge {
+#badgeImage, #badgeButton {
   position: absolute;
   top: 71px; 
   left: 194px;
   width: 40px;
   height: 39px;
+}
+
+#badgeImage2 { /*Equipment overlay*/
+  position: absolute;
+  top: 71px; 
+  left: 194px;
+  width: 40px;
+  height: 39px;
+  z-index: 1;
+  pointer-events: none;
 }
 
 #medal {
@@ -257,12 +381,22 @@ ul {
   height: 39px;
 }
 
-#cape {
+#capeImage, #capeButton {
   position: absolute;
   top: 194px; 
   left: 194px;
   width: 40px;
   height: 39px;
+}
+
+#capeImage2 { /*Equipment overlay*/
+  position: absolute;
+  top: 194px; 
+  left: 194px;
+  width: 40px;
+  height: 39px;
+  z-index: 1;
+  pointer-events: none;
 }
 
 #heart {

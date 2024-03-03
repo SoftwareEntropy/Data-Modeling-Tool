@@ -1,12 +1,10 @@
 /* hold equipment stats */
 var eyeJobStat; var eyeAllStat; var eyeHp; var eyeMp; var eyeAtt; var eyeMAtt;
-/* end equipment stats */
 
-/* (add) on load functions */
 updateEyeStarForceOptions();
 updateEyeStarForceStats();
-/* end on load functions */
 
+/* Update star force options, change image on selection */
 function updateEyeStarForceOptions() {
     var selectedEye = document.getElementById("selectEye").value;
     var starForceSelect = document.getElementById("eyeStarForce");
@@ -37,6 +35,10 @@ function updateEyeStarForceOptions() {
             options = [25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0];
             eyeEquipImage.src = "images/01022278.img.info.icon._outlink.png";
             break;
+		case "none":
+            options = [0];
+            eyeEquipImage.src = "images/Equip.Equip.Slots.3._outlink.png";
+            break;	
     }
     for (var i = 0; i < options.length; i++) {
         var option = document.createElement("option");
@@ -57,7 +59,7 @@ function calculateEyeStarForce(itemLevel, starForceLevel, itemType, itemAllStat,
 	var att = itemAttack;
 	var mAtt = itemMagAttack;
 	if (starForceLevel >= 1) {
-		jobStat += 2; hp + 5; mp += 5;
+		jobStat += 2; hp += 5; mp += 5;
 		if (itemType == weapon) {
 			att += 1 + Math.floor(itemAttack * (2 / 100));
 			mAtt += 1 + Math.floor(itemMagAttack * (2 / 100));
@@ -90,7 +92,7 @@ function calculateEyeStarForce(itemLevel, starForceLevel, itemType, itemAllStat,
 			att += 1 + Math.floor(itemAttack * (2 / 100));
 			mAtt += 1 + Math.floor(itemMagAttack * (2 / 100));
 		}
-		if (itemType == gloves) {
+		if (itemType == "gloves") {
 			att += 1; mAtt += 1;
 		}
 	}
@@ -107,7 +109,7 @@ function calculateEyeStarForce(itemLevel, starForceLevel, itemType, itemAllStat,
 			att += 1 + Math.floor(itemAttack * (2 / 100));
 			mAtt += 1 + Math.floor(itemMagAttack * (2 / 100));
 		}
-		if (itemType == gloves) {
+		if (itemType == "gloves") {
 			att += 1; mAtt += 1;
 		}
 	}
@@ -124,7 +126,7 @@ function calculateEyeStarForce(itemLevel, starForceLevel, itemType, itemAllStat,
 			att += 1 + Math.floor(itemAttack * (2 / 100));
 			mAtt += 1 + Math.floor(itemMagAttack * (2 / 100));
 		}
-		if (itemType == gloves) {
+		if (itemType == "gloves") {
 			att += 1; mAtt += 1;
 		}
 	}
@@ -141,7 +143,7 @@ function calculateEyeStarForce(itemLevel, starForceLevel, itemType, itemAllStat,
 			att += 1 + Math.floor(itemAttack * (2 / 100));
 			mAtt += 1 + Math.floor(itemMagAttack * (2 / 100));
 		}
-		if (itemType == gloves) {
+		if (itemType == "gloves") {
 			att += 1; mAtt += 1;
 		}	
 	}
@@ -158,7 +160,7 @@ function calculateEyeStarForce(itemLevel, starForceLevel, itemType, itemAllStat,
 			att += 1 + Math.floor(itemAttack * (2 / 100));
 			mAtt += 1 + Math.floor(itemMagAttack * (2 / 100));
 		}
-		if (itemType == gloves) {
+		if (itemType == "gloves") {
 			att += 1; mAtt += 1;
 		}	
 	}
@@ -168,7 +170,7 @@ function calculateEyeStarForce(itemLevel, starForceLevel, itemType, itemAllStat,
 			att += 1 + Math.floor(itemAttack * (2 / 100));
 			mAtt += 1 + Math.floor(itemMagAttack * (2 / 100));
 		}
-		if (itemType == gloves) {
+		if (itemType == "gloves") {
 			att += 1; mAtt += 1;
 		}
 	}
@@ -178,7 +180,7 @@ function calculateEyeStarForce(itemLevel, starForceLevel, itemType, itemAllStat,
 			att += 1 + Math.floor(itemAttack * (2 / 100));
 			mAtt += 1 + Math.floor(itemMagAttack * (2 / 100));
 		}
-		if (itemType == gloves) {
+		if (itemType == "gloves") {
 			att += 1; mAtt += 1;
 		}	
 	}
@@ -608,6 +610,9 @@ function updateEyeStarForceStats() {
         case "magicEyepatch":
             calculateEyeStarForce(160, starForceSelect, "accessory", 15, 0, 0, 3, 3);
             break;
+		case "none":
+            calculateEyeStarForce(0, starForceSelect, "accessory", 0, 0, 0, 0, 0);
+            break;	
     }
 	
 	/* save eye accessory stats */
