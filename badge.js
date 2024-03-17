@@ -72,6 +72,8 @@ function calculateBadgeStarForce(itemLevel, starForceLevel, itemType, itemAllSta
 	var mp = itemMp;
 	var att = itemAttack;
 	var mAtt = itemMagAttack;
+	var weapon = "weapon";
+	/* NOTE: Badges currently do not add ATT at any stage. Modified formula */
 	if (starForceLevel >= 1) {
 		jobStat += 2; hp += 5; mp += 5;
 		if (itemType == weapon) {

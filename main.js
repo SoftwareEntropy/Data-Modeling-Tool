@@ -21,12 +21,13 @@ var totalAp;
 updateApPoints();
 updateHyperStatPoints();
 
-document.addEventListener('DOMContentLoaded', function () {
-    var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
-    var popoverList = popoverTriggerList.map(function (trigger) {
-        return new bootstrap.Popover(trigger)
-    });
-});
+/* Bootstrap popover */
+const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
+const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
+
+/* Bootstrap tooltips */
+const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 
 /* Event Listeners for Level change */
 levelElem.addEventListener('blur', validateRange);
@@ -104,6 +105,7 @@ arcaneForceAllocated.addEventListener('change', calculateHyperStatPoints);
 calculateHyperStatPoints();
 legionBoard();
 createSymbolSelections();
+linkSkillButtonEffects();
 
 /* Number validation - set new minimum or maximum allowed values */
 function validateRange() {
@@ -124,6 +126,12 @@ function updateApPoints() {
 	var selectedLevel = parseInt(levelElem.value);
 	totalAp = 5 + 5 + (selectedLevel * 5);
 	apPointsElem.placeholder = totalAp + " points available";
+	strElem.value = 0;
+	dexElem.value = 0;
+	intElem.value = 0;
+	lukElem.value = 0;
+	hpElem.value = 0;
+	mpElem.value = 0;
 	strElem.max = totalAp;
 	dexElem.max = totalAp;
 	intElem.max = totalAp;
@@ -524,16 +532,12 @@ function updateInner() {
             var option = ability2options[i];
             if (ability1.value == option.value) {
                 option.style.display = 'none';
-            } else {
-                option.style.display = '';
             }
         }
-        for (var i = 0; i < ability3options.length; i++) {
-            var option = ability3options[i];
+        for (var j = 0; j < ability3options.length; j++) {
+            var option = ability3options[j];
             if (ability1.value == option.value) {
                 option.style.display = 'none';
-            } else {
-                option.style.display = '';
             }
         }
     }
@@ -542,16 +546,12 @@ function updateInner() {
             var option = ability1options[i];
             if (ability2.value == option.value) {
                 option.style.display = 'none';
-            } else {
-                option.style.display = '';
             }
         }
-        for (var i = 0; i < ability3options.length; i++) {
-            var option = ability3options[i];
+        for (var j = 0; j < ability3options.length; j++) {
+            var option = ability3options[j];
             if (ability2.value == option.value) {
                 option.style.display = 'none';
-            } else {
-                option.style.display = '';
             }
         }
     }
@@ -561,19 +561,36 @@ function updateInner() {
             var option = ability2options[i];
             if (ability3.value == option.value) {
                 option.style.display = 'none';
-            } else {
-                option.style.display = '';
             }
         }
-        for (var i = 0; i < ability1options.length; i++) {
-            var option = ability1options[i];
+        for (var j = 0; j < ability1options.length; j++) {
+            var option = ability1options[j];
             if (ability3.value == option.value) {
                 option.style.display = 'none';
-            } else {
-                option.style.display = '';
             }
         }
     }
+}
+
+/* Changes link skill toggle button text */
+function linkSkillButtonEffects() {
+	var ids = ['linkInvincibleBelief', 'linkEmpiricalKnowledge', 'linkAdventurersCuriosity', 'linkThiefsCunning',
+    'linkPirateBlessing', 'linkCygnusBlessing', 'linkKnightsWatch', 'linkElvenBlessing', 'linkComboKillBlessing',
+    'linkPhantomInstinct', 'linkLightWash', 'linkRunePersistence', 'linkCloseCall', 'linkSpiritOfFreedom',
+    'linkWildRage', 'linkFuryUnleashed', 'linkHybridLogic', 'linkTermsAndConditions', 'linkUnfairAdvantage',
+    'linkIronWill', 'linkTimeToPrepare', 'linkKeenEdge', 'linkElementalism', 'linkSolus', 'linkTideOfBattle',
+    'linkNobleFire', 'linkInnateGift', 'linkBravado', 'linknaturesFriend', 'linkFocusSpirit', 'linkJudgment', 'linkRhinnesBlessing'];
+
+	ids.forEach(function (id) {
+		var button = document.getElementById(id);
+		button.addEventListener('click', function() {
+			if (button.classList.contains('active')) {
+				button.innerHTML = '&#10003;';
+			} else {
+				button.innerHTML = '&#10005;';
+			};
+		});
+	});
 }
 
 /* Old */

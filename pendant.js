@@ -135,53 +135,54 @@ function calculatePendantStarForce(slotNum, itemLevel, starForceLevel, itemType,
 	var mp = itemMp;
 	var att = itemAttack;
 	var mAtt = itemMagAttack;
+	var weapon = "weapon";
 	if (starForceLevel >= 1) {
-		jobStat += 2; hp += 5; mp += 5;
+		jobStat += 2; hp += 5;
 		if (itemType == weapon) {
 			att += 1 + Math.floor(itemAttack * (2 / 100));
 			mAtt += 1 + Math.floor(itemMagAttack * (2 / 100));
 		}
 	}
 	if (starForceLevel >= 2) {
-		jobStat += 2; hp += 5; mp += 5;
+		jobStat += 2; hp += 5;
 		if (itemType == weapon) {
 			att += 1 + Math.floor(itemAttack * (2 / 100));
 			mAtt += 1 + Math.floor(itemMagAttack * (2 / 100));
 		}
 	}
 	if (starForceLevel >= 3) {
-		jobStat += 2; hp += 5; mp += 5;
+		jobStat += 2; hp += 5;
 		if (itemType == weapon) {
 			att += 1 + Math.floor(itemAttack * (2 / 100));
 			mAtt += 1 + Math.floor(itemMagAttack * (2 / 100));
 		}
 	}
 	if (starForceLevel >= 4) {
-		jobStat += 2; hp += 10; mp += 10;
+		jobStat += 2; hp += 10;
 		if (itemType == weapon) {
 			att += 1 + Math.floor(itemAttack * (2 / 100));
 			mAtt += 1 + Math.floor(itemMagAttack * (2 / 100));
 		}
 	}
 	if (starForceLevel >= 5){
-		jobStat += 2; hp += 10; mp += 10;
+		jobStat += 2; hp += 10;
 		if (itemType == weapon) {
 			att += 1 + Math.floor(itemAttack * (2 / 100));
 			mAtt += 1 + Math.floor(itemMagAttack * (2 / 100));
 		}
-		if (itemType == "gloves") {
+		if (itemType === "gloves") {
 			att += 1; mAtt += 1;
 		}
 	}
 	if (starForceLevel >= 6) {
-		jobStat += 3; hp += 15; mp += 15;
+		jobStat += 3; hp += 15;
 		if (itemType == weapon) {
 			att += 1 + Math.floor(itemAttack * (2 / 100));
 			mAtt += 1 + Math.floor(itemMagAttack * (2 / 100));
 		}
 	}
 	if (starForceLevel >= 7){
-		jobStat += 3; hp += 15; mp += 15;
+		jobStat += 3; hp += 15;
 		if (itemType == weapon) {
 			att += 1 + Math.floor(itemAttack * (2 / 100));
 			mAtt += 1 + Math.floor(itemMagAttack * (2 / 100));
@@ -191,14 +192,14 @@ function calculatePendantStarForce(slotNum, itemLevel, starForceLevel, itemType,
 		}
 	}
 	if (starForceLevel >= 8) {
-		jobStat += 3; hp += 20; mp += 20;
+		jobStat += 3; hp += 20;
 		if (itemType == weapon) {
 			att += 1 + Math.floor(itemAttack * (2 / 100));
 			mAtt += 1 + Math.floor(itemMagAttack * (2 / 100));
 		}
 	}
 	if (starForceLevel >= 9) {
-		jobStat += 3; hp += 20; mp += 20;
+		jobStat += 3; hp += 20;
 		if (itemType == weapon) {
 			att += 1 + Math.floor(itemAttack * (2 / 100));
 			mAtt += 1 + Math.floor(itemMagAttack * (2 / 100));
@@ -208,14 +209,14 @@ function calculatePendantStarForce(slotNum, itemLevel, starForceLevel, itemType,
 		}
 	}
 	if (starForceLevel >= 10) {
-		jobStat += 3; hp += 25; mp += 25;
+		jobStat += 3; hp += 25;
 		if (itemType == weapon) {
 			att += 1 + Math.floor(itemAttack * (2 / 100));
 			mAtt += 1 + Math.floor(itemMagAttack * (2 / 100));
 		}
 	}
 	if (starForceLevel >= 11) {
-		jobStat += 3; hp += 25; mp += 25;
+		jobStat += 3; hp += 25;
 		if (itemType == weapon) {
 			att += 1 + Math.floor(itemAttack * (2 / 100));
 			mAtt += 1 + Math.floor(itemMagAttack * (2 / 100));
@@ -225,14 +226,14 @@ function calculatePendantStarForce(slotNum, itemLevel, starForceLevel, itemType,
 		}	
 	}
 	if (starForceLevel >= 12) {
-		jobStat += 3; hp += 25; mp += 25;
+		jobStat += 3; hp += 25;
 		if (itemType == weapon) {
 			att += 1 + Math.floor(itemAttack * (2 / 100));
 			mAtt += 1 + Math.floor(itemMagAttack * (2 / 100));
 		}	
 	}
 	if (starForceLevel >= 13) {
-		jobStat += 3; hp += 25; mp += 25;
+		jobStat += 3; hp += 25;
 		if (itemType == weapon) {
 			att += 1 + Math.floor(itemAttack * (2 / 100));
 			mAtt += 1 + Math.floor(itemMagAttack * (2 / 100));
@@ -242,7 +243,7 @@ function calculatePendantStarForce(slotNum, itemLevel, starForceLevel, itemType,
 		}	
 	}
 	if (starForceLevel >= 14) {
-		jobStat += 3; hp += 25; mp += 25;
+		jobStat += 3; hp += 25;
 		if (itemType == weapon) {
 			att += 1 + Math.floor(itemAttack * (2 / 100));
 			mAtt += 1 + Math.floor(itemMagAttack * (2 / 100));
@@ -252,7 +253,7 @@ function calculatePendantStarForce(slotNum, itemLevel, starForceLevel, itemType,
 		}
 	}
 	if (starForceLevel >= 15) {
-		jobStat += 3; hp += 25; mp += 25;
+		jobStat += 3; hp += 25;
 		if (itemType == weapon) {
 			att += 1 + Math.floor(itemAttack * (2 / 100));
 			mAtt += 1 + Math.floor(itemMagAttack * (2 / 100));
@@ -726,19 +727,4 @@ function updatePendantStarForceStats() {
             calculatePendantStarForce(2, 0, 0, "accessory", 0, 0, 0, 0, 0);
             break;	
     }
-
-	/* save pendant stats */
-	document.getElementById("pendant1JobStat").innerHTML = "Pendant(1) - Job Stat: " + pendant1JobStat;
-	document.getElementById("pendant1AllStat").innerHTML = "Pendant(1) - All Stat: " + pendant1AllStat;
-	document.getElementById("pendant1Hp").innerHTML = "Pendant(1) - Hp: " + pendant1Hp;
-	document.getElementById("pendant1Mp").innerHTML = "Pendant(1) - Mp: " + pendant1Mp;
-	document.getElementById("pendant1Att").innerHTML = "Pendant(1) - Att: " + pendant1Att;
-	document.getElementById("pendant1MAtt").innerHTML = "Pendant(1) - M.Att: " + pendant1MAtt;
-	
-	document.getElementById("pendant2JobStat").innerHTML = "Pendant(2) - Job Stat: " + pendant2JobStat;
-	document.getElementById("pendant2AllStat").innerHTML = "Pendant(2) - All Stat: " + pendant2AllStat;
-	document.getElementById("pendant2Hp").innerHTML = "Pendant(2) - Hp: " + pendant2Hp;
-	document.getElementById("pendant2Mp").innerHTML = "Pendant(2) - Mp: " + pendant2Mp;
-	document.getElementById("pendant2Att").innerHTML = "Pendant(2) - Att: " + pendant2Att;
-	document.getElementById("pendant2MAtt").innerHTML = "Pendant(2) - M.Att: " + pendant2MAtt;
 }

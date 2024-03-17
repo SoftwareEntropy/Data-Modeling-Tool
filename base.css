@@ -6,28 +6,33 @@
 /* HTML and Body Styles */
 
 html{
-    display: table;
-    margin: auto;
-	padding: auto;
-	height: 100%;
 	background-image: url(images/background.png);
 	background-size: cover;
 	background-position: center;
 	background-size: 100%;
-	max-width: 1920px;
-	min-width: 900px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 ul {
   list-style: none;
 }
 
+.popover {
+    max-width: none !important;
+}
+
 #equipmentBox {
 	position: relative;  /*keeps children within box*/
 	display: block;
-	width: 233px;
-	height: 374px;
+	/*width: 233px;*/
+	/*height: 374px;*/
 	float: left;
+	min-width: 260px;
+	min-width: 380px;  /* fixed width with button */
+	min-height: 410px;
+	padding-top: 10px;
 }
 
 #equipmentInventory {
@@ -40,32 +45,41 @@ ul {
 
 #equipmentBackground {
   position: absolute;
-  top: 50px;
+  top: 65px;
   left: 60px;
   width: 127px;
   height: 209px;
 }
 
-#hat {
+#hatImage, #hatButton {
   position: absolute;
-  top: 30px; 
+  top: 45px; 
+  left: 110px;
+  width: 40px;
+  height: 39px;
+}
+
+#hatImage2 {
+  position: absolute;
+  top: 45px; 
   left: 110px;
   width: 40px;
   height: 39px;
   z-index: 1;
+  pointer-events: none;
 }
 
 #faceImage, #faceButton{
   position: absolute;
-  top: 71px; 
+  top: 86px; 
   left: 110px;
   width: 40px;
   height: 39px;
 }
 
-#faceImage2 { /*Equipment overlay*/
+#faceImage2 {
   position: absolute;
-  top: 71px; 
+  top: 86px; 
   left: 110px;
   width: 40px;
   height: 39px;
@@ -75,15 +89,15 @@ ul {
 
 #eyeImage, #eyeButton {
   position: absolute;
-  top: 112px; 
+  top: 127px; 
   left: 110px;
   width: 40px;
   height: 39px;
 }
 
-#eyeImage2 { /*Equipment overlay*/
+#eyeImage2 {
   position: absolute;
-  top: 112px; 
+  top: 127px; 
   left: 110px;
   width: 40px;
   height: 39px;
@@ -91,33 +105,53 @@ ul {
   pointer-events: none;
 }
 
-#top {
+#topImage, #topButton {
   position: absolute;
-  top: 153px; 
+  top: 168px; 
   left: 110px;
   width: 40px;
   height: 39px;
 }
 
-#bottom {
+#topImage2 {
   position: absolute;
-  top: 194px; 
+  top: 168px; 
   left: 110px;
   width: 40px;
   height: 39px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+#bottomImage, #bottomButton {
+  position: absolute;
+  top: 209px; 
+  left: 110px;
+  width: 40px;
+  height: 39px;
+}
+
+#bottomImage2 {
+  position: absolute;
+  top: 209px; 
+  left: 110px;
+  width: 40px;
+  height: 39px;
+  z-index: 1;
+  pointer-events: none;
 }
 
 #shoeImage, #shoeButton {
   position: absolute;
-  top: 235px; 
+  top: 250px; 
   left: 110px;
   width: 40px;
   height: 39px;
 }
 
-#shoeImage2 { /*Equipment overlay*/
+#shoeImage2 {
   position: absolute;
-  top: 235px; 
+  top: 250px; 
   left: 110px;
   width: 40px;
   height: 39px;
@@ -127,7 +161,7 @@ ul {
 
 #ring1Image, #ring1Button {
   position: absolute;
-  top: 153px; 
+  top: 168px; 
   left: 26px;
   width: 40px;
   height: 39px;
@@ -135,7 +169,7 @@ ul {
 
 #ring1Image2 {
   position: absolute;
-  top: 153px; 
+  top: 168px; 
   left: 26px;
   width: 40px;
   height: 39px;
@@ -145,7 +179,7 @@ ul {
 
 #ring2Image, #ring2Button {
   position: absolute;
-  top: 112px; 
+  top: 127px; 
   left: 26px;
   width: 40px;
   height: 39px;
@@ -153,7 +187,7 @@ ul {
 
 #ring2Image2 {
   position: absolute;
-  top: 112px; 
+  top: 127px; 
   left: 26px;
   width: 40px;
   height: 39px;
@@ -163,7 +197,7 @@ ul {
 
 #ring3Image, #ring3Button {
   position: absolute;
-  top: 71px; 
+  top: 86px; 
   left: 26px;
   width: 40px;
   height: 39px;
@@ -171,7 +205,7 @@ ul {
 
 #ring3Image2 {
   position: absolute;
-  top: 71px; 
+  top: 86px; 
   left: 26px;
   width: 40px;
   height: 39px;
@@ -181,7 +215,7 @@ ul {
 
 #ring4Image, #ring4Button {
   position: absolute;
-  top: 30px; 
+  top: 45px; 
   left: 26px;
   width: 40px;
   height: 39px;
@@ -189,7 +223,7 @@ ul {
 
 #ring4Image2 {
   position: absolute;
-  top: 30px; 
+  top: 45px; 
   left: 26px;
   width: 40px;
   height: 39px;
@@ -199,7 +233,7 @@ ul {
 
 #pocketImage, #pocketButton {
   position: absolute;
-  top: 194px; 
+  top: 209px; 
   left: 26px;
   width: 40px;
   height: 39px;
@@ -207,7 +241,7 @@ ul {
 
 #pocketImage2 {
   position: absolute;
-  top: 194px; 
+  top: 209px; 
   left: 26px;
   width: 40px;
   height: 39px;
@@ -217,7 +251,7 @@ ul {
 
 #pendant2Image, #pendant2Button {
   position: absolute;
-  top: 71px; 
+  top: 86px; 
   left: 68px;
   width: 40px;
   height: 39px;
@@ -225,7 +259,7 @@ ul {
 
 #pendant2Image2 {
   position: absolute;
-  top: 71px; 
+  top: 86px; 
   left: 68px;
   width: 40px;
   height: 39px;
@@ -235,7 +269,7 @@ ul {
 
 #pendant1Image, #pendant1Button {
   position: absolute;
-  top: 112px; 
+  top: 127px; 
   left: 68px;
   width: 40px;
   height: 39px;
@@ -243,7 +277,7 @@ ul {
 
 #pendant1Image2 {
   position: absolute;
-  top: 112px; 
+  top: 127px; 
   left: 68px;
   width: 40px;
   height: 39px;
@@ -251,25 +285,35 @@ ul {
   pointer-events: none;
 }
 
-#weapon {
+#weaponImage, #weaponButton {
   position: absolute;
-  top: 153px; 
+  top: 168px; 
   left: 68px;
   width: 40px;
   height: 39px;
+}
+
+#weaponImage2 {
+  position: absolute;
+  top: 168px; 
+  left: 68px;
+  width: 40px;
+  height: 39px;
+  z-index: 1;
+  pointer-events: none;
 }
 
 #beltImage, #beltButton {
   position: absolute;
-  top: 194px; 
+  top: 209px; 
   left: 68px;
   width: 40px;
   height: 39px;
 }
 
-#beltImage2 { /*Equipment overlay*/
+#beltImage2 {
   position: absolute;
-  top: 194px; 
+  top: 209px; 
   left: 68px;
   width: 40px;
   height: 39px;
@@ -279,15 +323,15 @@ ul {
 
 #earImage, #earButton {
   position: absolute;
-  top: 112px; 
+  top: 127px; 
   left: 152px;
   width: 40px;
   height: 39px;
 }
 
-#earImage2 { /*Equipment overlay*/
+#earImage2 {
   position: absolute;
-  top: 112px; 
+  top: 127px; 
   left: 152px;
   width: 40px;
   height: 39px;
@@ -297,15 +341,15 @@ ul {
 
 #shoulderImage, #shoulderButton {
   position: absolute;
-  top: 153px; 
+  top: 168px; 
   left: 152px;
   width: 40px;
   height: 39px;
 }
 
-#shoulderImage2 { /*Equipment overlay*/
+#shoulderImage2 {
   position: absolute;
-  top: 153px; 
+  top: 168px; 
   left: 152px;
   width: 40px;
   height: 39px;
@@ -315,15 +359,15 @@ ul {
 
 #gloveImage, #gloveButton {
   position: absolute;
-  top: 194px; 
+  top: 209px; 
   left: 152px;
   width: 40px;
   height: 39px;
 }
 
-#gloveImage2 { /*Equipment overlay*/
+#gloveImage2 {
   position: absolute;
-  top: 194px; 
+  top: 209px; 
   left: 152px;
   width: 40px;
   height: 39px;
@@ -331,33 +375,43 @@ ul {
   pointer-events: none;
 }
 
-#android {
+/*#android {
   position: absolute;
-  top: 235px; 
+  top: 250px; 
   left: 152px;
+  width: 40px;
+  height: 39px;
+}*/
+
+#emblemImage, #emblemButton {
+  position: absolute;
+  top: 45px; 
+  left: 194px;
   width: 40px;
   height: 39px;
 }
 
-#emblem {
+#emblemImage2 {
   position: absolute;
-  top: 30px; 
+  top: 45px; 
   left: 194px;
   width: 40px;
   height: 39px;
+  z-index: 1;
+  pointer-events: none;
 }
 
 #badgeImage, #badgeButton {
   position: absolute;
-  top: 71px; 
+  top: 86px; 
   left: 194px;
   width: 40px;
   height: 39px;
 }
 
-#badgeImage2 { /*Equipment overlay*/
+#badgeImage2 {
   position: absolute;
-  top: 71px; 
+  top: 86px; 
   left: 194px;
   width: 40px;
   height: 39px;
@@ -365,33 +419,54 @@ ul {
   pointer-events: none;
 }
 
-#medal {
+#medalImage, #medalButton {
   position: absolute;
-  top: 112px; 
+  top: 127px; 
   left: 194px;
   width: 40px;
   height: 39px;
 }
 
-#sub {
+#medalImage2 {
   position: absolute;
-  top: 153px; 
+  top: 127px; 
+  left: 194px;
+  width: 40px;
+  height: 39px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+#subweaponImage, #subweaponButton {
+  position: absolute;
+  top: 168px; 
   left: 194px;
   width: 40px;
   height: 39px;
 }
+
+#subweaponImage2 {
+  position: absolute;
+  top: 168px; 
+  left: 194px;
+  width: 40px;
+  height: 39px;
+  z-index: 1;
+  pointer-events: none;
+}
+
 
 #capeImage, #capeButton {
   position: absolute;
-  top: 194px; 
+  top: 209px; 
   left: 194px;
   width: 40px;
   height: 39px;
 }
 
-#capeImage2 { /*Equipment overlay*/
+#capeImage2 {
   position: absolute;
-  top: 194px; 
+  top: 209px; 
   left: 194px;
   width: 40px;
   height: 39px;
@@ -399,13 +474,21 @@ ul {
   pointer-events: none;
 }
 
-#heart {
+#heartImage, #heartButton {
   position: absolute;
-  top: 235px; 
+  top: 250px; 
   left: 194px;
   width: 40px;
   height: 39px;
 }
 
-
+#heartImage2 {
+  position: absolute;
+  top: 250px; 
+  left: 194px;
+  width: 40px;
+  height: 39px;
+  z-index: 1;
+  pointer-events: none;
+}
 

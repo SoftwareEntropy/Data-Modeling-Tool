@@ -543,53 +543,54 @@ function calculateRingStarForce(slotNum, itemLevel, starForceLevel, itemType, it
 	var mp = itemMp;
 	var att = itemAttack;
 	var mAtt = itemMagAttack;
+	var weapon = "weapon";
 	if (starForceLevel >= 1) {
-		jobStat += 2; hp += 5; mp += 5;
+		jobStat += 2; hp += 5;
 		if (itemType == weapon) {
 			att += 1 + Math.floor(itemAttack * (2 / 100));
 			mAtt += 1 + Math.floor(itemMagAttack * (2 / 100));
 		}
 	}
 	if (starForceLevel >= 2) {
-		jobStat += 2; hp += 5; mp += 5;
+		jobStat += 2; hp += 5;
 		if (itemType == weapon) {
 			att += 1 + Math.floor(itemAttack * (2 / 100));
 			mAtt += 1 + Math.floor(itemMagAttack * (2 / 100));
 		}
 	}
 	if (starForceLevel >= 3) {
-		jobStat += 2; hp += 5; mp += 5;
+		jobStat += 2; hp += 5;
 		if (itemType == weapon) {
 			att += 1 + Math.floor(itemAttack * (2 / 100));
 			mAtt += 1 + Math.floor(itemMagAttack * (2 / 100));
 		}
 	}
 	if (starForceLevel >= 4) {
-		jobStat += 2; hp += 10; mp += 10;
+		jobStat += 2; hp += 10;
 		if (itemType == weapon) {
 			att += 1 + Math.floor(itemAttack * (2 / 100));
 			mAtt += 1 + Math.floor(itemMagAttack * (2 / 100));
 		}
 	}
 	if (starForceLevel >= 5){
-		jobStat += 2; hp += 10; mp += 10;
+		jobStat += 2; hp += 10;
 		if (itemType == weapon) {
 			att += 1 + Math.floor(itemAttack * (2 / 100));
 			mAtt += 1 + Math.floor(itemMagAttack * (2 / 100));
 		}
-		if (itemType == "gloves") {
+		if (itemType === "gloves") {
 			att += 1; mAtt += 1;
 		}
 	}
 	if (starForceLevel >= 6) {
-		jobStat += 3; hp += 15; mp += 15;
+		jobStat += 3; hp += 15;
 		if (itemType == weapon) {
 			att += 1 + Math.floor(itemAttack * (2 / 100));
 			mAtt += 1 + Math.floor(itemMagAttack * (2 / 100));
 		}
 	}
 	if (starForceLevel >= 7){
-		jobStat += 3; hp += 15; mp += 15;
+		jobStat += 3; hp += 15;
 		if (itemType == weapon) {
 			att += 1 + Math.floor(itemAttack * (2 / 100));
 			mAtt += 1 + Math.floor(itemMagAttack * (2 / 100));
@@ -599,14 +600,14 @@ function calculateRingStarForce(slotNum, itemLevel, starForceLevel, itemType, it
 		}
 	}
 	if (starForceLevel >= 8) {
-		jobStat += 3; hp += 20; mp += 20;
+		jobStat += 3; hp += 20;
 		if (itemType == weapon) {
 			att += 1 + Math.floor(itemAttack * (2 / 100));
 			mAtt += 1 + Math.floor(itemMagAttack * (2 / 100));
 		}
 	}
 	if (starForceLevel >= 9) {
-		jobStat += 3; hp += 20; mp += 20;
+		jobStat += 3; hp += 20;
 		if (itemType == weapon) {
 			att += 1 + Math.floor(itemAttack * (2 / 100));
 			mAtt += 1 + Math.floor(itemMagAttack * (2 / 100));
@@ -616,14 +617,14 @@ function calculateRingStarForce(slotNum, itemLevel, starForceLevel, itemType, it
 		}
 	}
 	if (starForceLevel >= 10) {
-		jobStat += 3; hp += 25; mp += 25;
+		jobStat += 3; hp += 25;
 		if (itemType == weapon) {
 			att += 1 + Math.floor(itemAttack * (2 / 100));
 			mAtt += 1 + Math.floor(itemMagAttack * (2 / 100));
 		}
 	}
 	if (starForceLevel >= 11) {
-		jobStat += 3; hp += 25; mp += 25;
+		jobStat += 3; hp += 25;
 		if (itemType == weapon) {
 			att += 1 + Math.floor(itemAttack * (2 / 100));
 			mAtt += 1 + Math.floor(itemMagAttack * (2 / 100));
@@ -633,14 +634,14 @@ function calculateRingStarForce(slotNum, itemLevel, starForceLevel, itemType, it
 		}	
 	}
 	if (starForceLevel >= 12) {
-		jobStat += 3; hp += 25; mp += 25;
+		jobStat += 3; hp += 25;
 		if (itemType == weapon) {
 			att += 1 + Math.floor(itemAttack * (2 / 100));
 			mAtt += 1 + Math.floor(itemMagAttack * (2 / 100));
 		}	
 	}
 	if (starForceLevel >= 13) {
-		jobStat += 3; hp += 25; mp += 25;
+		jobStat += 3; hp += 25;
 		if (itemType == weapon) {
 			att += 1 + Math.floor(itemAttack * (2 / 100));
 			mAtt += 1 + Math.floor(itemMagAttack * (2 / 100));
@@ -650,7 +651,7 @@ function calculateRingStarForce(slotNum, itemLevel, starForceLevel, itemType, it
 		}	
 	}
 	if (starForceLevel >= 14) {
-		jobStat += 3; hp += 25; mp += 25;
+		jobStat += 3; hp += 25;
 		if (itemType == weapon) {
 			att += 1 + Math.floor(itemAttack * (2 / 100));
 			mAtt += 1 + Math.floor(itemMagAttack * (2 / 100));
@@ -660,7 +661,7 @@ function calculateRingStarForce(slotNum, itemLevel, starForceLevel, itemType, it
 		}
 	}
 	if (starForceLevel >= 15) {
-		jobStat += 3; hp += 25; mp += 25;
+		jobStat += 3; hp += 25;
 		if (itemType == weapon) {
 			att += 1 + Math.floor(itemAttack * (2 / 100));
 			mAtt += 1 + Math.floor(itemMagAttack * (2 / 100));
@@ -1245,33 +1246,4 @@ function updateRingStarForceStats() {
             calculateRingStarForce(4, 0, 0, "accessory", 0, 0, 0, 0, 0);
             break;	
     }
-	
-	/* save ring stats */
-	document.getElementById("ring1JobStat").innerHTML = "Ring(1) - Job Stat: " + ring1JobStat;
-	document.getElementById("ring1AllStat").innerHTML = "Ring(1) - All Stat: " + ring1AllStat;
-	document.getElementById("ring1Hp").innerHTML = "Ring(1) - Hp: " + ring1Hp;
-	document.getElementById("ring1Mp").innerHTML = "Ring(1) - Mp: " + ring1Mp;
-	document.getElementById("ring1Att").innerHTML = "Ring(1) - Att: " + ring1Att;
-	document.getElementById("ring1MAtt").innerHTML = "Ring(1) - M.Att: " + ring1MAtt;
-	
-	document.getElementById("ring2JobStat").innerHTML = "Ring(2) - Job Stat: " + ring2JobStat;
-	document.getElementById("ring2AllStat").innerHTML = "Ring(2) - All Stat: " + ring2AllStat;
-	document.getElementById("ring2Hp").innerHTML = "Ring(2) - Hp: " + ring2Hp;
-	document.getElementById("ring2Mp").innerHTML = "Ring(2) - Mp: " + ring2Mp;
-	document.getElementById("ring2Att").innerHTML = "Ring(2) - Att: " + ring2Att;
-	document.getElementById("ring2MAtt").innerHTML = "Ring(2) - M.Att: " + ring2MAtt;
-	
-	document.getElementById("ring3JobStat").innerHTML = "Ring(3) - Job Stat: " + ring3JobStat;
-	document.getElementById("ring3AllStat").innerHTML = "Ring(3) - All Stat: " + ring3AllStat;
-	document.getElementById("ring3Hp").innerHTML = "Ring(3) - Hp: " + ring3Hp;
-	document.getElementById("ring3Mp").innerHTML = "Ring(3) - Mp: " + ring3Mp;
-	document.getElementById("ring3Att").innerHTML = "Ring(3) - Att: " + ring3Att;
-	document.getElementById("ring3MAtt").innerHTML = "Ring(3) - M.Att: " + ring3MAtt;
-	
-	document.getElementById("ring4JobStat").innerHTML = "Ring(4) - Job Stat: " + ring4JobStat;
-	document.getElementById("ring4AllStat").innerHTML = "Ring(4) - All Stat: " + ring4AllStat;
-	document.getElementById("ring4Hp").innerHTML = "Ring(4) - Hp: " + ring4Hp;
-	document.getElementById("ring4Mp").innerHTML = "Ring(4) - Mp: " + ring4Mp;
-	document.getElementById("ring4Att").innerHTML = "Ring(4) - Att: " + ring4Att;
-	document.getElementById("ring4MAtt").innerHTML = "Ring(4) - M.Att: " + ring4MAtt;
 }

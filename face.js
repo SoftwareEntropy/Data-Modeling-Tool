@@ -54,6 +54,7 @@ function calculateFaceStarForce(itemLevel, starForceLevel, itemType, itemAllStat
 	var mp = itemMp;
 	var att = itemAttack;
 	var mAtt = itemMagAttack;
+	var weapon = "weapon";
 	if (starForceLevel >= 1) {
 		jobStat += 2; hp += 5; mp += 5;
 		if (itemType == weapon) {
