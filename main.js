@@ -592,33 +592,3 @@ function linkSkillButtonEffects() {
 		});
 	});
 }
-
-/* Old */
-/*function calculateAttributePoints() {
-	validateRange.call(this);
-	var selectedLevel = parseInt(document.getElementById("level").value);
-	var strAllocated = parseInt(document.getElementById("strAP").value);
-	var dexAllocated = parseInt(document.getElementById("dexAP").value);
-	var intAllocated = parseInt(document.getElementById("intAP").value);
-	var lukAllocated = parseInt(document.getElementById("lukAP").value);
-	var allocatedAp = strAllocated + dexAllocated + intAllocated + lukAllocated;
-	var totalAp = 5 + 5 + (selectedLevel * 5);
-	var remainingAp = totalAp - allocatedAp;
-	apPointsElem.placeholder = "Available AP: " + remainingAp;
-	var display = document.getElementById("apPoints");
-	display.placeholder =  totalAp;
-	if (remainingAp > 0) {
-		if (strAllocated < totalAp) {
-			document.getElementById("strAP").max = strAllocated + remainingAp;
-		}
-		if (dexAllocated < totalAp) {
-			document.getElementById("dexAP").max = dexAllocated + remainingAp;
-		}
-		if (intAllocated < totalAp) {
-			document.getElementById("intAP").max = intAllocated + remainingAp;
-		}
-		if (lukAllocated < totalAp) {
-			document.getElementById("lukAP").max = lukAllocated + remainingAp;
-		}
-	}
-}*/
