@@ -1,5 +1,5 @@
 /* hold equipment stats */
-var emblemJobStat = 0; var emblemAllStat = 0; var emblemHp = 0; var emblemMp = 0; var emblemAtt = 0; var emblemMAtt = 0;
+var emblemJobStat = 0; var emblemAllStat = 0; var emblemHp = 0; var emblemMp = 0; var emblemAtt = 0; var emblemMAtt = 0; var emblemBoss = 0; var emblemIed = 0;
 
 var charClass = document.getElementById("selectClass");
 charClass.addEventListener("change", updateEmblemStarForceOptions);

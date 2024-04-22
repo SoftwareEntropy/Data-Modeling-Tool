@@ -1,5 +1,5 @@
 /* hold equipment stats */
-var weaponJobStat = 0; var weaponAllStat = 0; var weaponHp = 0; var weaponMp = 0; var weaponAtt = 0; var weaponMAtt = 0;
+var weaponJobStat = 0; var weaponAllStat = 0; var weaponHp = 0; var weaponMp = 0; var weaponAtt = 0; var weaponMAtt = 0; var weaponBoss = 0; var weaponIed = 0;
 
 /* Update star force options, change image on selection */
 function updateWeaponStarForceOptions() {
@@ -43,19 +43,19 @@ function updateWeaponStarForceStats() {
 	switch(selectedWeapon) {
 		/* (itemLevel, starForceLevel, itemType, itemJobStat, itemAllStat, itemHp, itemMP, itemAttack, itemMagAttack) */
         case "fafnirWeapon":
-            output = getItemStats(150, starForceSelect, "weapon", 0, 0, 0, 0, 0, 0);
+            output = getItemStats(150, starForceSelect, "weapon", 0, 0, 0, 0, 0, 0); weaponBoss = 30; weaponIed = 10;
             break;
 		case "absolabWeapon":
-            output = getItemStats(160, starForceSelect, "weapon", 0, 0, 0, 0, 0, 0);
+            output = getItemStats(160, starForceSelect, "weapon", 0, 0, 0, 0, 0, 0); weaponBoss = 30; weaponIed = 10;
             break;
 		case "arcaneWeapon":
-            output = getItemStats(200, starForceSelect, "weapon", 0, 0, 0, 0, 0, 0);
+            output = getItemStats(200, starForceSelect, "weapon", 0, 0, 0, 0, 0, 0); weaponBoss = 30; weaponIed = 20;
             break;
 		case "genesisWeapon":
-            output = getItemStats(200, starForceSelect, "weapon", 0, 0, 0, 0, 0, 0);
+            output = getItemStats(200, starForceSelect, "weapon", 0, 0, 0, 0, 0, 0);  weaponBoss = 30; weaponIed = 20;
             break;
 		case "none":
-            output = getItemStats(0, starForceSelect, "weapon", 0, 0, 0, 0, 0, 0);
+            output = getItemStats(0, starForceSelect, "weapon", 0, 0, 0, 0, 0, 0);  weaponBoss = 0; weaponIed = 0;
             break;	
     }
 	weaponJobStat = parseInt(output.jobStat);

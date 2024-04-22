@@ -1,5 +1,5 @@
 /* hold equipment stats */
-var hatJobStat = 0; var hatAllStat = 0; var hatHp = 0; var hatMp = 0; var hatAtt = 0; var hatMAtt = 0;
+var hatJobStat = 0; var hatAllStat = 0; var hatHp = 0; var hatMp = 0; var hatAtt = 0; var hatMAtt = 0; var hatBoss = 0; var hatIed = 0;
 
 /* Update star force options, change image on selection */
 function updateHatStarForceOptions() {
@@ -10,20 +10,20 @@ function updateHatStarForceOptions() {
     var options = [25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0];
     switch(selectedHat) {
 		case "rootAbyssHat":
-            hatEquipImage.src = "images/magician/01005303.img.info.icon._outlink.png";
+            hatEquipImage.src = "images/magician/01005303.img.info.icon._outlink.png"; hatBoss = 0; hatIed = 10;
             break;
         case "absolabHat":
-            hatEquipImage.src = "images/magician/01004423.img.info.icon._outlink.png";
+            hatEquipImage.src = "images/magician/01004423.img.info.icon._outlink.png"; hatBoss = 0; hatIed = 10;
             break;
         case "arcaneHat":
-            hatEquipImage.src = "images/magician/01004809.img.info.icon._outlink.png";
+            hatEquipImage.src = "images/magician/01004809.img.info.icon._outlink.png"; hatBoss = 0; hatIed = 15;
             break;
 		case "eternalHat":
-            hatEquipImage.src = "images/magician/01005981.img.info.icon._outlink.png";
+            hatEquipImage.src = "images/magician/01005981.img.info.icon._outlink.png"; hatBoss = 0; hatIed = 15;
             break;
 		case "none":
             options = [0];
-            hatEquipImage.src = "images/UIelements/Equip.Equip.Slots.1._outlink.png";
+            hatEquipImage.src = "images/UIelements/Equip.Equip.Slots.1._outlink.png"; hatBoss = 0; hatIed = 0;
             break;	
     }
     for (var i = 0; i < options.length; i++) {

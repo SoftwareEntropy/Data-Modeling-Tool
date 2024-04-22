@@ -1,5 +1,5 @@
 /* hold equipment stats */
-var pocketJobStat = 0; var pocketAllStat = 0; var pocketHp = 0; var pocketMp = 0; var pocketAtt = 0; var pocketMAtt = 0;
+var pocketJobStat = 0; var pocketAllStat = 0; var pocketHp = 0; var pocketMp = 0; var pocketAtt = 0; var pocketMAtt = 0; var pocketBoss = 0; var pocketIed = 0;
 
 /* Update options, change image on selection */
 function updatePocketOptions() {

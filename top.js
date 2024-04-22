@@ -1,5 +1,5 @@
 /* hold equipment stats */
-var topJobStat = 0; var topAllStat = 0; var topHp = 0; var topMp = 0; var topAtt = 0; var topMAtt = 0;
+var topJobStat = 0; var topAllStat = 0; var topHp = 0; var topMp = 0; var topAtt = 0; var topMAtt = 0; var topBoss = 0; var topIed = 0;
 
 /* Update star force options, change image on selection */
 function updateTopStarForceOptions() {
@@ -10,14 +10,14 @@ function updateTopStarForceOptions() {
     var options = [25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0];
     switch(selectedTop) {
 		case "rootAbyssTop":
-            topEquipImage.src = "images/magician/01042393.img.info.icon._outlink.png";
+            topEquipImage.src = "images/magician/01042393.img.info.icon._outlink.png"; topBoss = 0; topIed = 5;
             break;
 		case "eternalTop":
-            topEquipImage.src = "images/magician/01042434.img.info.icon._outlink.png";
+            topEquipImage.src = "images/magician/01042434.img.info.icon._outlink.png"; topBoss = 0; topIed = 5;
             break;
 		case "none":
             options = [0];
-            topEquipImage.src = "images/UIelements/Equip.Equip.Slots.5._outlink.png";
+            topEquipImage.src = "images/UIelements/Equip.Equip.Slots.5._outlink.png"; topBoss = 0; topIed = 5;
             break;	
     }
     for (var i = 0; i < options.length; i++) {

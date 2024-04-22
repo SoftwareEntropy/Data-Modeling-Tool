@@ -1,5 +1,5 @@
 /* hold equipment stats */
-var heartJobStat = 0; var heartAllStat = 0; var heartHp = 0; var heartMp = 0; var heartAtt = 0; var heartMAtt = 0;
+var heartJobStat = 0; var heartAllStat = 0; var heartHp = 0; var heartMp = 0; var heartAtt = 0; var heartMAtt = 0; var heartBoss = 0; var heartIed = 0;
 
 /* Update star force options, change image on selection */
 function updateHeartStarForceOptions() {
@@ -51,18 +51,18 @@ function updateHeartStarForceStats() {
 	var selectedHeart = document.getElementById("selectHeart").value;
 	var starForceSelect = document.getElementById("heartStarForce").value;
 	switch(selectedHeart) {
-		/* (itemLevel, starForceLevel, itemType, itemAllStat, itemHp, itemMP, itemAttack, itemMagAttack) */
+		/* (itemLevel, starForceLevel, itemType, itemJobStat, itemAllStat, itemHp, itemMP, itemAttack, itemMagAttack) */
         case "blackHeart":
-			output = getItemStats(120, starForceSelect, "heart", 10, 100, 0, 77, 77);
+			output = getItemStats(120, starForceSelect, "heart", 0, 10, 100, 0, 77, 77);
             break;
         case "wondroidHeart":
-			output = getItemStats(120, starForceSelect, "heart", 10, 500, 0, 1, 1);
+			output = getItemStats(120, starForceSelect, "heart", 0, 10, 500, 0, 1, 1);
             break;
         case "outlawHeart":
-			output = getItemStats(150, starForceSelect, "heart", 5, 500, 0, 0, 0);
+			output = getItemStats(150, starForceSelect, "heart", 0, 5, 500, 0, 0, 0);
             break;
 		case "none":
-			output = getItemStats(0, starForceSelect, "heart", 0, 0, 0, 0, 0);
+			output = getItemStats(0, starForceSelect, "heart", 0, 0, 0, 0, 0, 0);
             break;	
     }
 	heartJobStat = parseInt(output.jobStat);

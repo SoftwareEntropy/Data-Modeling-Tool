@@ -1,5 +1,5 @@
 /* hold equipment stats */
-var shoulderJobStat = 0; var shoulderAllStat = 0; var shoulderHp = 0; var shoulderMp = 0; var shoulderAtt = 0; var shoulderMAtt = 0;
+var shoulderJobStat = 0; var shoulderAllStat = 0; var shoulderHp = 0; var shoulderMp = 0; var shoulderAtt = 0; var shoulderMAtt = 0;  var shoulderBoss = 0; var shoulderIed = 0;
 
 /* Update star force options, change image on selection */
 function updateShoulderStarForceOptions() {

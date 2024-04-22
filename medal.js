@@ -1,5 +1,5 @@
 /* hold equipment stats */
-var medalJobStat = 0; var medalAllStat = 0; var medalHp = 0; var medalMp = 0; var medalAtt = 0; var medalMAtt = 0;
+var medalJobStat = 0; var medalAllStat = 0; var medalHp = 0; var medalMp = 0; var medalAtt = 0; var medalMAtt = 0; var medalBoss = 0; var medalIed = 0;
 
 /* Update star force options, change image on selection */
 function updateMedalStarForceOptions() {
@@ -10,10 +10,10 @@ function updateMedalStarForceOptions() {
     var options = [0];
     switch(selectedMedal) {
         case "sevenDayMonsterParker":
-            medalEquipImage.src = "images/common/01142922.img.info.icon._outlink.png";
+            medalEquipImage.src = "images/common/01142922.img.info.icon._outlink.png"; medalBoss = 0; medalIed = 10;
             break;
 		case "none":
-			medalEquipImage.src = "images/UIelements/Equip.Equip.Slots.21._outlink.png";
+			medalEquipImage.src = "images/UIelements/Equip.Equip.Slots.21._outlink.png"; medalBoss = 0; medalIed = 0;
             break;
     }
     for (var i = 0; i < options.length; i++) {

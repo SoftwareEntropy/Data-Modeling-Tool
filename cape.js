@@ -1,5 +1,5 @@
 /* hold equipment stats */
-var capeJobStat = 0; var capeAllStat = 0; var capeHp = 0; var capeMp = 0; var capeAtt = 0; var capeMAtt = 0;
+var capeJobStat = 0; var capeAllStat = 0; var capeHp = 0; var capeMp = 0; var capeAtt = 0; var capeMAtt = 0; var capeBoss = 0; var capeIed = 0;
 
 /* Update star force options, change image on selection */
 function updateCapeStarForceOptions() {

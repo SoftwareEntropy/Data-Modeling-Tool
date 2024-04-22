@@ -1,5 +1,5 @@
 /* hold equipment stats */
-var badgeJobStat = 0; var badgeAllStat = 0; var badgeHp = 0; var badgeMp = 0; var badgeAtt = 0; var badgeMAtt = 0;
+var badgeJobStat = 0; var badgeAllStat = 0; var badgeHp = 0; var badgeMp = 0; var badgeAtt = 0; var badgeMAtt = 0; var badgeBoss = 0; var badgeIed = 0;
 
 /* Update star force options, change image on selection */
 function updateBadgeStarForceOptions() {
@@ -14,32 +14,32 @@ function updateBadgeStarForceOptions() {
     var options = [0];
     switch(selectedBadge) {
         case "crystalVentusBadge":
-            badgeEquipImage.src = "images/common/01182087.img.info.icon._outlink.png";
+            badgeEquipImage.src = "images/common/01182087.img.info.icon._outlink.png"; badgeBoss = 0; badgeIed = 0;
 			badgePot1.value = ""; badgePot2.value = ""; badgePot3.value = "";
 			badgePot1.hidden = true; badgePot2.hidden = true; badgePot3.hidden = true; label.style.display = 'none';
             break;
         case "sevenDaysBadge":
-            badgeEquipImage.src = "images/common/01182200.img.info.icon._outlink.png";
+            badgeEquipImage.src = "images/common/01182200.img.info.icon._outlink.png"; badgeBoss = 0; badgeIed = 10;
 			badgePot1.value = ""; badgePot2.value = ""; badgePot3.value = "";
 			badgePot1.hidden = true; badgePot2.hidden = true; badgePot3.hidden = true; label.style.display = 'none';
             break;
         case "genesisBadge":
-            badgeEquipImage.src = "images/common/01182285.img.info.icon._outlink.png";
+            badgeEquipImage.src = "images/common/01182285.img.info.icon._outlink.png"; badgeBoss = 0; badgeIed = 0;
 			badgePot1.value = ""; badgePot2.value = ""; badgePot3.value = "";
 			badgePot1.hidden = true; badgePot2.hidden = true; badgePot3.hidden = true; label.style.display = 'none';
             break;
         case "ghostShipExorcistBadge":
             options = [25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0];
-            badgeEquipImage.src = "images/common/01182060.img.info.icon._outlink.png";
+            badgeEquipImage.src = "images/common/01182060.img.info.icon._outlink.png"; badgeBoss = 0; badgeIed = 0;
 			badgePot1.hidden = false; badgePot2.hidden = false; badgePot3.hidden = false; label.style.display = 'block';
             break;
 		case "sengokuHakaseBadge":
             options = [25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0];
-            badgeEquipImage.src = "images/common/01182273.img.info.icon._outlink.png";
+            badgeEquipImage.src = "images/common/01182273.img.info.icon._outlink.png"; badgeBoss = 0; badgeIed = 0;
 			badgePot1.hidden = false; badgePot2.hidden = false; badgePot3.hidden = false; label.style.display = 'block';
             break;	
 		case "none":
-            badgeEquipImage.src = "images/UIelements/Equip.Equip.Slots.29._outlink.png";
+            badgeEquipImage.src = "images/UIelements/Equip.Equip.Slots.29._outlink.png"; badgeBoss = 0; badgeIed = 0;
 			badgePot1.hidden = false; badgePot2.hidden = false; badgePot3.hidden = false; label.style.display = 'block';
             break;
     }

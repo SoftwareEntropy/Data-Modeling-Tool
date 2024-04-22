@@ -2,22 +2,20 @@
 var charLevel; var charClass; var classType; var primaryStat; var cStr; var cDex; var cInt; var cLuk; var att; var mAtt; var hp; var mp; var arcaneForce; var sacredForce;
 var finalStr; var finalDex; var finalInt; var finalLuk; var finalHp;
 /* multipliers */
-var percentStr = []; var percentDex = []; var percentInt = []; var percentLuk = []; var percentAllStat = []; var percentHp = []; var percentMp = [];
-var critRate = []; var critDmg = []; var bossDmg = []; var dmg = []; var monsterDmg = []; var ied = []; var abnormalStatusDmg = [];
-var percentAtt = []; var percentMagAtt = []; var finalDamage = [];
+var percentStr; var percentDex; var percentInt; var percentLuk; var percentAllStat; var percentHp; var percentMp;
+var critRate; var critDmg; var bossDmg; var dmg; var monsterDmg; var ied; var abnormalStatusDmg;
+var percentAtt; var percentMagAtt; var finalDamage;
 /* special stats */
-var attSpeedBonus = []; var cdSkipChance = []; var cdSkipSec = []; var cdReduction = []; var incPassive = []; var buffDuration = []; var elementalIgnore = [];
-var weaponAttackSpeed; /* use old cal  avg(6), slow(8) */ var weaponMultiplier; var lapisMultiplier = 1.49; var lapisSpd = 8; var lazuliMultiplier = 1.34; var lazuliSpd = 6;
+var cdSkipChance; var cdReductionSec; var cdReductionPercent; var passiveSkills; var buffDuration; var elementalIgnore; var tripleScaling;
+var weaponAttackSpeed; /* use new cal  avg(4), slow(2) */ var weaponMultiplier; var lapisMultiplier; var lapisSpd; var lazuliMultiplier; var lazuliSpd;
 /* trackers */
-var hasTermsAndConditions = false;
-var genesisWeapon = 0; var pitchedSet = 0; var rootAbyssSet = 0; var absolabSet = 0; var arcaneSet = 0; var eternalSet = 0; var golluxSet = 0; var dawnSet = 0;
-var bossSet = 0; var monsterParkSet = 0;
+var hasTermsAndConditions = false; var ozRingLv;
+var genesisWeapon; var pitchedSet; var rootAbyssSet; var absolabSet; var arcaneSet; var eternalSet; var golluxSet; var dawnSet;
+var bossSet; var monsterParkSet;
+/* combat only stats */
+var combatDmg; var combatIed;
 
-aggregate();
-
-var test = document.getElementById("selectRing4");
-test.addEventListener("change", aggregate);
-
+// Apply event listeners to all buttons
 const selectElements = document.querySelectorAll('.form-select');
 const inputElements = document.querySelectorAll('.form-control');
 const buttonElements = document.querySelectorAll('.linkbtn');
@@ -28,12 +26,16 @@ inputElements.forEach(element => {
     element.addEventListener('change', aggregate);
 });
 buttonElements.forEach(element => {
-    element.addEventListener('change', aggregate);
+    element.addEventListener('click', aggregate);
 });
+
+// Load functions
+aggregate();
 
 function aggregate() {
 	clearValues();
 	getSpecification();
+	designateClassAndPrimaryStat();
 	getAttributeAllocation();
 	getInnerAbilitySelections();
 	getTraitsBonuses();
@@ -43,16 +45,19 @@ function aggregate() {
 	getFamiliarBadgeSelections();
 	getLegionBoardSelections();
 	getLegionMemberSelections();
-	getEquipmentSelections();
-	
-	
+
 	updateWeaponData();
 	updateSubWeaponData();
-	
-	
-	fillEquipmentStats();
+	updateEquipmentData();
+
 	editEquipmentImages();
 	getSetEffects();
+	getSetStats();
+	getEquipmentPotentials();
+	getAdditionalStats();
+	getSymbolStats();
+	//applyRebootPassive
+	updateStatsTable();
 }
 
 function clearValues() {
@@ -61,94 +66,116 @@ function clearValues() {
 	cStr = 0; cDex = 0; cInt = 0; cLuk = 0; att = 0; mAtt = 0; hp = 0; mp = 0; arcaneForce = 0; sacredForce = 0;
 	finalStr  = 0; finalDex = 0; finalInt = 0; finalLuk = 0; finalHp = 0;
 	/* multipliers */
-	percentStr = []; percentDex = []; percentInt = []; percentLuk = []; percentAllStat = []; percentHp = []; percentMp = [];
-	critRate = []; critDmg = []; bossDmg = []; dmg = []; monsterDmg = []; ied = []; abnormalStatusDmg = [];
-	percentAtt = []; percentMagAtt = []; finalDamage = [];
+	percentStr = 0; percentDex = 0; percentInt = 0; percentLuk = 0; percentAllStat = 0; percentHp = 0; percentMp = 0;
+	critRate = 0; critDmg = 0; bossDmg = 0; dmg = 0; monsterDmg = 0; ied = []; abnormalStatusDmg = 0;
+	percentAtt = 0; percentMagAtt = 0; finalDamage = 0;
 	/* special stats */
-	attSpeedBonus = []; cdSkipChance = []; cdSkipSec = []; cdReduction = []; incPassive = []; buffDuration = []; elementalIgnore = [];
+	cdSkipChance = 0; cdReductionSec = 0; cdReductionPercent = 0; passiveSkills = 0; buffDuration = 0; elementalIgnore = []; tripleScaling = false;
 	weaponAttackSpeed = 0; weaponMultiplier = 0; lapisMultiplier = 1.49; lapisSpd = 8; lazuliMultiplier = 1.34; lazuliSpd = 6;
 	/* trackers */
-	hasTermsAndConditions = false;
+	hasTermsAndConditions = false; ozRingLv = 0;
 	genesisWeapon = 0; pitchedSet = 0; rootAbyssSet = 0; absolabSet = 0; arcaneSet = 0; eternalSet = 0; golluxSet = 0; dawnSet = 0;
 	bossSet = 0; monsterParkSet = 0;
+	/* combat only stats */
+	combatDmg = 0; combatIed = [];
 }
 
 function getSpecification() {
 	/* get class name, selected level */
 	charClass = document.getElementById("selectClass").value;
 	charLevel = parseInt(document.getElementById("level").value);
-	designatePrimaryStat(charClass);
-}
-
-function designatePrimaryStat(selection) {
-	switch (selection) {
-		case "adele": /* str/dex */
-		case "aran": /* str/dex */
-		case "ark": /* str/dex */
-		case "blaster": /* str/dex */
-		case "buccaneer": /* str/dex */
-		case "cannoneer": /* str/dex */
-		case "darkKnight": /* str/dex */
-		case "dawnWarrior": /* str/dex */
-		case "demonSlayer": /* str/dex */
-		case "hayato": /* str/dex */
-		case "hero": /* str/dex */
-		case "kaiser": /* str/dex */
-		case "mihile": /* str/dex */
-		case "paladin": /* str/dex */
-		case "shade": /* str/dex */
-		case "thunderBreaker": /* str/dex */
-		case "zero": /* str/dex */
-			/* Special case: hp scaling, uses warrior equip with str mainstat */
-		case "demonAvenger": /* HP/str */
-		case "unselected":
-			primaryStat = "str";
-			break;
-		case "angelicBuster": /* dex/str */
-		case "bowmaster": /* dex/str */
-		case "corsair": /* dex/str */
-		case "kain": /* dex/str */
-		case "marksman": /* dex/str */
-		case "mechanic": /* dex/str */
-		case "mercedes": /* dex/str */
-		case "pathfinder": /* dex/str */
-		case "wildHunter": /* dex/str */
-		case "windArcher": /* dex/str */
-			primaryStat = "dex";
-			break;
-		case "archMageIceLightning": /* int/luk */
-		case "archMageFirePoison": /* int/luk */
-		case "battleMage": /* int/luk */
-		case "beastTamer": /* int/luk */
-		case "bishop": /* int/luk */
-		case "blazeWizard": /* int/luk */
-		case "evan": /* int/luk */
-		case "illium": /* int/luk */
-		case "kanna": /* int/luk */
-		case "kinesis": /* int/luk */
-		case "lara": /* int/luk */
-		case "luminous": /* int/luk */
-			primaryStat = "int";
-			break;
-			/* Double stat scaling */
-		case "hoyoung": /* luk/dex */
-		case "khali": /* luk/dex */
-		case "nightLord": /* luk/dex */
-		case "nightWalker": /* luk/dex */
-		case "phantom": /* luk/dex */	
-			/* Triple stat scaling */
-		case "cadena": /* luk/dex/str */
-		case "dualBlade": /* luk/dex/str */
-		case "shadower": /* luk/dex/str */
-			/* Special case: Triple primary scaling, luk mainstat assume thief equipment */	
-		case "xenon": /* Luk/Str/Dex */
-			primaryStat = "luk";
-			break;
-		default:
-			primaryStat = "str";
-			break;
+	let selectedServer = document.getElementById("selectServer").value;
+	if (selectedServer == "Heroic") {
+		if (charLevel == 300) {
+			finalDamage += 70; //300
+		}
+		else {
+			finalDamage += 65; //250+
+		}
 	}
 }
+
+function designateClassAndPrimaryStat() {
+	let selection = document.getElementById("selectClass").value;
+	switch (selection) {
+		case "adele":
+		case "aran":
+		case "blaster":
+		case "darkKnight":
+		case "dawnWarrior":
+		case "demonSlayer":
+		case "hayato":
+		case "hero":
+		case "kaiser":
+		case "mihile":
+		case "paladin":
+		case "zero":
+		case "demonAvenger":
+		case "none":
+			classType = "warrior";
+			primaryStat = "str";
+			break;
+		case "bowmaster":
+		case "kain":
+		case "marksman":
+		case "mercedes":
+		case "pathfinder":
+		case "wildHunter":
+		case "windArcher":
+			classType = "bowman";
+			primaryStat = "dex";
+			break;
+		case "archMageIceLightning":
+		case "archMageFirePoison":
+		case "battleMage":
+		case "beastTamer":
+		case "bishop":
+		case "blazeWizard":
+		case "evan":
+		case "illium":
+		case "kanna":
+		case "kinesis":
+		case "lara":
+		case "luminous":
+			classType = "magician";
+			primaryStat = "int";
+			break;
+		case "hoyoung":
+		case "khali":
+		case "nightLord":
+		case "nightWalker":
+		case "phantom":
+			classType = "thief";
+			primaryStat = "luk";
+			break;
+		case "cadena": // triple stat scaling
+		case "dualBlade": // triple stat scaling
+		case "shadower": // triple stat scaling
+		case "xenon": // triple stat scaling
+			classType = "thief";
+			primaryStat = "luk";
+			tripleScaling = true;
+			break;	
+		case "ark":
+		case "buccaneer":
+		case "cannoneer":
+		case "shade":
+		case "thunderBreaker":
+			classType = "pirate";
+			primaryStat = "str";
+			break;
+		case "angelicBuster":	
+		case "corsair":	
+		case "mechanic":
+			classType = "pirate";
+			primaryStat = "dex";
+			break;
+		default:
+			classType = "none";
+			primaryStat = "none";
+			break;
+	}
+};
 
 function getAttributeAllocation() {
 	/* get allocated attribute points */
@@ -156,8 +183,8 @@ function getAttributeAllocation() {
 	cDex = parseInt(document.getElementById("dexAP").value) + 4;
 	cInt = parseInt(document.getElementById("intAP").value) + 4;
 	cLuk = parseInt(document.getElementById("lukAP").value) + 4;
-	hp = parseInt(document.getElementById("hpAP").value);
-	mp = parseInt(document.getElementById("mpAP").value);
+	hp += 545 + 18 * parseInt(document.getElementById("hpAP").value); //DA
+	mp = 5 + 108 + 8.8 * parseInt(document.getElementById("mpAP").value); //Mage
 }
 
 function getInnerAbilitySelections() {
@@ -169,7 +196,7 @@ function getInnerAbilitySelections() {
 		];
 	switch (inner1) {
 		case "attSpeed":
-			attSpeedBonus.push(1);
+			weaponAttackSpeed += 1;
 			break;
 		case "wepAtt":
 			att += 30;
@@ -178,28 +205,28 @@ function getInnerAbilitySelections() {
 			mAtt += 30;
 			break;
 		case "crit":
-			critRate.push(30);
+			critRate += 30;
 			break;
 		case "hp":
-			percentHp.push(20);
+			percentHp += 20;
 			break;
 		case "boss":
-			bossDmg.push(20);
+			bossDmg += 20;
 			break;
 		case "norm":
-			monsterDmg.push(10);
+			monsterDmg += 10;
 			break;
 		case "abn":
-			abnormalStatusDmg.push(10);
+			abnormalStatusDmg += 10;
 			break;
 		case "cdSkip":
-			cdSkipChance.push(20);
+			cdSkipChance += 20;
 			break;
 		case "passive+1":
-			incPassive.push(1);
+			passiveSkills += 1;
 			break;
 		case "buff":
-			buffDuration.push(50);
+			buffDuration += 50;
 			break;
 		default:
 			/* skip drop rate, meso increase */
@@ -214,25 +241,25 @@ function getInnerAbilitySelections() {
 				mAtt += 21;
 				break;
 			case "crit":
-				critRate.push(20);
+				critRate += 20;
 				break;
 			case "hp":
-				percentHp.push(10);
+				percentHp += 10;
 				break;
 			case "boss":
-				bossDmg.push(10);
+				bossDmg += 10;
 				break;
 			case "norm":
-				monsterDmg.push(8);
+				monsterDmg += 8;
 				break;
 			case "abn":
-				abnormalStatusDmg.push(8);
+				abnormalStatusDmg += 8;
 				break;
 			case "cdSkip":
-				cdSkipChance.push(8);
+				cdSkipChance += 8;
 				break;
 			case "buff":
-				buffDuration.push(38);
+				buffDuration += 38;
 				break;
 			default:
 				/* omit drop rate, meso increase */
@@ -243,72 +270,50 @@ function getInnerAbilitySelections() {
 
 function getTraitsBonuses() {
 	/* traits bonuses */
-	var empathyLv = parseInt(document.getElementById("empathy").value);
-	empathyLv = Math.floor(empathyLv / 10);
-	buffDuration.push(empathyLv);
-	mp += ((empathyLv * 2) * 100);
-	var ambitionLv = parseInt(document.getElementById("ambition").value);
-	ambitionLv = Math.floor(ambitionLv / 5);
-	ied.push(ambitionLv * .5);
-	var insightLv = parseInt(document.getElementById("insight").value);
-	insightLv = Math.floor(insightLv / 10);
-	elementalIgnore.push(insightLv * .5);
-	var willpowerLv = parseInt(document.getElementById("willpower").value);
-	willpowerLv = Math.floor(willpowerLv / 5);
-	hp += (willpowerLv * 100);
+	// Empathy
+	buffDuration += Math.floor(parseInt(document.getElementById("empathy").value) / 10);
+	mp += Math.floor(parseInt(document.getElementById("empathy").value) / 5) * 100;
+	// Ambition
+	ied.push(Math.floor(parseInt(document.getElementById("ambition").value) / 5) * .5);
+	// Insight
+	elementalIgnore.push(Math.floor(parseInt(document.getElementById("insight").value) / 10) * .5);
+	// Willpower
+	hp += (Math.floor(parseInt(document.getElementById("willpower").value) / 5) * 100);
 	/* skip willpower +5 def, +1 abnormal status resist per 5 levels*/
 }
 
 function getHyperStatAllocation() {
 	/* hyper stat bonuses */
-	var hyperStr = parseInt(document.getElementById("strHS").value);
-	finalStr += (hyperStr * 30);
-	var hyperDex = parseInt(document.getElementById("dexHS").value);
-	finalDex += (hyperDex * 30);
-	var hyperInt = parseInt(document.getElementById("intHS").value);
-	finalInt += (hyperInt * 30);
-	var hyperLuk = parseInt(document.getElementById("lukHS").value);
-	finalLuk += (hyperLuk * 30);
-	var hyperHp = parseInt(document.getElementById("hpHS").value);
-	percentHp.push(hyperHp * 2);
-	var hyperMp = parseInt(document.getElementById("mpHS").value);
-	percentMp.push(hyperMp * 2);
-	var hyperCritRate = parseInt(document.getElementById("critRateHS").value);
-	if (hyperCritRate <= 5) {
-		critRate.push(hyperCritRate);
+	finalStr += (parseInt(document.getElementById("strHS").value) * 30);
+	finalDex += (parseInt(document.getElementById("dexHS").value) * 30);
+	finalInt += (parseInt(document.getElementById("intHS").value) * 30);
+	finalLuk += (parseInt(document.getElementById("lukHS").value) * 30);
+	percentHp += (parseInt(document.getElementById("hpHS").value) * 2);
+	percentMp += (parseInt(document.getElementById("mpHS").value) * 2);
+	critDmg += parseInt(document.getElementById("critDamageHS").value);
+	ied.push(parseInt(document.getElementById("iedHS").value) * 3);
+	dmg += (parseInt(document.getElementById("damHS").value) * 3);
+	att += (parseInt(document.getElementById("attHS").value)* 3);
+	mAtt += (parseInt(document.getElementById("attHS").value) * 3);
+	if (parseInt(document.getElementById("critRateHS").value) <= 5) {
+		critRate += parseInt(document.getElementById("critRateHS").value);
 	} else {
-		hyperCritRate = hyperCritRate - 5;
-		critRate.push(5 + (hyperCritRate * 2));
+		critRate += 5 + ((parseInt(document.getElementById("critRateHS").value) - 5) * 2);
 	}
-	var hyperCritDamage = parseInt(document.getElementById("critDamageHS").value);
-	critDmg.push(hyperCritDamage);
-	var hyperIgnoreDef = parseInt(document.getElementById("iedHS").value);
-	ied.push(hyperIgnoreDef * 3);
-	var hyperBossDamage = parseInt(document.getElementById("bossHS").value);
-	if (hyperBossDamage <= 5) {
-		bossDmg.push(hyperBossDamage * 3);
+	if (parseInt(document.getElementById("bossHS").value) <= 5) {
+		bossDmg += (parseInt(document.getElementById("bossHS").value) * 3);
 	} else {
-		hyperBossDamage = hyperBossDamage - 5;
-		hyperBossDamage.push((5 * 3) + (hyperBossDamage * 4));
+		bossDmg += (5 * 3) + ((parseInt(document.getElementById("bossHS").value) - 5) * 4);
 	}
-	var hyperMonsterDamage = parseInt(document.getElementById("normMonDamHS").value);
-	if (hyperMonsterDamage <= 5) {
-		monsterDmg.push(hyperMonsterDamage * 3);
+	if (parseInt(document.getElementById("normMonDamHS").value) <= 5) {
+		monsterDmg += (parseInt(document.getElementById("normMonDamHS").value) * 3);
 	} else {
-		hyperMonsterDamage = hyperMonsterDamage - 5;
-		monsterDmg.push((5 * 3) + (hyperMonsterDamage * 4));
+		monsterDmg += ((5 * 3) + ((parseInt(document.getElementById("normMonDamHS").value) - 5) * 4));
 	}
-	var hyperDamage = parseInt(document.getElementById("damHS").value);
-	dmg.push(hyperDamage * 3);
-	var hyperAttack = parseInt(document.getElementById("attHS").value);
-	att += (hyperAttack * 3);
-	mAtt += (hyperAttack * 3);
-	var hyperArcaneForce = parseInt(document.getElementById("arcaneForceHS").value);
-	if (hyperArcaneForce <= 10) {
-		arcaneForce += (hyperArcaneForce * 5);
+	if (parseInt(document.getElementById("arcaneForceHS").value) <= 10) {
+		arcaneForce += (parseInt(document.getElementById("arcaneForceHS").value) * 5);
 	} else {
-		hyperArcaneForce = hyperArcaneForce - 10;
-		arcaneForce += ((10 * 5) + (hyperArcaneForce * 10));
+		arcaneForce += (10 * 5) + ((parseInt(document.getElementById("arcaneForceHS").value) - 10) * 10);
 	}
 	/* omit df/tf/pp, status resist, bonus exp */
 }
@@ -327,76 +332,76 @@ function getLinkSkillSelections() {
 		var selectedLinkSkill = document.getElementById(id);
 		if (selectedLinkSkill.classList.contains('active')) {
 			if (id == 'linkEmpiricalKnowledge') {
-				dmg.push(9);
-				ied.push(9);
+				combatDmg += 9;
+				combatIed.push(9);
 			};
 			if (id == 'linkAdventurersCuriosity') {
-				critRate.push(10);
+				critRate += 10;
 			};
 			if (id == 'linkThiefsCunning') {
-				dmg.push(9);
+				combatDmg += 9;
 			};
 			if (id == 'linkPhantomInstinct') {
-				cStr += 70;
+				critRate += 20;
 			};
 			if (id == 'linkLightWash') {
 				ied.push(20);
 			};
 			if (id == 'linkWildRage') {
-				dmg.push(15);
+				dmg += 15;
 			};
 			if (id == 'linkFuryUnleashed') {
-				bossDmg.push(20);
+				bossDmg += 20;
 			};
 			if (id == 'linkHybridLogic') {
-				percentAllStat.push(10);
+				percentAllStat += 10;
 			};
 			if (id == 'linkTermsAndConditions') {
 				hasTermsAndConditions = true;
 			};
 			if (id == 'linkUnfairAdvantage') {
-				dmg.push(12);
+				combatDmg += 12;
 			};
 			if (id == 'linkIronWill') {
-				percentHp.push(20);
+				percentHp += 20;
 			};
 			if (id == 'linkTimeToPrepare') {
-				dmg.push(8.5); /* 17% for 20 of 40 seconds, use average */
+				combatDmg += 8.5; /* 17% for 20 of 40 seconds, use average */
 			};
 			if (id == 'linkKeenEdge') {
 				att += 15; mAtt += 15;
 			};
 			if (id == 'linkElementalism') {
-				dmg.push(10);
+				dmg += 10;
 			};
 			if (id == 'linkSolus') {
-				dmg.push(16);
+				combatDmg += 16;
 			};
 			if (id == 'linkTideOfBattle') {
-				dmg.push(12);
+				combatDmg += 12;
 			};
 			if (id == 'linkNobleFire') {
-				bossDmg.push(4);
-				dmg.push(8); /* +2 up to 8 for each party member */
+				bossDmg += 4;
+				dmg += 8; /* +2 up to 8 for each party member */
 			};
 			if (id == 'linkInnateGift') {
-				dmg.push(5);
+				dmg += 5;
 			};
 			if (id == 'linkBravado') {
-				dmg.push(10);
+				dmg += 10;
 			};
 			if (id == 'linknaturesFriend') {
-				dmg.push(5);
-				monsterDmg.push(11); /* conditional normal monster dmg +11% */
+				dmg += 5;
+				monsterDmg += 11; /* conditional normal monster dmg +11% */
 			};
 			if (id == 'linkFocusSpirit') {
-				bossDmg.push(10);
-				critRate.push(10);
-				percentHp.push(5);
-				percentMp.push(5);
+				bossDmg += 10;
+				critRate += 10;
+				percentHp += 5;
+				percentMp += 5;
 			};
 			if (id == 'linkJudgment') {
-				critDmg.push(4);
+				critDmg += 4;
 			};
 			if (id == 'linkRhinnesBlessing') {
 				ied.push(10);
@@ -407,277 +412,92 @@ function getLinkSkillSelections() {
 
 function getFamiliarPotentialSelections() {
 	/* percent stat */
-	var famPercStr = parseInt(document.getElementById("famStr").value);
-	percentStr.push(famPercStr);
-	var famPercDex = parseInt(document.getElementById("famDex").value);
-	percentDex.push(famPercDex);
-	var famPercInt = parseInt(document.getElementById("famInt").value);
-	percentInt.push(famPercInt);
-	var famPercLuk = parseInt(document.getElementById("famLuk").value);
-	percentLuk.push(famPercLuk);
-	var famPercAll = parseInt(document.getElementById("famStat").value);
-	percentAllStat.push(famPercAll);
+	percentStr += parseInt(document.getElementById("famStr").value);
+	percentDex += parseInt(document.getElementById("famDex").value);
+	percentInt += parseInt(document.getElementById("famInt").value);
+	percentLuk += parseInt(document.getElementById("famLuk").value);
+	percentAllStat += parseInt(document.getElementById("famStat").value);
 	/* flat stat (affected by potentials) */
-	var famStr = parseInt(document.getElementById("famFlatStr").value);
-	cStr += famStr;
-	var famDex = parseInt(document.getElementById("famFlatDex").value);
-	cDex += famDex;
-	var famInt = parseInt(document.getElementById("famFlatInt").value);
-	cInt += famInt;
-	var famLuk = parseInt(document.getElementById("famFlatLuk").value);
-	cLuk += famFlatLuk;
-	var famFlatAtt = parseInt(document.getElementById("famFlatAtt").value);
-	att += famAtt;
-	var famFlatMagAtt = parseInt(document.getElementById("famFlatMAtt").value);
-	mAtt += famMagAtt;
+	cStr += parseInt(document.getElementById("famFlatStr").value);
+	cDex += parseInt(document.getElementById("famFlatDex").value);
+	cInt += parseInt(document.getElementById("famFlatInt").value);
+	cLuk += parseInt(document.getElementById("famFlatLuk").value);
+	att += parseInt(document.getElementById("famFlatAtt").value);
+	mAtt += parseInt(document.getElementById("famFlatMAtt").value);
 	/* other percent multipliers */
-	var famCritRate = parseInt(document.getElementById("famCritRate").value);
-	critRate.push(famCritRate);
-	var famCritDmg = parseInt(document.getElementById("famCritDam").value);
-	critDmg.push(famCritDmg);
-	var famIed = parseInt(document.getElementById("famIed").value);
-	ied.push(famIed);
-	var famBossDmg = parseInt(document.getElementById("famBoss").value);
-	bossDmg.push(famBossDmg);
-	var famDmg = parseInt(document.getElementById("famDam").value);
-	dmg.push(famDmg);
-	var famAtt = parseInt(document.getElementById("famAtt").value);
-	percentAtt.push(famAtt);
-	var famMagAtt = parseInt(document.getElementById("famMAtt").value);
-	percentMagAtt.push(famMagAtt);
+	critRate += parseInt(document.getElementById("famCritRate").value);
+	critDmg += parseInt(document.getElementById("famCritDam").value);
+	ied.push(parseInt(document.getElementById("famIed").value));
+	bossDmg += parseInt(document.getElementById("famBoss").value);
+	dmg += parseInt(document.getElementById("famDam").value);
+	percentAtt += parseInt(document.getElementById("famAtt").value);
+	percentMagAtt += parseInt(document.getElementById("famMAtt").value);
 }
 
 function getFamiliarBadgeSelections(){
-	var badgeStr = parseInt(document.getElementById("famBadgeStr").value);
-	cStr += badgeStr;
-	var badgeDex = parseInt(document.getElementById("famBadgeDex").value);
-	cDex += badgeDex;
-	var badgeInt = parseInt(document.getElementById("famBadgeInt").value);
-	cInt += badgeInt;
-	var badgeLuk = parseInt(document.getElementById("famBadgeLuk").value);
-	cLuk += badgeLuk;
-	var badgeAllStat = parseInt(document.getElementById("famBadgeStat").value);
-	percentAllStat.push(badgeAllStat);
-	var badgeFlatStats = parseInt(document.getElementById("famBadgeFlatStat").value);
-	cStr += badgeFlatStats;
-	cDex += badgeFlatStats;
-	cInt += badgeFlatStats;
-	cLuk += badgeFlatStats;
-	var badgePercHp = parseInt(document.getElementById("famBadgehp%").value);
-	percentHp.push(badgePercHp);
-	var badgeHp = parseInt(document.getElementById("famBadgeHp").value);
-	hp += badgeHp;
-	var badgeMp = parseInt(document.getElementById("famBadgeMp").value);
-	mp += badgeMp;
-	var badgeCritRate = parseInt(document.getElementById("famBadgeCrit%").value);
-	critRate.push(badgeCritRate);
-	var badgeIgnoreDef = parseInt(document.getElementById("famBadgeIed").value);
-	ied.push(badgeIgnoreDef);
-	var badgePercDmg = parseInt(document.getElementById("famBadgeDam").value);
-	dmg.push(badgePercDmg);
-	var badgePercAtt = parseInt(document.getElementById("famBadgeAtt%").value);
-	percentAtt.push(badgePercAtt);
-	var badgeAtt = parseInt(document.getElementById("famBadgeAtt").value);
-	att += badgeAtt;
-	var badgePercMagAtt = parseInt(document.getElementById("famBadgeMAtt%").value);
-	percentMagAtt.push(badgePercMagAtt);
-	var badgeMagAtt = parseInt(document.getElementById("famBadgeMAtt").value);
-	mAtt += badgeMagAtt;
+	cStr += parseInt(document.getElementById("famBadgeStr").value);
+	cDex += parseInt(document.getElementById("famBadgeDex").value);
+	cInt += parseInt(document.getElementById("famBadgeInt").value);
+	cLuk += parseInt(document.getElementById("famBadgeLuk").value);
+	percentAllStat += parseInt(document.getElementById("famBadgeStat").value);
+	cStr += parseInt(document.getElementById("famBadgeFlatStat").value);
+	cDex += parseInt(document.getElementById("famBadgeFlatStat").value);
+	cInt += parseInt(document.getElementById("famBadgeFlatStat").value);
+	cLuk += parseInt(document.getElementById("famBadgeFlatStat").value);
+	percentHp += parseInt(document.getElementById("famBadgehp%").value);
+	hp += parseInt(document.getElementById("famBadgeHp").value);
+	mp += parseInt(document.getElementById("famBadgeMp").value);
+	critRate += parseInt(document.getElementById("famBadgeCrit%").value);
+	ied.push(parseInt(document.getElementById("famBadgeIed").value));
+	dmg += parseInt(document.getElementById("famBadgeDam").value);
+	percentAtt += parseInt(document.getElementById("famBadgeAtt%").value);
+	att += parseInt(document.getElementById("famBadgeAtt").value);
+	percentMagAtt += parseInt(document.getElementById("famBadgeMAtt%").value);
+	mAtt += parseInt(document.getElementById("famBadgeMAtt").value);
 }
 
 function getLegionBoardSelections() {
-	var legionStr = parseInt(document.getElementById("legionStr").value);
-	cStr += (legionStr * 5);
-	var legionDex = parseInt(document.getElementById("legionDex").value);
-	cDex += (legionDex * 5);
-	var legionInt = parseInt(document.getElementById("legionInt").value);
-	cInt += (legionInt * 5);
-	var legionLuk = parseInt(document.getElementById("legionLuk").value);
-	cLuk += (legionLuk * 5);
-	var legionHp = parseInt(document.getElementById("legionHp").value);
-	hp += (legionHp * 250);
-	var legionMp = parseInt(document.getElementById("legionMp").value);
-	mp += (legionMp * 250);
-	var legionCritRate = parseInt(document.getElementById("legionCritRate").value);
-	critRate.push(legionCritRate * 1);
-	var legionCritDam = parseInt(document.getElementById("legionCritDam").value);
-	critDmg.push(legionCritDam * 0.5);
-	var legionIed = parseInt(document.getElementById("legionIed").value);
-	ied.push(legionIed * 1);
-	var legionBoss = parseInt(document.getElementById("legionBoss").value);
-	bossDmg.push(legionBoss * 1);
-	var legionNormMonDam = parseInt(document.getElementById("legionNormMonDam").value);
-	monsterDmg.push(legionNormMonDam * 1);
-	var legionBuffDuration = parseInt(document.getElementById("legionBuffDuration").value);
-	buffDuration.push(legionBuffDuration * 1);
-	var legionAtt = parseInt(document.getElementById("legionAtt").value);
-	att += legionAtt;
-	var legionMagAtt = parseInt(document.getElementById("legionMagAtt").value);
-	mAtt += legionMagAtt;
+	cStr += parseInt(document.getElementById("legionStr").value) * 5;
+	cDex += parseInt(document.getElementById("legionDex").value) * 5;
+	cInt += parseInt(document.getElementById("legionInt").value) * 5;
+	cLuk += parseInt(document.getElementById("legionLuk").value) * 5;
+	hp += parseInt(document.getElementById("legionHp").value) * 250;
+	mp += parseInt(document.getElementById("legionMp").value) * 250;
+	critRate += parseInt(document.getElementById("legionCritRate").value);
+	critDmg += parseInt(document.getElementById("legionCritDam").value) * 0.5;
+	ied.push(parseInt(document.getElementById("legionIed").value));
+	bossDmg += parseInt(document.getElementById("legionBoss").value);
+	monsterDmg += parseInt(document.getElementById("legionNormMonDam").value);
+	buffDuration += parseInt(document.getElementById("legionBuffDuration").value);
+	att += parseInt(document.getElementById("legionAtt").value);
+	mAtt += parseInt(document.getElementById("legionMagAtt").value);
 	//omit abnormal status, exp bonus
 	//var legionAbnormal = parseInt(document.getElementById("legionAbnormal").value);
 	//var legionExp = parseInt(document.getElementById("legionExp").value);
 }
 
 function getLegionMemberSelections() {
-	var memberStr = parseInt(document.getElementById("memberStr").value);
-	finalStr += memberStr;
-	var memberDex = parseInt(document.getElementById("memberDex").value);
-	finalDex += memberDex;
-	var memberInt = parseInt(document.getElementById("memberInt").value);
-	finalInt += memberInt;
-	var memberLuk = parseInt(document.getElementById("memberLuk").value);
-	finalLuk += memberLuk;
-	var memberPercHp = parseInt(document.getElementById("memberHp%").value);
-	percentHp.push(memberPercHp);
-	var memberHp = parseInt(document.getElementById("memberHp").value);
-	finalHp += memberHp;
-	var memberPercMp = parseInt(document.getElementById("memberMp%").value);
-	percentMp.push(memberPercMp);
-	var memberCritRate = parseInt(document.getElementById("memberCritRate").value);
-	critRate.push(memberCritRate);
-	var memberCritDamage = parseInt(document.getElementById("memberCritDamage").value);
-	critDmg.push(memberCritDamage);
-	var memberIgnoreDefense = parseInt(document.getElementById("memberIgnoreDefense").value);
-	ied.push(memberIgnoreDefense);
-	var memberBossDamage = parseInt(document.getElementById("memberBossDamage").value);
-	bossDmg.push(memberBossDamage);
-	var memberBuffDuration = parseInt(document.getElementById("memberBuffDuration").value);
-	buffDuration.push(memberBuffDuration);
-	var memberDamageChance = parseInt(document.getElementById("memberDamageChance").value);
-	dmg.push(memberDamageChance / 5); /* use average, 20% chance to trigger 4|8|12|14|20 / 5 */
-	var memberCooldown = parseInt(document.getElementById("memberCooldown").value);
-	cdReduction.push(memberCooldown);
+	finalStr += parseInt(document.getElementById("memberStr").value);
+	finalDex += parseInt(document.getElementById("memberDex").value);
+	finalInt += parseInt(document.getElementById("memberInt").value);
+	finalLuk += parseInt(document.getElementById("memberLuk").value);
+	percentHp += parseInt(document.getElementById("memberHp%").value);
+	finalHp += parseInt(document.getElementById("memberHp").value);
+	percentMp += parseInt(document.getElementById("memberMp%").value);
+	critRate += parseInt(document.getElementById("memberCritRate").value);
+	critDmg += parseInt(document.getElementById("memberCritDamage").value);
+	ied.push(parseInt(document.getElementById("memberIgnoreDefense").value));
+	bossDmg += parseInt(document.getElementById("memberBossDamage").value);
+	buffDuration += parseInt(document.getElementById("memberBuffDuration").value);
+	dmg += (parseInt(document.getElementById("memberDamageChance").value) / 5); /* use average, 20% chance to trigger 4|8|12|14|20 / 5 */
+	cdReductionPercent += parseInt(document.getElementById("memberCooldown").value);
 	/*var memberSummonDuration = parseInt(document.getElementById("memberSummonDuration").value);*/
-}
-
-function getEquipmentSelections() {
-	// Get equipment stats, apply conditionals if applicable.
-	// Weapons, secondaries applied seperately in other function
-	/* Rings, universal */
-	var ringTotalStats = ring1JobStat + ring1AllStat + ring2JobStat + ring2AllStat + ring3JobStat + ring3AllStat + ring4JobStat + ring4AllStat;
-	var ringTotalHp = ring1Hp + ring2Hp + ring3Hp + ring4Hp;
-	var ringTotalMp = ring1Mp + ring2Mp + ring3Mp + ring4Mp;
-	var ringTotalAtt = ring1Att + ring2Att + ring3Att + ring4Att;
-	var ringTotalMagAtt = ring1MAtt + ring2MAtt + ring3MAtt + ring4MAtt;
-	cStr += ringTotalStats; cDex += ringTotalStats; cInt += ringTotalStats; cLuk += ringTotalStats;
-	hp += ringTotalHp; mp += ringTotalMp; att += ringTotalAtt; mAtt += ringTotalMagAtt;
-	/* Pocket, universal */
-	hp += pocketHp; mp += pocketMp; att += pocketAtt; mAtt += pocketMAtt;
-	var selectedPocket = document.getElementById("selectPocket").value;
-	if (selectedPocket == "cursedSpellbook") {
-		// special case: additional 10 main stat on book
-		switch (primaryStat) {
-			case "str":
-				cStr += 10;
-				break;
-			case "dex":
-				cDex += 10;
-				break;
-			case "int":
-				cInt += 10;
-				break;
-			case "luk":
-				cLuk += 10;
-				break;
-			default:
-				break;
-		}
-		cStr += pocketAllStat; cDex += pocketAllStat; cInt += pocketAllStat; cLuk += pocketAllStat;
-	} else {
-		var pocketTotalStats = pocketJobStat + pocketAllStat;
-		cStr += pocketTotalStats; cDex += pocketTotalStats; cInt += pocketTotalStats; cLuk += pocketTotalStats;
-	}
-	/* Pendants, universal */
-	var pendantTotalStats = pendant1JobStat + pendant1AllStat + pendant2JobStat + pendant2AllStat;
-	cStr += pendantTotalStats; cDex += pendantTotalStats; cInt += pendantTotalStats; cLuk += pendantTotalStats;
-	hp += (pendant1Hp + pendant2Hp); mp += pendant1Mp + pendant2Mp; att += pendant1Att + pendant2Att; mAtt = pendant1MAtt + pendant2MAtt
-		/* Additional Item specific bonuses */
-	var selectedPendant1 = document.getElementById("selectPendant1").value;
-	var selectedPendant2 = document.getElementById("selectPendant2").value;
-	if (selectedPendant1 == "daybreakPendant" || selectedPendant2 == "daybreakPendant") {
-		percentHp.push(5);
-	}
-	if (selectedPendant1 == "dominatorPendant" || selectedPendant2 == "dominatorPendant") {
-		percentHp.push(10);
-		percentMp.push(10);
-	}
-	if (selectedPendant1 == "sourceOfSuffering" || selectedPendant2 == "sourceOfSuffering") {
-		percentHp.push(5);
-	}
-	/* Belt, universal */
-	var beltTotalStats = beltJobStat + beltAllStat;
-	cStr += beltTotalStats; cDex += beltTotalStats; cInt += beltTotalStats; cLuk += beltTotalStats;
-	hp += beltHp; mp += beltMp; att += beltAtt, mAtt += beltMAtt;
-	/* Face accessory, universal */
-	var faceTotalStats = faceJobStat + faceAllStat;
-	cStr += faceTotalStats; cDex += faceTotalStats; cInt += faceTotalStats; cLuk += faceTotalStats;
-	hp += faceHp; mp += faceMp; att += faceAtt; mAtt += faceMAtt;
-	/* Eye accessory, universal */
-	var eyeTotalStats = eyeJobStat + eyeAllStat;
-	cStr += eyeTotalStats; cDex += eyeTotalStats; cInt += eyeTotalStats; cLuk += eyeTotalStats;
-	hp += eyeHp; mp += eyeMp; att += eyeAtt; mAtt += eyeMAtt;
-	/* Ear accessory, universal */
-	var earTotalStats = earJobStat + earAllStat;
-	cStr += eyeTotalStats; cDex += eyeTotalStats; cInt += eyeTotalStats; cLuk += eyeTotalStats;
-	hp += earHp; mp += earMp; att += earAtt; mAtt += earMAtt;
-	/* Badge, universal */
-	var badgeTotalStats = badgeJobStat + badgeAllStat;
-	cStr += badgeTotalStats; cDex += badgeTotalStats; cInt += badgeTotalStats; cLuk += badgeTotalStats;
-	hp += badgeHp; mp += badgeMp; att += badgeAtt; mAtt += badgeMAtt;
-	/* Medal, universal */
-	var medalTotalStats = medalJobStat + medalAllStat;
-	cStr += medalTotalStats; cDex += medalTotalStats; cInt += medalTotalStats; cLuk += medalTotalStats;
-	hp += medalHp; mp += medalMp; att += medalAtt; mAtt += medalMAtt;
-	/* Heart, universal */
-	var heartTotalStats = heartJobStat + heartAllStat;
-	cStr += heartTotalStats; cDex += heartTotalStats; cInt += heartTotalStats; cLuk += heartTotalStats;
-	hp += heartHp; mp += heartMp; att += heartAtt; mAtt += heartMAtt;
-	
-	/* Hat, Top, Bottom, Shoes, Shoulder, Gloves, Emblem, Cape [+ weapon, + subweapon on seperate function] class specific */
-	var classTotalJobStat = hatJobStat + topJobStat + bottomJobStat + shoeJobStat + shoulderJobStat + gloveJobStat + capeJobStat + emblemJobStat;
-	var classTotalAllStat = hatAllStat + topAllStat + bottomAllStat + shoeAllStat + shoulderAllStat + gloveAllStat + capeAllStat + emblemAllStat;
-	var classTotalHp = hatHp + topHp + bottomHp + shoeHp + shoulderHp + gloveHp + capeHp + emblemHp;
-	var classTotalMp = hatMp + topMp + bottomMp + shoeMp + shoulderMp + gloveMp + capeMp + emblemMp;
-	var classTotalAtt = hatAtt + topAtt + bottomAtt + shoeAtt + shoulderAtt + gloveAtt + capeAtt + emblemAtt;
-	var classTotalMagAtt = hatMAtt + topMAtt + bottomMAtt + shoeMAtt + shoulderMAtt + gloveMAtt + capeMAtt + emblemMAtt;
-	var selectedGlove = document.getElementById("selectGlove").value;
-	if (selectedGlove == "tyrantGloves" && classType == "magician") {
-		classTotalMp += 300;
-	} else {
-		classTotalHp += 300;
-	}
-	cStr += classTotalAllStat; cDex += classTotalAllStat; cInt += classTotalAllStat; cLuk += classTotalAllStat;
-	hp += classTotalHp; mp += classTotalMp; att += classTotalAtt; mAtt += classTotalMagAtt;
-	switch(primaryStat) {
-		case "str":
-			cStr += classTotalJobStat; cDex += classTotalJobStat;
-			break;
-		case "dex":
-			cDex += classTotalJobStat; cStr += classTotalJobStat;
-			break;
-		case "int":
-			cInt += classTotalJobStat; cLuk += classTotalJobStat;
-			break;
-		case "luk":
-			cLuk += classTotalJobStat; cDex += classTotalJobStat;
-			break;
-		default:
-			break;
-	}
-	var cselectedEmblem = document.getElementById("selectEmblem").value;
-	if (charClass == "demonAvenger" && cselectedEmblem == "classEmblem") {
-		hp += 500;
-	}
-	if (classType == "warrior" && cselectedEmblem == "mitrasRage") {
-		hp += 700;
-	}
-}
+};
 
 function updateWeaponData() {
 	let charData = classData[charClass];
 	classType = charData.classType;
-	weaponAttackSpeed = charData.weaponAttackSpeed;
+	weaponAttackSpeed += charData.weaponAttackSpeed;
 	weaponMultiplier = charData.weaponMultiplier;
 	let weaponStatIndex = charData.weaponRefNum;
 	let selectWeapon = document.getElementById("selectWeapon").value;
@@ -710,15 +530,15 @@ function updateWeaponData() {
 		}
 		var weaponEquipImage = document.getElementById("weaponImage2");
 		weaponEquipImage.src = charData.weaponImages[selectWeapon];
+		bossDmg += parseInt(weaponBoss);
+		ied.push(parseInt(weaponIed));
 	}
 }
 
 function updateSubWeaponData() {
-	let charData = classData[charClass];
 	let selectedSubWeapon = document.getElementById("selectSubweapon").value;
-	let subWeapon = charData.secondary;
 	if (charClass == "zero") { selectedSubWeapon = document.getElementById("selectWeapon").value; }; // if class = "zero", match weapon type
-	let subWeaponIndex = subWeapon[selectedSubWeapon]?.subWeaponRefNum;
+	let subWeaponIndex = classData[charClass].secondary[selectedSubWeapon]?.subWeaponRefNum;
 	let stats = subWeaponStats[subWeaponIndex];
 	document.getElementById("subweaponStr").innerHTML = subweaponAllStat;
 	document.getElementById("subweaponDex").innerHTML = subweaponAllStat;
@@ -755,7 +575,7 @@ function updateSubWeaponData() {
 		subweaponMAtt = parseInt(subweaponOutput.mAtt);
 		document.getElementById("subweaponStr").innerHTML = subweaponJobStat + subweaponAllStat;
 		document.getElementById("subweaponDex").innerHTML = subweaponJobStat + subweaponAllStat;
-	} else if (charClass != "unselected" && selectedSubWeapon != "none") { // other cases, obtain values from object
+	} else if (charClass != "none" && selectedSubWeapon != "none") { // other cases, obtain values from object
 		cStr += stats.str; cDex += stats.dex; cInt += stats._int; cLuk += stats.luk;
 		hp += stats.hp; mp += stats.mp; att += stats.att; mAtt += stats.mAtt;
 		document.getElementById("subweaponStr").innerHTML = stats.str;
@@ -777,78 +597,89 @@ function updateSubWeaponData() {
 		subweaponEquipImage.src = subWeaponData.subWeaponImage;
 	}
 	if (selectedSubWeapon == "ruinForceShield") {
-		finalDamage.push(10);
+		finalDamage += 10;
 	}
+	bossDmg += parseInt(subweaponBoss);
+	ied.push(parseInt(subweaponIed));
 }
 
-function fillEquipmentStats() {
-	var equipment = ["ring1", "ring2", "ring3", "ring4", "pocket", "pendant1", "pendant2", "belt", "face", "eye", "ear", "badge", "medal", "heart",
-		/* Primary stat dependent */ "hat", "top", "bottom", "shoe", "shoulder", "glove", "cape", "emblem"];
+function updateEquipmentData() {
+	let equipment = ["ring1", "ring2", "ring3", "ring4", "pocket", "pendant1", "pendant2", "belt", "face", "eye", "ear",
+	"badge", "medal", "heart", "hat", "top", "bottom", "shoe", "shoulder", "glove", "cape", "emblem"];
 	equipment.forEach((element) => {
-		var elementStr = document.getElementById(element + "Str");
-		var elementDex = document.getElementById(element + "Dex");
-		var elementInt = document.getElementById(element + "Int");
-		var elementLuk = document.getElementById(element + "Luk");
-		var elementHp = document.getElementById(element + "Hp");
-		var elementMp = document.getElementById(element + "Mp");
-		var elementAtt = document.getElementById(element + "Att");
-		var elementMAtt = document.getElementById(element + "MAtt");
+		let elementStr = document.getElementById(element + "Str");
+		let elementDex = document.getElementById(element + "Dex");
+		let elementInt = document.getElementById(element + "Int");
+		let elementLuk = document.getElementById(element + "Luk");
+		let elementHp = document.getElementById(element + "Hp");
+		let elementMp = document.getElementById(element + "Mp");
+		let elementAtt = document.getElementById(element + "Att");
+		let elementMAtt = document.getElementById(element + "MAtt");
+		let elementBoss = document.getElementById(element + "Boss");
+		let elementIed = document.getElementById(element + "Ied");
 		switch(primaryStat) {
 			case "str":
 			case "dex":
-				elementStr.innerHTML = parseInt(eval(element + "JobStat")) + parseInt(eval(element + "AllStat"));
-				elementDex.innerHTML = parseInt(eval(element + "JobStat")) + parseInt(eval(element + "AllStat"));
-				elementInt.innerHTML = elementLuk.innerHTML = parseInt(eval(element + "AllStat"));
+				cStr += elementStr.innerHTML = parseInt(eval(element + "JobStat")) + parseInt(eval(element + "AllStat"));
+				cDex += elementDex.innerHTML = parseInt(eval(element + "JobStat")) + parseInt(eval(element + "AllStat"));
+				cInt += elementInt.innerHTML = parseInt(eval(element + "AllStat"));
+				cLuk += elementLuk.innerHTML = parseInt(eval(element + "AllStat"));
 				break;
 			case "int":
-				elementStr.innerHTML = elementDex.innerHTML = parseInt(eval(element + "AllStat"));
-				elementInt.innerHTML = parseInt(eval(element + "JobStat")) + parseInt(eval(element + "AllStat"));
-				elementLuk.innerHTML = parseInt(eval(element + "AllStat"));
+				cStr += elementStr.innerHTML = parseInt(eval(element + "AllStat"));
+				cDex += elementDex.innerHTML = parseInt(eval(element + "AllStat"));
+				cInt += elementInt.innerHTML = parseInt(eval(element + "JobStat")) + parseInt(eval(element + "AllStat"));
+				cLuk += elementLuk.innerHTML = parseInt(eval(element + "JobStat")) + parseInt(eval(element + "AllStat"));
 				break;
 			case "luk":
-				elementStr.innerHTML = parseInt(eval(element + "JobStat"));
-				elementDex.innerHTML = elementInt.innerHTML = parseInt(eval(element + "AllStat"));
-				elementLuk.innerHTML = parseInt(eval(element + "AllStat")) + parseInt(eval(element + "AllStat"));
+				cStr += elementStr.innerHTML = parseInt(eval(element + "AllStat"));
+				cDex += elementDex.innerHTML = parseInt(eval(element + "JobStat")) + parseInt(eval(element + "AllStat"));
+				cInt += elementInt.innerHTML = parseInt(eval(element + "AllStat"));
+				cLuk += elementLuk.innerHTML = parseInt(eval(element + "JobStat")) + parseInt(eval(element + "AllStat"));
 				break;
 			default:
 				break;
 		}
-		elementHp.innerHTML = parseInt(eval(element + "Hp"));
-		elementMp.innerHTML = parseInt(eval(element + "Mp"));
-		elementAtt.innerHTML = parseInt(eval(element + "Att"));
-		elementMAtt.innerHTML = parseInt(eval(element + "MAtt"));
+		hp += elementHp.innerHTML = parseInt(eval(element + "Hp"));
+		mp += elementMp.innerHTML = parseInt(eval(element + "Mp"));
+		att += elementAtt.innerHTML = parseInt(eval(element + "Att"));
+		mAtt += elementMAtt.innerHTML = parseInt(eval(element + "MAtt"));
+		bossDmg += parseInt(eval(element + "Boss"));
+		ied.push(parseInt(eval(element + "Ied")));
 	});
 	// Additional item specific modifiers
-	var selectedPocket = document.getElementById("selectPocket").value;
+	let selectedPocket = document.getElementById("selectPocket").value;
 	if (selectedPocket == "cursedSpellbook") {
 		switch (primaryStat) {
 			case "str":
-				document.getElementById("pocketStr").innerHTML = pocketAllStat + 10;
+				cStr += document.getElementById("pocketStr").innerHTML = pocketAllStat + 10;
 				break;
 			case "dex":
-				document.getElementById("pocketDex").innerHTML = pocketAllStat + 10;
+				cDex += document.getElementById("pocketDex").innerHTML = pocketAllStat + 10;
 				break;
 			case "int":
-				document.getElementById("pocketInt").innerHTML = pocketAllStat + 10;
+				cInt += document.getElementById("pocketInt").innerHTML = pocketAllStat + 10;
 				break;
 			case "luk":
-				document.getElementById("pocketLuk").innerHTML = pocketAllStat + 10;
+				cLuk += document.getElementById("pocketLuk").innerHTML = pocketAllStat + 10;
 				break;
 			default:
 				break;
 		}
 	}
-	var selectedGlove = document.getElementById("selectGlove").value;
+	let selectedGlove = document.getElementById("selectGlove").value;
 	if (selectedGlove == "tyrantGloves") {
 		if (classType == "magician") {
 			document.getElementById("gloveHp").innerHTML = gloveHp;
 			document.getElementById("gloveMp").innerHTML = (gloveMp += 300);
+			mp += 300;
 		} else {
 			document.getElementById("gloveHp").innerHTML = (gloveHp += 300);
 			document.getElementById("gloveMp").innerHTML = gloveMp;
+			hp += 300;
 		}
 	}
-	var cselectedEmblem = document.getElementById("selectEmblem").value;
+	let cselectedEmblem = document.getElementById("selectEmblem").value;
 	if (charClass == "demonAvenger" && cselectedEmblem == "classEmblem") {
 		hp += 500;
 		document.getElementById("emblemHp").innerHTML = emblemHp + 500;
@@ -858,663 +689,467 @@ function fillEquipmentStats() {
 	} else {
 		document.getElementById("emblemHp").innerHTML = emblemHp;
 	}
-
+	let selectedPendant1 = document.getElementById("selectPendant1").value;
+	let selectedPendant2 = document.getElementById("selectPendant2").value;
+	if (selectedPendant1 == "daybreakPendant" || selectedPendant2 == "daybreakPendant") {
+		percentHp += 5;
+	}
+	if (selectedPendant1 == "dominatorPendant" || selectedPendant2 == "dominatorPendant") {
+		percentHp += 10;
+		percentMp += 10;
+	}
+	if (selectedPendant1 == "sourceOfSuffering" || selectedPendant2 == "sourceOfSuffering") {
+		percentHp += 5;
+	}
 }
 
 function editEquipmentImages() {
-	var selectedHat = document.getElementById("selectHat").value;
-    var hatEquipImage = document.getElementById("hatImage2");
-	var selectedTop = document.getElementById("selectTop").value;
-    var topEquipImage = document.getElementById("topImage2");
-	var selectedBottom = document.getElementById("selectBottom").value;
-    var bottomEquipImage = document.getElementById("bottomImage2");
-	var selectedPocket = document.getElementById("selectPocket").value;
-    var pocketEquipImage = document.getElementById("pocketImage2");
-	
-	switch (classType) {
-		case "warrior":
-			switch (selectedHat) {
-				case "rootAbyssHat":
-					hatEquipImage.src = "images/warrior/01003797.img.info.icon._outlink.png";
-					break;
-				case "absolabHat":
-					hatEquipImage.src = "images/warrior/01004422.img.info.icon._outlink.png";
-					break;
-				case "arcaneHat":
-					hatEquipImage.src = "images/warrior/01004808.img.info.icon._outlink.png";
-					break;
-				case "eternalHat":
-					hatEquipImage.src = "images/warrior/01005980.img.info.icon._outlink.png";
-					break;
+	let selectedHat = document.getElementById("selectHat").value;
+    let hatEquipImage = document.getElementById("hatImage2");
+	let selectedTop = document.getElementById("selectTop").value;
+    let topEquipImage = document.getElementById("topImage2");
+	let selectedBottom = document.getElementById("selectBottom").value;
+    let bottomEquipImage = document.getElementById("bottomImage2");
+	let selectedPocket = document.getElementById("selectPocket").value;
+    let pocketEquipImage = document.getElementById("pocketImage2");
+	if (armorImages[charClass]) {
+        if (selectedHat != "none") {
+			hatEquipImage.src = armorImages[classType][selectedHat] || "";
+		}
+        if (selectedTop != "none") {
+			topEquipImage.src = armorImages[classType][selectedTop] || "";
+		}
+        if (selectedBottom != "none") {
+			bottomEquipImage.src = armorImages[classType][selectedBottom] || "";
+		}
+		if (selectedPocket != "none" && selectedPocket == "cursedSpellbook") {
+			if (classType == "pirate" && primaryStat == "str") {
+				pocketEquipImage.src = armorImages["warrior"][selectedPocket] || "";
+			} else if (classType == "pirate" && primaryStat == "dex") {
+				pocketEquipImage.src = armorImages["bowman"][selectedPocket] || "";
+			} else {
+				pocketEquipImage.src = armorImages[classType][selectedPocket] || "";
 			}
-			switch(selectedTop) {
-				case "rootAbyssTop":
-					topEquipImage.src = "images/warrior/01042254.img.info.icon._outlink.png";
-					break;
-				case "eternalTop":
-					topEquipImage.src = "images/warrior/01042433.img.info.icon._outlink.png";
-					break;
-			}
-			switch(selectedBottom) {
-				case "rootAbyssBottom":
-					bottomEquipImage.src = "images/warrior/01062165.img.info.icon._outlink.png";
-					break;
-				case "eternalBottom":
-					bottomEquipImage.src = "images/warrior/01062285.img.info.icon._outlink.png";
-					break;
-			}
-			switch(selectedPocket) {
-				case "cursedSpellbook":
-					pocketEquipImage.src = "images/warrior/01162080.img.info.icon._outlink.png";
-					break;
-			}
-			break;
-		case "bowman":
-			switch (selectedHat) {
-				case "rootAbyssHat":
-					hatEquipImage.src = "images/bowman/01003799.img.info.icon._outlink.png";
-					break;
-				case "absolabHat":
-					hatEquipImage.src = "images/bowman/01004424.img.info.icon._outlink.png";
-					break;
-				case "arcaneHat":
-					hatEquipImage.src = "images/bowman/01004810.img.info.icon._outlink.png";
-					break;
-				case "eternalHat":
-					hatEquipImage.src = "images/bowman/01005982.img.info.icon._outlink.png";
-					break;
-			}
-			switch(selectedTop) {
-				case "rootAbyssTop":
-					topEquipImage.src = "images/bowman/01042256.img.info.icon._outlink.png";
-					break;
-				case "eternalTop":
-					topEquipImage.src = "images/bowman/01042435.img.info.icon._outlink.png";
-					break;
-			}
-			switch(selectedBottom) {
-				case "rootAbyssBottom":
-					bottomEquipImage.src = "images/bowman/01062167.img.info.icon._outlink.png";
-					break;
-				case "eternalBottom":
-					bottomEquipImage.src = "images/bowman/01062287.img.info.icon._outlink.png";
-					break;
-			}
-			switch(selectedPocket) {
-				case "cursedSpellbook":
-					pocketEquipImage.src = "images/bowman/01162082.img.info.icon._outlink.png";
-					break;
-			}
-			break;
-		case "magician":
-			switch (selectedHat) {
-				case "rootAbyssHat":
-					hatEquipImage.src = "images/magician/01005303.img.info.icon._outlink.png";
-					break;
-				case "absolabHat":
-					hatEquipImage.src = "images/magician/01004423.img.info.icon._outlink.png";
-					break;
-				case "arcaneHat":
-					hatEquipImage.src = "images/magician/01004809.img.info.icon._outlink.png";
-					break;
-				case "eternalHat":
-					hatEquipImage.src = "images/magician/01005981.img.info.icon._outlink.png";
-					break;
-			}
-			switch(selectedTop) {
-				case "rootAbyssTop":
-					topEquipImage.src = "images/magician/01042393.img.info.icon._outlink.png";
-					break;
-				case "eternalTop":
-					topEquipImage.src = "images/magician/01042434.img.info.icon._outlink.png";
-					break;
-			}
-			switch(selectedBottom) {
-				case "rootAbyssBottom":
-					bottomEquipImage.src = "images/magician/01062259.img.info.icon._outlink.png";
-					break;
-				case "eternalBottom":
-					bottomEquipImage.src = "images/magician/01062286.img.info.icon._outlink.png";
-					break;
-			}
-			switch(selectedPocket) {
-				case "cursedSpellbook":
-					pocketEquipImage.src = "images/magician/sbinfo.icon._outlink.png";
-					break;
-			}
-			break;
-		case "pirate":
-			switch (selectedHat) {
-				case "rootAbyssHat":
-					hatEquipImage.src = "images/pirate/01003801.img.info.icon._outlink.png";
-					break;
-				case "absolabHat":
-					hatEquipImage.src = "images/pirate/01004426.img.info.icon._outlink.png";
-					break;
-				case "arcaneHat":
-					hatEquipImage.src = "images/pirate/01004812.img.info.icon._outlink.png";
-					break;
-				case "eternalHat":
-					hatEquipImage.src = "images/pirate/01005984.img.info.icon._outlink.png";
-					break;
-			}
-			switch(selectedTop) {
-				case "rootAbyssTop":
-					topEquipImage.src = "images/pirate/01042258.img.info.icon._outlink.png";
-					break;
-				case "eternalTop":
-					topEquipImage.src = "images/pirate/01042437.img.info.icon._outlink.png";
-					break;
-			}
-			switch(selectedBottom) {
-				case "rootAbyssBottom":
-					bottomEquipImage.src = "images/pirate/01062169.img.info.icon._outlink.png";
-					break;
-				case "eternalBottom":
-					bottomEquipImage.src = "images/pirate/01062289.img.info.icon._outlink.png";
-					break;
-			}
-			switch(selectedPocket) {
-				case "cursedSpellbook":
-					if (primaryStat == "str") {
-						pocketEquipImage.src = "images/warrior/01162080.img.info.icon._outlink.png";
-					} else {
-						pocketEquipImage.src = "images/bowman/01162082.img.info.icon._outlink.png";
-					}
-					break;
-			}
-			break;
-		case "thief":
-			switch (selectedHat) {
-				case "rootAbyssHat":
-					hatEquipImage.src = "images/thief/01003800.img.info.icon._outlink.png";
-					break;
-				case "absolabHat":
-					hatEquipImage.src = "images/thief/01004425.img.info.icon._outlink.png";
-					break;
-				case "arcaneHat":
-					hatEquipImage.src = "images/thief/01004811.img.info.icon._outlink.png";
-					break;
-				case "eternalHat":
-					hatEquipImage.src = "images/thief/01005983.img.info.icon._outlink.png";
-					break;
-			}
-			switch(selectedTop) {
-				case "rootAbyssTop":
-					topEquipImage.src = "images/thief/01042257.img.info.icon._outlink.png";
-					break;
-				case "eternalTop":
-					topEquipImage.src = "images/thief/01042436.img.info.icon._outlink.png";
-					break;
-			}
-			switch(selectedBottom) {
-				case "rootAbyssBottom":
-					bottomEquipImage.src = "images/thief/01062168.img.info.icon._outlink.png";
-					break;
-				case "eternalBottom":
-					bottomEquipImage.src = "images/thief/01062288.img.info.icon._outlink.png";
-					break;
-			}
-			switch(selectedPocket) {
-				case "cursedSpellbook":
-					pocketEquipImage.src = "images/thief/01162083.img.info.icon._outlink.png";
-					break;
-			}
-			break;
-		default:
-			break;
-	}
-}
+		}
+    }
+};
 
-/* + add equipment specific bonuses */
 function getSetEffects() {
-	var selectedHeart = document.getElementById("selectHeart").value;
-	switch(selectedHeart) {
-        case "blackHeart":
-			pitchedSet += 1;
-            break;
+    for (var selector in setEffects) {
+        var selectedEquipment = document.getElementById(selector).value;
+		if(setEffects[selector][selectedEquipment] != undefined) {
+			window[setEffects[selector][selectedEquipment]]++;
+		}
     }
-	var selectedMedal = document.getElementById("selectMedal").value;
-	switch(selectedMedal) {
-        case "sevenDayMonsterParker":
-			ied.push(10);
-            monsterParkSet += 1;
-            break;
-    }
-	var selectedEmblem = document.getElementById("selectEmblem").value;
-	switch(selectedEmblem) {
-        case "mitrasRage":
-            pitchedSet += 1;
-            break;
-    }
-	var selectedWeapon = document.getElementById("selectWeapon").value;
-	switch(selectedWeapon) {
-        case "fafnirWeapon":
-			rootAbyssSet += 1;
-            break;
-		case "absolabWeapon":
-            absolabSet += 1;
-            break;
-		case "arcaneWeapon":
-            arcaneSet += 1;
-            break;
-		case "genesisWeapon":
-            genesisWeapon = 1;
-            break;
-    }
-	var selectedFace = document.getElementById("selectFace").value;
-	switch(selectedFace) {
-        case "condensedPowerCrystal":
-			bossSet += 1;
-            break;
-        case "twilightMark":
-			dawnSet += 1;
-            break;
-        case "berserked":
-			pitchedSet += 1;
-            break;	
-    }
-	var selectedEye = document.getElementById("selectEye").value;
-	switch(selectedEye) {
-		case "aquaticLetterEyeAccessory":
-            bossSet += 1;
-            break;
-        case "blackBeanMark":
-            bossSet += 1;
-            break;
-		case "papulatusMark":
-            bossSet += 1;
-            break;
-        case "magicEyepatch":
-            pitchedSet += 1;
-            break;
-    }
-	var selectedEar = document.getElementById("selectEar").value;
-	switch(selectedEar) {
-		case "superiorGolluxEarrings":
-            golluxSet += 1;
-            break;
-		case "estellaEarrings":
-            dawnSet += 1;
-            break;
-        case "commandingForceEarrings":
-            pitchedSet += 1;
-            break;
-    }
-	var selectedBelt = document.getElementById("selectBelt").value;
-	switch(selectedBelt) {
-        case "superiorGolluxBelt":
-            golluxSet += 1;
-            break;
-		case "dreamyBelt":
-            pitchedSet += 1;
-            break;
-    }
-	var selectedGlove = document.getElementById("selectGlove").value;
-	switch(selectedGlove) {
-        case "absolabGloves":
-            absolabSet += 1;
-            break;
-		case "arcaneGloves":
-            arcaneSet += 1;
-            break;
-    }
-	var selectedCape = document.getElementById("selectCape").value;
-	switch(selectedCape) {
-        case "absolabCape":
-            absolabSet += 1;
-            break;
-		case "arcaneCape":
-            arcaneSet += 1;
-            break;
-    }
-	var selectedShoe = document.getElementById("selectShoe").value;
-	switch(selectedShoe) {
-        case "absolabShoe":
-            absolabSet += 1;
-            break;
-		case "arcaneShoe":
-            arcaneSet += 1;
-            break;	
-    }
-	var selectedShoulder = document.getElementById("selectShoulder").value;
-	switch(selectedShoulder) {
-		case "absolabShoulder":
-            absolabSet += 1;
-            break;
-        case "arcaneShoulder":
-            arcaneSet += 1;
-            break;
-		case "eternalShoulder":
-            eternalSet += 1;
-            break;
-    }
-	var selectedBadge = document.getElementById("selectBadge").value;
-	switch(selectedBadge) {
-        case "crystalVentusBadge":
-			bossSet += 1;
-            break;
-        case "sevenDaysBadge":
-			ied.push(10);
-			monsterParkSet += 1;
-            break;
-        case "genesisBadge":
-			pitchedSet += 1;
-            break;
-    }
-	var selectedRing1 = document.getElementById("selectRing1").value;
-	var selectedRing2 = document.getElementById("selectRing2").value;
-	var selectedRing3 = document.getElementById("selectRing3").value;
-	var selectedRing4 = document.getElementById("selectRing4").value;
-	switch(selectedRing1) {
-		case "superiorGolluxRing":
-            golluxSet += 1;
-            break;
-		case "dawnGuardianAngelRing":
-            dawnSet += 1;
-            break;
-		case "endlessTerror":
-            pitchedSet += 1;
-            break;
-    }
-	switch(selectedRing2) {
-		case "superiorGolluxRing":
-            golluxSet += 1;
-            break;
-		case "dawnGuardianAngelRing":
-            dawnSet += 1;
-            break;
-		case "endlessTerror":
-            pitchedSet += 1;
-            break;
-    }
-	switch(selectedRing3) {
-		case "superiorGolluxRing":
-            golluxSet += 1;
-            break;
-		case "dawnGuardianAngelRing":
-            dawnSet += 1;
-            break;
-		case "endlessTerror":
-            pitchedSet += 1;
-            break;
-    }
-	switch(selectedRing4) {
-		case "superiorGolluxRing":
-            golluxSet += 1;
-            break;
-		case "dawnGuardianAngelRing":
-            dawnSet += 1;
-            break;
-		case "endlessTerror":
-            pitchedSet += 1;
-            break;
-    }
-	var selectedPendant1 = document.getElementById("selectPendant1").value;
-	var selectedPendant2 = document.getElementById("selectPendant2").value;
-	switch(selectedPendant1) {
-		case "daybreakPendant":
-            dawnSet += 1;
-            break;
-        case "dominatorPendant":
-            bossSet += 1;
-            break;
-		case "superiorGolluxPendant":
-            golluxSet += 1;
-            break;
-		case "sourceOfSuffering":
-            pitchedSet += 1;
-            break;
-    }
-	switch(selectedPendant2) {
-		case "daybreakPendant":
-            dawnSet += 1;
-            break;
-        case "dominatorPendant":
-            bossSet += 1;
-            break;
-		case "superiorGolluxPendant":
-            golluxSet += 1;
-            break;
-		case "sourceOfSuffering":
-            pitchedSet += 1;
-            break;
-    }
-	var selectedPocket = document.getElementById("selectPocket").value;
-	switch(selectedPocket) {
-		case "pinkHolyCup":
-            bossSet += 1;
-            break;
-        case "cursedSpellbook":
-            pitchedSet += 1;
-            break;
-    }
-	var selectedHat = document.getElementById("selectHat").value;
-	switch(selectedHat) {
-		case "rootAbyssHat":
-            rootAbyssSet += 1;
-            break;
-        case "absolabHat":
-            absolabSet += 1;
-            break;
-		case "arcaneHat":
-            arcaneSet += 1;
-            break;
-		case "eternalHatHat":
-            eternalSet += 1;
-            break;	
-    }
-	var selectedTop = document.getElementById("selectTop").value;
-	switch(selectedTop) {
-		case "rootAbyssTop":
-            rootAbyssSet += 1;
-            break;
-		case "eternalTop":
-            eternalSet += 1;
-            break;	
-    }
-	var selectedBottom = document.getElementById("selectBottom").value;
-	switch(selectedBottom) {
-		case "rootAbyssBottom":
-			rootAbyssSet += 1;
-            break;
-		case "eternalBottom":
-            eternalSet += 1;
-            break;	
-    }
-	/* Lucky item */
-	if (genesisWeapon >= 1 && rootAbyssSet >= 3) {
+	if (genesisWeapon >= 1) {
+		if (rootAbyssSet >= 3) {
 		rootAbyssSet += 1;
+		}
+		if (absolabSet >= 3) {
+			absolabSet += 1;
+		}
+		if (arcaneSet >= 3) {
+			arcaneSet += 1;
+		}
+		if (eternalSet >= 3) {
+			eternalSet += 1;
+		}
 	}
-	if (genesisWeapon >= 1 && absolabSet >= 3) {
-		absolabSet += 1;
-	}
-	if (genesisWeapon >= 1 && arcaneSet >= 3) {
-		arcaneSet += 1;
-	}
-	if (genesisWeapon >= 1 && eternalSet >= 3) {
-		eternalSet += 1;
-	}
-	/* calculate */
-	switch (pitchedSet) {
-		case '2':
-			cStr += 10; cDex += 10; cInt += 10; cLuk += 10; hp += 250; att += 10; mAtt += 10; bossDmg.push(10);
-			break;
-		case '3':
-			cStr += 20; cDex += 20; cInt += 20; cLuk += 20; hp += 500; att += 20; mAtt += 20; bossDmg.push(10); ied.push(10);
-			break;
-		case '4':
-			cStr += 35; cDex += 35; cInt += 35; cLuk += 35; hp += 875; att += 35; mAtt += 35; bossDmg.push(10); ied.push(10); critDmg.push(5);
-			break;
-		case '5':
-			cStr += 50; cDex += 50; cInt += 50; cLuk += 50; hp += 1250; att += 50; mAtt += 50; bossDmg.push(20); ied.push(10); critDmg.push(5);
-			break;
-		case '6':
-			cStr += 65; cDex += 65; cInt += 65; cLuk += 65; hp += 1625; att += 65; mAtt += 65; bossDmg.push(20); ied.push(10); ied.push(10); critDmg.push(5);
-			break;
-		case '7':
-			cStr += 80; cDex += 80; cInt += 80; cLuk += 80; hp += 2000; att += 80; mAtt += 80; bossDmg.push(20); ied.push(10); ied.push(10); critDmg.push(10);
-			break;
-		case '8':
-			cStr += 95; cDex += 95; cInt += 95; cLuk += 95; hp += 2375; att += 95; mAtt += 95; bossDmg.push(30); ied.push(10); ied.push(10); critDmg.push(10);
-			break;
-		case '9':
-			cStr += 110; cDex += 110; cInt += 110; cLuk += 110; hp += 2750; att += 110; mAtt += 110; bossDmg.push(30); ied.push(10); ied.push(10); critDmg.push(15);
-			break;
-	}
-	switch (rootAbyssSet) {
-		case '2':
-			switch(primaryStat) {
-				case 'str':
-				case 'dex':
-					cStr += 20; cDex += 20; hp += 1000; mp += 1000;
-					break;
-				case 'int':
-					cInt += 20; cLuk += 20; hp += 1000; mp += 1000;
-					break;
-				case 'luk':
-					cLuk += 20; cDex += 20; hp += 1000; mp += 1000;
-					break;
-			}
-			break;
-		case '3':
-			switch(primaryStat) {
-				case 'str':
-				case 'dex':
-					cStr += 20; cDex += 20; hp += 1000; percentHp.push(10); mp += 1000; percentMp.push(10); att += 50;
-					break;
-				case 'int':
-					cInt += 20; cLuk += 20; hp += 1000; percentHp.push(10); mp += 1000; percentMp.push(10); Matt += 50;
-					break;
-				case 'luk':
-					cLuk += 20; cDex += 20; hp += 1000; percentHp.push(10); mp += 1000; percentMp.push(10); att += 50;
-					break;
-			}
-			break;
-		case '4':
-			switch(primaryStat) {
-				case 'str':
-				case 'dex':
-					cStr += 20; cDex += 20; hp += 1000; percentHp.push(10); mp += 1000; percentMp.push(10); att += 50; bossDmg.push(30);
-					break;
-				case 'int':
-					cInt += 20; cLuk += 20; hp += 1000; percentHp.push(10); mp += 1000; percentMp.push(10); Matt += 50; bossDmg.push(30);
-					break;
-				case 'luk':
-					cLuk += 20; cDex += 20; hp += 1000; percentHp.push(10); mp += 1000; percentMp.push(10); att += 50; bossDmg.push(30);
-					break;
-			}
-			break;
-	}
-	switch (absolabSet) {
-		case '2':
-			hp += 1500; mp += 1500; att += 20; mAtt += 20; bossDmg.push(10);
-			break;
-		case '3':
-			cStr += 30; cDex += 30; cInt += 30; cLuk += 30; hp += 1500; mp += 1500; att += 40; mAtt += 40; bossDmg.push(20);
-			break;
-		case '4':
-			cStr += 30; cDex += 30; cInt += 30; cLuk += 30; hp += 1500; mp += 1500; att += 65; mAtt += 65; bossDmg.push(20); ied.push(10);
-			break;
-		case '5':
-			cStr += 30; cDex += 30; cInt += 30; cLuk += 30; hp += 1500; mp += 1500; att += 95; mAtt += 95; bossDmg.push(30); ied.push(10);
-			break;
-		case '6':
-			cStr += 30; cDex += 30; cInt += 30; cLuk += 30; hp += 1500; percentHp.push(20); mp += 1500; percentMp.push(20); att += 115; mAtt += 115; bossDmg.push(30); ied.push(10);
-			break;
-		case '7':
-			cStr += 30; cDex += 30; cInt += 30; cLuk += 30; hp += 1500; percentHp.push(20); mp += 1500; percentMp.push(20); att += 135; mAtt += 135; bossDmg.push(30); ied.push(10); ied.push(10);
-			break;
-	}
-	switch (arcaneSet) {
-		case '2':
-			att += 30; mAtt += 30; bossDmg.push(10);
-			break;
-		case '3':
-			att += 60; mAtt += 60; bossDmg.push(10); ied.push(10);
-			break;
-		case '4':
-			cStr += 50; cDex += 50; cInt += 50; cLuk += 50; att += 95; mAtt += 95; bossDmg.push(20); ied.push(10);
-			break;
-		case '5':
-			cStr += 50; cDex += 50; cInt += 50; cLuk += 50; hp += 2000; mp += 2000; att += 135; mAtt += 135; bossDmg.push(30); ied.push(10);
-			break;
-		case '6':
-			cStr += 50; cDex += 50; cInt += 50; cLuk += 50; hp += 2000; percentHp.push(30); mp += 2000; percentMp.push(30);
-			att += 165; mAtt += 165; bossDmg.push(30); ied.push(10);
-			break;
-		case '7':
-			cStr += 50; cDex += 50; cInt += 50; cLuk += 50; hp += 2000; percentHp.push(30); mp += 2000; percentMp.push(30);
-			att += 195; mAtt += 195; bossDmg.push(30); ied.push(10); ied.push(10);
-			break;
-	}
-	switch (eternalSet) {
-		case '2':
-			hp += 2500; mp += 2500; att += 40; mAtt += 40; bossDmg.push(10);
-			break;
-		case '3':
-			cStr += 50; cDex += 50; cInt += 50; cLuk += 50; hp += 2500; mp += 2500; att += 80; mAtt += 80; bossDmg.push(20);
-			break;
-		case '4':
-			cStr += 50; cDex += 50; cInt += 50; cLuk += 50; hp += 2500; percentHp.push(15); mp += 2500; percentMp.push(15);
-			att += 120; mAtt += 120; bossDmg.push(30);
-			break;
-		case '5':
-			cStr += 50; cDex += 50; cInt += 50; cLuk += 50; hp += 2500; percentHp.push(15); mp += 2500; percentMp.push(15);
-			att += 160; mAtt += 160; bossDmg.push(30); ied.push(20);
-			break;
-	}
-	switch (golluxSet) {
-		case '2':
-			cStr += 20; cDex += 20; cInt += 20; cLuk += 20; hp += 1500; mp += 1500;
-			break;
-		case '3':
-			cStr += 20; cDex += 20; cInt += 20; cLuk += 20; hp += 1500; percentHp.push(13); mp += 1500; percentMp.push(13);
-			att += 35; mAtt += 35;
-			break;
-		case '4':
-			cStr += 20; cDex += 20; cInt += 20; cLuk += 20; hp += 1500; percentHp.push(13); mp += 1500; percentMp.push(13);
-			att += 35; mAtt += 35; bossDmg.push(30); ied.push(30);
-			break;
-	}
-	switch (dawnSet) {
-		case '2':
-			cStr += 10; cDex += 10; cInt += 10; cLuk += 10; att += 10; mAtt += 10; bossDmg.push(10);
-			break;
-		case '3':
-			cStr += 20; cDex += 20; cInt += 20; cLuk += 20; hp += 500; att += 20; mAtt += 20; bossDmg.push(10);
-			break;
-		case '4':
-			cStr += 30; cDex += 30; cInt += 30; cLuk += 30; hp += 750; att += 30; mAtt += 30; bossDmg.push(10); ied.push(10);
-			break;
-	}
-	switch (bossSet) {
-		case '3':
-			cStr += 10; cDex += 10; cInt += 10; cLuk += 10; percentHp.push(5); percentMp.push(5); att += 5; mAtt += 5;
-			break;
-		case '5':
-			cStr += 20; cDex += 20; cInt += 20; cLuk += 20; percentHp.push(10); percentMp.push(10); att += 10; mAtt += 10;
-			break;
-		case '7':
-			cStr += 30; cDex += 30; cInt += 30; cLuk += 30; percentHp.push(10); percentMp.push(10); att += 20; mAtt += 20; ied.push(10);
-			break;
-		case '9':
-			cStr += 45; cDex += 45; cInt += 45; cLuk += 45; percentHp.push(10); percentMp.push(10); att += 30; mAtt += 30; bossDmg.push(10); ied.push(10);
-			break;
-	}
-	switch (monsterParkSet) {
-		case '2':
-			cStr += 7; cDex += 7; cInt += 7; cLuk += 7; att += 7; mAtt += 7; ied.push(10);
-			break;
+};
+
+function getSetStats() {
+	let setsToGet = ['pitchedSet', 'rootAbyssSet', 'absolabSet', 'arcaneSet', 'eternalSet', 'golluxSet', 'dawnSet', 'bossSet', 'monsterParkSet'];
+	for (var set of setsToGet) {
+		let stats = setEffectStats[set][eval(set)];
+		if (set == 'rootAbyssSet') {
+			stats = setEffectStats[set][primaryStat][eval(set)];
+		}
+		cStr += stats[0],
+		cDex += stats[1];
+		cInt += stats[2];
+		cLuk += stats[3];
+		hp += stats[4];
+		mp += stats[5];
+		percentHp += stats[6];
+		percentMp += stats[7];
+		att += stats[8];
+		mAtt += stats[9];
+		bossDmg += stats[10];
+		ied.push(stats[11]);
+		ied.push(stats[12]);
+		critDmg += stats[13];
 	}
 }
 
+function getEquipmentPotentials() {
+	var ids = ['facePot1', 'facePot2', 'facePot3', 'eyePot1', 'eyePot2', 'eyePot3', 'earPot1', 'earPot2', 'earPot3',
+    'beltPot1', 'beltPot2', 'beltPot3', 'glovePot1', 'glovePot2', 'glovePot3', 'capePot1', 'capePot2', 'capePot3',
+    'shoePot1', 'shoePot2', 'shoePot3', 'shoulderPot1', 'shoulderPot2', 'shoulderPot3', 'badgePot1', 'badgePot2', 'badgePot3',
+    'ring1Pot1', 'ring1Pot2', 'ring1Pot3', 'ring2Pot1', 'ring2Pot2', 'ring2Pot3', 'ring3Pot1', 'ring3Pot2', 'ring3Pot3',
+    'ring4Pot1', 'ring4Pot2', 'ring4Pot3', 'pendant1Pot1', 'pendant1Pot2', 'pendant1Pot3', 'pendant2Pot1', 'pendant2Pot2', 'pendant2Pot3',
+    'hatPot1', 'hatPot2', 'hatPot3', 'topPot1', 'topPot2', 'topPot3', 'bottomPot1', 'bottomPot2', 'bottomPot3',
+	'heartPot1', 'heartPot2', 'heartPot3', 'emblemPot1', 'emblemPot2', 'emblemPot3', 'medalPot1', 'medalPot2', 'medalPot3',
+	'subweaponPot1', 'subweaponPot2', 'subweaponPot3', 'weaponPot1', 'weaponPot2', 'weaponPot3', 'ring1Level', 'ring2Level', 'ring3Level', 'ring4Level'];
+	
+	ids.forEach(function (id) {
+		var selectedPotential = document.getElementById(id).value;
+		var ringLevel = 0;
+		switch (selectedPotential) {
+			case "13%Str":
+				percentStr += 13;
+				break;
+			case "12%Str":
+				percentStr += 12;
+				break;
+			case "10%Str":
+				percentStr += 10;
+				break;
+			case "9%Str":
+				percentStr += 9;
+				break;
+			case "7%Str":
+				percentStr += 7;
+				break;
+			case "6%Str":
+				percentStr += 6;
+				break;
+			case "13%Dex":
+				percentDex += 13;
+				break;
+			case "12%Dex":
+				percentDex += 12;
+				break;
+			case "10%Dex":
+				percentDex += 10;
+				break;
+			case "9%Dex":
+				percentDex += 9;
+				break;
+			case "7%Dex":
+				percentDex += 7;
+				break;
+			case "6%Dex":
+				percentDex += 6;
+				break;
+			case "13%Int":
+				percentInt += 13;
+				break;
+			case "12%Int":
+				percentInt += 12;
+				break;
+			case "10%Int":
+				percentInt += 10;
+				break;
+			case "9%Int":
+				percentInt += 9;
+				break;
+			case "7%Int":
+				percentInt += 7;
+				break;
+			case "6%Int":
+				percentInt += 6;
+				break;
+			case "13%Luk":
+				percentLuk += 13;
+				break;
+			case "12%Luk":
+				percentLuk += 12;
+				break;
+			case "10%Luk":
+				percentLuk += 10;
+				break;
+			case "9%Luk":
+				percentLuk += 9;
+				break;
+			case "7%Luk":
+				percentLuk += 7;
+				break;
+			case "6%Luk":
+				percentLuk += 6;
+				break;
+			case "10%All":
+				percentAllStat += 10;
+				break;
+			case "9%All":
+				percentAllStat += 9;
+				break;
+			case "7%All":
+				percentAllStat += 7;
+				break;
+			case "6%All":
+				percentAllStat += 6;
+				break;
+			case "4%All":
+				percentAllStat += 4;
+				break;
+			case "3%All":
+				percentAllStat += 3;
+				break;
+			case "8%CritDmg":
+				critDmg += 8;
+				break;
+			case "2sec":
+				cdReductionSec += 2;
+				break;
+			case "1sec":
+				cdReductionSec += 1;
+				break;
+			case "13%Att":
+				percentAtt += 13;
+				break;
+			case "12%Att":
+				percentAtt += 12;
+				break;
+			case "10%Att":
+				percentAtt += 10;
+				break;
+			case "9%Att":
+				percentAtt += 9;
+				break;
+			case "7%Att":
+				percentAtt += 7;
+				break;
+			case "6%Att":
+				percentAtt += 6;
+				break;
+			case "4%Att":
+				percentAtt += 4;
+				break;
+			case "3%Att":
+				percentAtt += 3;
+				break;
+			case "13%MagAtt":
+				percentMagAtt += 13;
+				break;
+			case "12%MagAtt":
+				percentMagAtt += 12;
+				break;
+			case "10%MagAtt":
+				percentMagAtt += 10;
+				break;
+			case "9%MagAtt":
+				percentMagAtt += 9;
+				break;
+			case "7%MagAtt":
+				percentMagAtt += 7;
+				break;
+			case "6%MagAtt":
+				percentMagAtt += 6;
+				break;
+			case "4%MagAtt":
+				percentMagAtt += 4;
+				break;
+			case "3%MagAtt":
+				percentMagAtt += 3;
+				break;
+			case "40%Ied":
+				ied.push(40);
+				break;
+			case "35%Ied":
+				ied.push(35);
+				break;
+			case "30%Ied":
+				ied.push(30);
+				break;
+			case "15%Ied":
+				ied.push(15);
+				break;
+			case "40%Boss":
+				bossDmg += 40;
+				break;
+			case "35%Boss":
+				bossDmg += 35;
+				break;
+			case "30%Boss":
+				bossDmg += 30;
+				break;
+			case "15%Boss":
+				bossDmg += 15;
+				break;
+			case "lv1":
+				ringLevel = 1;
+				break;
+			case "lv2":
+				ringLevel = 2;
+				break;
+			case "lv3":
+				ringLevel = 3;
+				break;
+			case "lv4":
+				ringLevel = 4;
+				break;
+			case "lv5":
+				ringLevel = 5;
+				break;
+			default:
+				break;
+		}
+		if (ringLevel > ozRingLv) {
+			ozRingLv = ringLevel;
+		}
+	});
+}
 
+function getAdditionalStats() {
+	percentStr += parseInt(document.getElementById("addStr").value);
+	percentDex += parseInt(document.getElementById("addDex").value);
+	percentInt += parseInt(document.getElementById("addInt").value);
+	percentLuk += parseInt(document.getElementById("addLuk").value);
+	percentAllStat += parseInt(document.getElementById("addAllStat").value);
+	cStr += parseInt(document.getElementById("addFlatStr").value);
+	cDex += parseInt(document.getElementById("addFlatDex").value);
+	cInt += parseInt(document.getElementById("addFlatInt").value);
+	cLuk += parseInt(document.getElementById("addFlatLuk").value);
+	percentHp += parseInt(document.getElementById("addHp%").value);
+	percentMp += parseInt(document.getElementById("addMp%").value);
+	hp += parseInt(document.getElementById("addHp").value);
+	mp += parseInt(document.getElementById("addMp").value);
+	critRate += parseInt(document.getElementById("addCritRate").value);
+	critDmg += parseInt(document.getElementById("addCritDam").value);
+	ied.push(parseInt(document.getElementById("addIed").value));
+	bossDmg += parseInt(document.getElementById("addBoss").value);
+	dmg += parseInt(document.getElementById("addDam").value);
+	monsterDmg += parseInt(document.getElementById("addMonDam").value);
+	percentAtt += parseInt(document.getElementById("addAtt").value);
+	percentMagAtt += parseInt(document.getElementById("addMAtt").value);
+	att += parseInt(document.getElementById("addFlatAtt").value);
+	mAtt += parseInt(document.getElementById("legionMagAtt").value);
+	cdReductionSec += parseInt(document.getElementById("addCooldown").value);
+}
 
+function getSymbolStats() {
+	var arcaneSymbols = ['vjSymbol', 'chuchuSymbol', 'lachSymbol', 'arcanaSymbol', 'morassSymbol', 'esferaSymbol'];
+	var sacredSymbols = ['cerniumSymbol', 'arcusSymbol', 'odiumSymbol', 'shangSymbol', 'arteriaSymbol', 'carcionSymbol'];
+	arcaneSymbols.forEach(function (id) {
+		var selectedArcaneSymbol = document.getElementById(id).value;
+		if (selectedArcaneSymbol >= 1) {
+			if (charClass == "xenon") {
+				finalStr += ((selectedArcaneSymbol - 1) * 48) + 144;
+				finalDex += ((selectedArcaneSymbol - 1) * 48) + 144;
+				finalLuk += ((selectedArcaneSymbol - 1) * 48) + 144;
+			} else if (charClass == "demonAvenger") {
+				finalHp += ((selectedArcaneSymbol - 1) * 2100) + 6300;
+			} else {
+				if (primaryStat == "str") {
+					finalStr += ((selectedArcaneSymbol - 1) * 100) + 300;
+				} else if (primaryStat == "dex") {
+					finalDex += ((selectedArcaneSymbol - 1) * 100) + 300;
+				} else if (primaryStat == "int") {
+					finalInt += ((selectedArcaneSymbol - 1) * 100) + 300;
+				} else {
+					finalLuk += ((selectedArcaneSymbol - 1) * 100) + 300;
+				}
+			}
+			arcaneForce += ((selectedArcaneSymbol - 1) * 10) + 30;
+		}
+	});
+	sacredSymbols.forEach(function (id) {
+		var selectedSacredSymbol = document.getElementById(id).value;
+		if (selectedSacredSymbol >= 1) {
+			if (charClass == "xenon") {
+				finalStr += ((selectedSacredSymbol - 1) * 96) + 240;
+				finalDex += ((selectedSacredSymbol - 1) * 96) + 240;
+				finalLuk += ((selectedSacredSymbol - 1) * 96) + 240;
+			} else if (charClass == "demonAvenger") {
+				finalHp += ((selectedSacredSymbol - 1) * 4200) + 10500;
+			} else {
+				if (primaryStat == "str") {
+					finalStr += ((selectedSacredSymbol - 1) * 100) + 300;
+				} else if (primaryStat == "dex") {
+					finalDex += ((selectedSacredSymbol - 1) * 100) + 300;
+				} else if (primaryStat == "int") {
+					finalInt += ((selectedSacredSymbol - 1) * 100) + 300;
+				} else {
+					finalLuk += ((selectedSacredSymbol - 1) * 100) + 300;
+				}
+			}
+			sacredForce += ((selectedSacredSymbol - 1) * 10) + 10;
+		}
+	});
+}
 
+function updateStatsTable() {
+	let totalStr = Math.floor((cStr * (1 + (percentStr + percentAllStat) / 100)) + finalStr);
+	let totalDex = Math.floor((cDex * (1 + (percentDex + percentAllStat) / 100)) + finalDex);
+	let totalInt = Math.floor((cInt * (1 + (percentInt + percentAllStat) / 100)) + finalInt);
+	let totalLuk = Math.floor((cLuk * (1 + (percentLuk + percentAllStat) / 100)) + finalLuk);
+	document.getElementById("neutralStr").placeholder = totalStr;
+	document.getElementById("neutralDex").placeholder = totalDex;
+	document.getElementById("neutralInt").placeholder = totalInt;
+	document.getElementById("neutralLuk").placeholder = totalLuk;
+	document.getElementById("neutralAtt").placeholder = Math.floor(att * (1 + percentAtt / 100));
+	document.getElementById("neutralMAtt").placeholder = Math.floor(mAtt * (1 + percentMagAtt / 100));
+	document.getElementById("neutralAF").placeholder = arcaneForce;
+	document.getElementById("neutralSF").placeholder = sacredForce;
+	document.getElementById("neutralCritRate").placeholder = critRate;
+	document.getElementById("neutralCritDamage").placeholder = critDmg;
+	document.getElementById("neutralDmg").placeholder = dmg;
+	document.getElementById("neutralBossDmg").placeholder = bossDmg;
+	document.getElementById("neutralMonDmg").placeholder = monsterDmg;
+	let ignoreDefenseValue = 100;
+	for (var source of ied) {
+		ignoreDefenseValue *= (1 - source / 100);
+	}
+	ignoreDefenseValue = 100 - ignoreDefenseValue;
+	document.getElementById("neutralIED").placeholder = ignoreDefenseValue;
+	document.getElementById("neutralFD").placeholder = finalDamage;
+	document.getElementById("neutralBuffDuration").placeholder = buffDuration;
+	if (weaponAttackSpeed > 10) {
+		weaponAttackSpeed = 10;
+	}
+	document.getElementById("neutralAttSpeed").placeholder = weaponAttackSpeed;
+	let statValue = totalStr * 4 + totalDex;
+	if (tripleScaling == true) {
+		statValue = totalLuk * 4 + totalDex + totalStr;
+	} else if (primaryStat == "int") {
+		statValue = totalInt * 4 + totalLuk;
+	} else if (primaryStat == "luk") {
+		statValue = totalLuk * 4 + totalDex;
+	}
+	let totalAttack = att * (1 + percentAtt / 100);
+	let totalMagicAttack = mAtt * (1 + (percentMagAtt / 100));
+	let upperActualDamageRange = weaponMultiplier * statValue * (1 + totalAttack / 100);
+	let lowerActualDamageRange = upperActualDamageRange * 70 / 100; //70 base weapon mastery
+	let upperShownDamageRange = Math.floor(upperActualDamageRange * (1 + dmg / 100) * (1 + finalDamage / 100));
+	let lowerShownDamageRange = Math.floor(1 + lowerActualDamageRange * (1 + dmg / 100) * (1 + finalDamage / 100));
+	document.getElementById("neutralRange").placeholder = lowerShownDamageRange + " - " + upperShownDamageRange;
+}
 
+function applyCooldownReduction(inputCD, resettable) { //resettable only <4th job, (Excl. hyper, 6th, 5th, and specifically excluded skills)
+    // Convert cdReductionSecond to milliseconds
+    let cdReductionMS = cdReductionSecond * 1000;
+    // Calculate the initial new cooldown
+    let newCD = inputCD * (1 - cdReductionPercent);
+	if (resettable) {
+		newCD = inputCD * (1 - (cdReductionPercent + cdSkipChance * 0.01));
+	}
+    // Check if direct subtraction would fall below 10,000 milliseconds
+    if (newCD - cdReductionMS < 10000) {
+        // Determine how much of the reduction would bring the cooldown below 10,000 ms
+        let safeReduction = newCD - 10000; // This is the amount we can safely reduce without going below 10,000 ms
+        let excessReduction = cdReductionMS - safeReduction; // The rest needs to be adjusted
+        // Apply safe reduction
+        newCD -= safeReduction;
+        // Apply the percentage reduction for the excess
+        let excessReductionInSeconds = excessReduction / 1000; // Convert excess milliseconds back to seconds
+        let percentageReduction = 1 - (excessReductionInSeconds * 0.0005); // Each 0.01 second adds 0.05% reduction
+        newCD *= percentageReduction; // Apply percentage reduction
+    } else {
+        // Safe to subtract cdReductionMS directly
+        newCD -= cdReductionMS;
+    }
+    // Ensure the cooldown doesn't drop below 5000 milliseconds
+    if (newCD <= 5000) {
+        newCD = 5000;
+    }
+    // Return the final cooldown in milliseconds
+    return Math.floor(newCD);
+}
 
-
-
-
-
+function applyAttackSpeed(inputDelay) {
+	if (weaponAttackSpeed > 10) {
+		return Math.floor(100 * 10 / 16);
+	} else {
+		return Math.floor(100 * (20 - weaponAttackSpeed) / 16);
+	}
+}

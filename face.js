@@ -1,5 +1,5 @@
 /* hold equipment stats */
-var faceJobStat = 0; var faceAllStat = 0; var faceHp = 0; var faceMp = 0; var faceAtt = 0; var faceMAtt = 0;
+var faceJobStat = 0; var faceAllStat = 0; var faceHp = 0; var faceMp = 0; var faceAtt = 0; var faceMAtt = 0; var faceBoss = 0; var faceIed = 0;
 
 /* Update star force options, change image on selection */
 function updateFaceStarForceOptions() {

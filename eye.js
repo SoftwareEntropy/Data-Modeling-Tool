@@ -1,5 +1,5 @@
 /* hold equipment stats */
-var eyeJobStat = 0; var eyeAllStat = 0; var eyeHp = 0; var eyeMp = 0; var eyeAtt = 0; var eyeMAtt = 0;
+var eyeJobStat = 0; var eyeAllStat = 0; var eyeHp = 0; var eyeMp = 0; var eyeAtt = 0; var eyeMAtt = 0; var eyeBoss = 0; var eyeIed = 0;
 
 /* Update star force options, change image on selection */
 function updateEyeStarForceOptions() {

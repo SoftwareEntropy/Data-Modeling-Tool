@@ -1,5 +1,5 @@
 /* hold equipment stats */
-var shoeJobStat = 0; var shoeAllStat = 0; var shoeHp = 0; var shoeMp = 0; var shoeAtt = 0; var shoeMAtt = 0;
+var shoeJobStat = 0; var shoeAllStat = 0; var shoeHp = 0; var shoeMp = 0; var shoeAtt = 0; var shoeMAtt = 0; var shoeBoss = 0; var shoeIed = 0;
 
 /* Update star force options, change image on selection */
 function updateShoeStarForceOptions() {

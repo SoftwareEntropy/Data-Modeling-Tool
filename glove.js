@@ -1,5 +1,5 @@
 /* hold equipment stats */
-var gloveJobStat = 0; var gloveAllStat = 0; var gloveHp = 0; var gloveMp = 0; var gloveAtt = 0; var gloveMAtt = 0;
+var gloveJobStat = 0; var gloveAllStat = 0; var gloveHp = 0; var gloveMp = 0; var gloveAtt = 0; var gloveMAtt = 0; var gloveBoss = 0; var gloveIed = 0;
 
 /* Update star force options, change image on selection */
 function updateGloveStarForceOptions() {

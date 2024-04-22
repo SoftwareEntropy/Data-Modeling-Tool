@@ -1,5 +1,5 @@
 /* hold equipment stats */
-var subweaponJobStat = 0; var subweaponAllStat = 0; var subweaponHp = 0; var subweaponMp = 0; var subweaponAtt = 0; var subweaponMAtt = 0;
+var subweaponJobStat = 0; var subweaponAllStat = 0; var subweaponHp = 0; var subweaponMp = 0; var subweaponAtt = 0; var subweaponMAtt = 0; var subweaponBoss = 0; var subweaponIed = 0;
 
 var charClass = document.getElementById("selectClass");
 var selectDropdown = document.getElementById("selectSubweapon");
@@ -95,37 +95,37 @@ function updateSubweaponStarForceOptions() {
     switch(selectedSubweapon) {
         case "princessNoSubweapon":
             options = [0];
-            subweaponEquipImage.src = "images/magician/01352815.img.info.icon._outlink.png";
+            subweaponEquipImage.src = "images/magician/01352815.img.info.icon._outlink.png"; subweaponBoss = 0; subweaponIed = 0;
             break;
         case "sweetwaterKatara":
-            subweaponEquipImage.src = "images/thief/01342090.img.info.icon._outlink.png";
+            subweaponEquipImage.src = "images/thief/01342090.img.info.icon._outlink.png"; subweaponBoss = 30; subweaponIed = 10;
             break;
 		case "deimosMageShield":
             options = [20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0];
-            subweaponEquipImage.src = "images/magician/01092089.img.info.icon._outlink.png";
+            subweaponEquipImage.src = "images/magician/01092089.img.info.icon._outlink.png"; subweaponBoss = 0; subweaponIed = 0;
             break;
 		case "deimosWarriorShield":
 			options = [20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0];
-            subweaponEquipImage.src = "images/warrior/01092087.img.info.icon._outlink.png";
+            subweaponEquipImage.src = "images/warrior/01092087.img.info.icon._outlink.png"; subweaponBoss = 0; subweaponIed = 0;
             break;
 		case "deimosThiefShield":
 			options = [20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0];
-            subweaponEquipImage.src = "images/thief/01092088.img.info.icon._outlink.png";
+            subweaponEquipImage.src = "images/thief/01092088.img.info.icon._outlink.png"; subweaponBoss = 0; subweaponIed = 0;
             break;
 		case "ruinForceShield":
             options = [0];
-            subweaponEquipImage.src = "images/warrior/01099015.img.info.icon._outlink.png";
+            subweaponEquipImage.src = "images/warrior/01099015.img.info.icon._outlink.png"; subweaponBoss = 0; subweaponIed = 0;
             break;
 		case "kannaFan":
             options = [0];
-            subweaponEquipImage.src = "images/magician/01552119.img.info.icon._outlink.png";
+            subweaponEquipImage.src = "images/magician/01552119.img.info.icon._outlink.png"; subweaponBoss = 0; subweaponIed = 0;
             break;
 		case "lapis":
-            subweaponEquipImage.src = "images/warrior/01562007.img.info.icon._outlink.png";
+            subweaponEquipImage.src = "images/warrior/01562007.img.info.icon._outlink.png"; subweaponBoss = 0; subweaponIed = 0;
             break;	
 		case "none":
             options = [0];
-            subweaponEquipImage.src = "images/UIelements/Equip.Equip.Slots.10._outlink.png";
+            subweaponEquipImage.src = "images/UIelements/Equip.Equip.Slots.10._outlink.png"; subweaponBoss = 0; subweaponIed = 0;
             break;	
     }
     for (var i = 0; i < options.length; i++) {

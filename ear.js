@@ -1,5 +1,5 @@
 /* hold equipment stats */
-var earJobStat = 0; var earAllStat = 0; var earHp = 0; var earMp = 0; var earAtt = 0; var earMAtt = 0;
+var earJobStat = 0; var earAllStat = 0; var earHp = 0; var earMp = 0; var earAtt = 0; var earMAtt = 0;  var earBoss = 0; var earIed = 0;
 
 /* Update star force options, change image on selection */
 function updateEarStarForceOptions() {

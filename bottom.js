@@ -1,5 +1,5 @@
 /* Hold equipment stats */
-var bottomJobStat = 0; var bottomAllStat = 0; var bottomHp = 0; var bottomMp = 0; var bottomAtt = 0; var bottomMAtt = 0;
+var bottomJobStat = 0; var bottomAllStat = 0; var bottomHp = 0; var bottomMp = 0; var bottomAtt = 0; var bottomMAtt = 0; var bottomBoss = 0; var bottomIed = 0;
 
 /* Update star force options, change image on selection */
 function updateBottomStarForceOptions() {
@@ -10,14 +10,14 @@ function updateBottomStarForceOptions() {
     var options = [25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0];
     switch(selectedBottom) {
 		case "rootAbyssBottom":
-            bottomEquipImage.src = "images/magician/01062259.img.info.icon._outlink.png";
+            bottomEquipImage.src = "images/magician/01062259.img.info.icon._outlink.png"; bottomBoss = 0; bottomIed = 5;
             break;
 		case "eternalBottom":
-            bottomEquipImage.src = "images/magician/01062286.img.info.icon._outlink.png";
+            bottomEquipImage.src = "images/magician/01062286.img.info.icon._outlink.png"; bottomBoss = 0; bottomIed = 5;
             break;
 		case "none":
             options = [0];
-            bottomEquipImage.src = "images/UIelements/Equip.Equip.Slots.6._outlink.png";
+            bottomEquipImage.src = "images/UIelements/Equip.Equip.Slots.6._outlink.png"; bottomBoss = 0; bottomIed = 0;
             break;	
     }
     for (var i = 0; i < options.length; i++) {

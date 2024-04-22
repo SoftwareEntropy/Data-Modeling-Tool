@@ -1,6 +1,6 @@
 /* hold equipment stats */
-var pendant1JobStat = 0; var pendant1AllStat = 0; var pendant1Hp = 0; var pendant1Mp = 0; var pendant1Att = 0; var pendant1MAtt = 0;
-var pendant2JobStat = 0; var pendant2AllStat = 0; var pendant2Hp = 0; var pendant2Mp = 0; var pendant2Att = 0; var pendant2MAtt = 0;
+var pendant1JobStat = 0; var pendant1AllStat = 0; var pendant1Hp = 0; var pendant1Mp = 0; var pendant1Att = 0; var pendant1MAtt = 0; var pendant1Boss = 0; var pendant1Ied = 0;
+var pendant2JobStat = 0; var pendant2AllStat = 0; var pendant2Hp = 0; var pendant2Mp = 0; var pendant2Att = 0; var pendant2MAtt = 0; var pendant2Boss = 0; var pendant2Ied = 0;
 
 function restoreOptions(selector, maxIndex){
 	for (let i = 0; i < maxIndex; i++) {

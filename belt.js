@@ -1,5 +1,5 @@
 /* hold equipment stats */
-var beltJobStat = 0; var beltAllStat = 0; var beltHp = 0; var beltMp = 0; var beltAtt = 0; var beltMAtt = 0;
+var beltJobStat = 0; var beltAllStat = 0; var beltHp = 0; var beltMp = 0; var beltAtt = 0; var beltMAtt = 0; var beltBoss = 0; var beltIed = 0;
 
 /* Update star force options, change image on selection */
 function updateBeltStarForceOptions() {

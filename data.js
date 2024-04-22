@@ -110,7 +110,7 @@ function getItemStats(itemLevel, starForceLevel, itemType, itemJobStat, itemAllS
 }
 
 const classData = {
-	"unselected": {  // edit for default, unchosen class values.
+	"none": {  // edit for default, unchosen class values.
 		classType: "warrior",
 		weaponAttackSpeed: 4,
 		weaponMultiplier: 1.3,
@@ -134,7 +134,7 @@ const classData = {
 	},
 	"adele": {
 		classType: "warrior",
-		weaponAttackSpeed: 4,
+		weaponAttackSpeed: 6,
 		weaponMultiplier: 1.3,
 		weaponRefNum: 8, // Bladecaster: 171, 205, 295, 340
 		weaponImages: {
@@ -224,7 +224,7 @@ const classData = {
 	},
 	"cannoneer": {
 		classType: "pirate",
-		weaponAttackSpeed: 8,
+		weaponAttackSpeed: 2,
 		weaponMultiplier: 1.5,
 		weaponRefNum: 3, // Cannon: 128, 154, 221, 255
 		weaponImages: {
@@ -242,7 +242,7 @@ const classData = {
 	},
 	"darkKnight": {
 		classType: "warrior",
-		weaponAttackSpeed: 6,
+		weaponAttackSpeed: 4,
 		weaponMultiplier: 1.49,
 		weaponRefNum: 8, // Spear: 171, 205, 295, 340
 		weaponImages: {
@@ -260,7 +260,7 @@ const classData = {
 	},
 	"dawnWarrior": {
 		classType: "warrior",
-		weaponAttackSpeed: 6,
+		weaponAttackSpeed: 4,
 		weaponMultiplier: 1.34,
 		weaponRefNum: 8, // 2-h Sword: 171, 205, 295, 340
 		weaponImages: {
@@ -317,7 +317,7 @@ const classData = {
 	},
 	"hero": {
 		classType: "warrior",
-		weaponAttackSpeed: 6,
+		weaponAttackSpeed: 4,
 		weaponMultiplier: 1.44, // +.1 hero bonus
 		weaponRefNum: 8, // 2-h Sword: 171, 205, 295, 340
 		weaponImages: {
@@ -335,7 +335,7 @@ const classData = {
 	},
 	"kaiser": {
 		classType: "warrior",
-		weaponAttackSpeed: 6,
+		weaponAttackSpeed: 4,
 		weaponMultiplier: 1.34,
 		weaponRefNum: 8, // 2-h Sword: 171, 205, 295, 340
 		weaponImages: {
@@ -353,7 +353,7 @@ const classData = {
 	},
 	"mihile": {
 		classType: "warrior",
-		weaponAttackSpeed: 6,
+		weaponAttackSpeed: 4,
 		weaponMultiplier: 1.24,
 		weaponRefNum: 6, // 1-h Sword: 164, 197, 283, 326
 		weaponImages: {
@@ -371,7 +371,7 @@ const classData = {
 	},
 	"paladin": {
 		classType: "warrior",
-		weaponAttackSpeed: 6,
+		weaponAttackSpeed: 4,
 		weaponMultiplier: 1.34,
 		weaponRefNum: 8, // 2-h Blunt: 171, 205, 295, 340
 		weaponImages: {
@@ -443,7 +443,7 @@ const classData = {
 	},
 	"bowmaster": {
 		classType: "bowman",
-		weaponAttackSpeed: 6,
+		weaponAttackSpeed: 4,
 		weaponMultiplier: 1.3,
 		weaponRefNum: 5, // Bow: 160, 192, 276, 318
 		weaponImages: {
@@ -479,7 +479,7 @@ const classData = {
 	},
 	"kain": {
 		classType: "bowman",
-		weaponAttackSpeed: 4,
+		weaponAttackSpeed: 6,
 		weaponMultiplier: 1.3,
 		weaponRefNum: 5, // Whispershot: 160, 192, 276, 318
 		weaponImages: {
@@ -497,7 +497,7 @@ const classData = {
 	},
 	"marksman": {
 		classType: "bowman",
-		weaponAttackSpeed: 6,
+		weaponAttackSpeed: 4,
 		weaponMultiplier: 1.35,
 		weaponRefNum: 6, // Crossbow: 164, 197, 283, 326
 		weaponImages: {
@@ -533,7 +533,7 @@ const classData = {
 	},
 	"mercedes": {
 		classType: "bowman",
-		weaponAttackSpeed: 6,
+		weaponAttackSpeed: 4,
 		weaponMultiplier: 1.3,
 		weaponRefNum: 5, // Dual Bowguns: 160, 192, 276, 318
 		weaponImages: {
@@ -551,7 +551,7 @@ const classData = {
 	},
 	"pathfinder": {
 		classType: "bowman",
-		weaponAttackSpeed: 6,
+		weaponAttackSpeed: 4,
 		weaponMultiplier: 1.3,
 		weaponRefNum: 5, // Bow: 160, 192, 276, 318
 		weaponImages: {
@@ -569,7 +569,7 @@ const classData = {
 	},
 	"wildHunter": {
 		classType: "bowman",
-		weaponAttackSpeed: 6,
+		weaponAttackSpeed: 4,
 		weaponMultiplier: 1.35,
 		weaponRefNum: 6, // Crossbow: 164, 197, 283, 326
 		weaponImages: {
@@ -587,7 +587,7 @@ const classData = {
 	},
 	"windArcher": {
 		classType: "bowman",
-		weaponAttackSpeed: 6,
+		weaponAttackSpeed: 4,
 		weaponMultiplier: 1.3,
 		weaponRefNum: 5, // Bow: 160, 192, 276, 318
 		weaponImages: {
@@ -605,7 +605,7 @@ const classData = {
 	},
 	"archMageIceLightning": {
 		classType: "magician",
-		weaponAttackSpeed: 6, // 8 -> 6 Casting speed override
+		weaponAttackSpeed: 4, // 8 -> 6 Casting speed override
 		weaponMultiplier: 1.2,
 		weaponRefNum: 12, // Staff (Att/MAtt): 126/204, 151/245, 218/353, 251/406
 		weaponImages: {
@@ -626,7 +626,7 @@ const classData = {
 	},
 	"archMageFirePoison": {
 		classType: "magician",
-		weaponAttackSpeed: 6, // 8 -> 6 Casting speed override
+		weaponAttackSpeed: 4, // 8 -> 6 Casting speed override
 		weaponMultiplier: 1.2,
 		weaponRefNum: 12, // Staff (Att/MAtt): 126/204, 151/245, 218/353, 251/406
 		weaponImages: {
@@ -647,7 +647,7 @@ const classData = {
 	},
 	"battleMage": {
 		classType: "magician",
-		weaponAttackSpeed: 6, // 8 -> 6 Casting speed override
+		weaponAttackSpeed: 4, // 8 -> 6 Casting speed override
 		weaponMultiplier: 1.2,
 		weaponRefNum: 12, // Staff (Att/MAtt): 126/204, 151/245, 218/353, 251/406
 		weaponImages: {
@@ -668,7 +668,7 @@ const classData = {
 	},
 	"beastTamer": {
 		classType: "magician",
-		weaponAttackSpeed: 6,
+		weaponAttackSpeed: 4,
 		weaponMultiplier: 1.34,
 		weaponRefNum: 11, // Scepter (Att/MAtt): 119/201, 143/241, 206/347, 237/400
 		weaponImages: {
@@ -689,7 +689,7 @@ const classData = {
 	},
 	"bishop": {
 		classType: "magician",
-		weaponAttackSpeed: 6, // 8 -> 6 Casting speed override
+		weaponAttackSpeed: 4, // 8 -> 6 Casting speed override
 		weaponMultiplier: 1.2,
 		weaponRefNum: 12, // Staff (Att/MAtt): 126/204, 151/245, 218/353, 251/406
 		weaponImages: {
@@ -710,7 +710,7 @@ const classData = {
 	},
 	"blazeWizard": {
 		classType: "magician",
-		weaponAttackSpeed: 6, // 8 -> 6 Casting speed override
+		weaponAttackSpeed: 4, // 8 -> 6 Casting speed override
 		weaponMultiplier: 1.2,
 		weaponRefNum: 12, // Staff (Att/MAtt): 126/204, 151/245, 218/353, 251/406
 		weaponImages: {
@@ -731,7 +731,7 @@ const classData = {
 	},
 	"evan": {
 		classType: "magician",
-		weaponAttackSpeed: 6, // 8 -> 6 Casting speed override
+		weaponAttackSpeed: 4, // 8 -> 6 Casting speed override
 		weaponMultiplier: 1.2,
 		weaponRefNum: 12, // Staff (Att/MAtt): 126/204, 151/245, 218/353, 251/406
 		weaponImages: {
@@ -752,7 +752,7 @@ const classData = {
 	},
 	"illium": {
 		classType: "magician",
-		weaponAttackSpeed: 6,
+		weaponAttackSpeed: 4,
 		weaponMultiplier: 1.2,
 		weaponRefNum: 11, // Lucent Gauntlet (Att/MAtt): 119/201, 143/241, 206/347, 237/400
 		weaponImages: {
@@ -770,7 +770,7 @@ const classData = {
 	},
 	"kanna": {
 		classType: "magician",
-		weaponAttackSpeed: 6, // 8 -> 6 Casting speed override
+		weaponAttackSpeed: 4, // 8 -> 6 Casting speed override
 		weaponMultiplier: 1.35,
 		weaponRefNum: 13, // Fan (Att/MAtt): 126/204, 151/245, 218/353, 251/406
 		weaponImages: {
@@ -788,7 +788,7 @@ const classData = {
 	},
 	"kinesis": {
 		classType: "magician",
-		weaponAttackSpeed: 6,
+		weaponAttackSpeed: 4,
 		weaponMultiplier: 1.2,
 		weaponRefNum: 11, // Psy-Limiter (Att/MAtt): 119/201, 143/241, 206/347, 237/400
 		weaponImages: {
@@ -806,7 +806,7 @@ const classData = {
 	},
 	"lara": {
 		classType: "magician",
-		weaponAttackSpeed: 6,
+		weaponAttackSpeed: 4,
 		weaponMultiplier: 1.2,
 		weaponRefNum: 11, // Wand (Att/MAtt): 119/201, 143/241, 206/347, 237/400
 		weaponImages: {
@@ -824,7 +824,7 @@ const classData = {
 	},
 	"luminous": {
 		classType: "magician",
-		weaponAttackSpeed: 6,
+		weaponAttackSpeed: 4,
 		weaponMultiplier: 1.2,
 		weaponRefNum: 11, // Shining Rod (Att/MAtt): 119/201, 143/241, 206/347, 237/400
 		weaponImages: {
@@ -842,7 +842,7 @@ const classData = {
 	},
 	"hoyoung": {
 		classType: "thief",
-		weaponAttackSpeed: 4,
+		weaponAttackSpeed: 6,
 		weaponMultiplier: 1.3,
 		weaponRefNum: 5, // Ritual Fan: 160, 192, 276, 318
 		weaponImages: {
@@ -878,7 +878,7 @@ const classData = {
 	},
 	"nightLord": {
 		classType: "thief",
-		weaponAttackSpeed: 4,
+		weaponAttackSpeed: 6,
 		weaponMultiplier: 1.75,
 		weaponRefNum: 1, // Claw: 86, 103, 149, 172
 		weaponImages: {
@@ -896,7 +896,7 @@ const classData = {
 	},
 	"nightWalker": {
 		classType: "thief",
-		weaponAttackSpeed: 4,
+		weaponAttackSpeed: 6,
 		weaponMultiplier: 1.75,
 		weaponRefNum: 1, // Claw: 86, 103, 149, 172
 		weaponImages: {
@@ -932,7 +932,7 @@ const classData = {
 	},
 	"cadena": {
 		classType: "thief",
-		weaponAttackSpeed: 4,
+		weaponAttackSpeed: 6,
 		weaponMultiplier: 1.3,
 		weaponRefNum: 5, // Chain: 160, 192, 276, 318
 		weaponImages: {
@@ -950,7 +950,7 @@ const classData = {
 	},
 	"dualBlade": {
 		classType: "thief",
-		weaponAttackSpeed: 4,
+		weaponAttackSpeed: 6,
 		weaponMultiplier: 1.3,
 		weaponRefNum: 5, // Dagger: 160, 192, 276, 318
 		weaponImages: {
@@ -968,7 +968,7 @@ const classData = {
 	},
 	"shadower": {
 		classType: "thief",
-		weaponAttackSpeed: 4,
+		weaponAttackSpeed: 6,
 		weaponMultiplier: 1.3,
 		weaponRefNum: 5, // Dagger: 160, 192, 276, 318
 		weaponImages: {
@@ -989,7 +989,7 @@ const classData = {
 	},
 	"demonAvenger": {
 		classType: "warrior",
-		weaponAttackSpeed: 6,
+		weaponAttackSpeed: 4,
 		weaponMultiplier: 1.3,
 		weaponRefNum: 8, // Desperado: 171, 205, 295, 340
 		weaponImages: {
@@ -1028,7 +1028,7 @@ const classData = {
 	},
 	"zero": {
 		classType: "warrior",
-		weaponAttackSpeed: 6,
+		weaponAttackSpeed: 4,
 		weaponMultiplier: 1.3125,
 		weaponMultiplier2: 149,
 		weaponRefNum: 7, // Lazuli: 169, 203, 293, 337
@@ -1153,6 +1153,304 @@ const subWeaponStats = {
 	23 : { itemLv: 200, str: 150, dex: 150, _int: 0, luk: 0, hp: 0, mp: 0, att: 342, mAtt: 0 }, // Lapis, Genesis (Pre SF)
 	24 : { str: 0, dex: 0, _int: 0, luk: 0, hp: 0, mp: 0, att: 93, mAtt: 0 } // pNo Katara
 };
+
+const armorImages = {
+	none: { //unselected character class, default to warrior
+		rootAbyssHat: "images/warrior/01003797.img.info.icon._outlink.png",
+		absolabHat: "images/warrior/01004422.img.info.icon._outlink.png",
+		arcaneHat: "images/warrior/01004808.img.info.icon._outlink.png",
+		eternalHat: "images/warrior/01005980.img.info.icon._outlink.png",
+		rootAbyssTop: "images/warrior/01042254.img.info.icon._outlink.png",
+		eternalTop: "images/warrior/01042433.img.info.icon._outlink.png",
+		rootAbyssBottom: "images/warrior/01062165.img.info.icon._outlink.png",
+		eternalBottom: "images/warrior/01062285.img.info.icon._outlink.png",
+		cursedSpellbook: "images/warrior/01162080.img.info.icon._outlink.png"
+	},
+	warrior: {
+		rootAbyssHat: "images/warrior/01003797.img.info.icon._outlink.png",
+		absolabHat: "images/warrior/01004422.img.info.icon._outlink.png",
+		arcaneHat: "images/warrior/01004808.img.info.icon._outlink.png",
+		eternalHat: "images/warrior/01005980.img.info.icon._outlink.png",
+		rootAbyssTop: "images/warrior/01042254.img.info.icon._outlink.png",
+		eternalTop: "images/warrior/01042433.img.info.icon._outlink.png",
+		rootAbyssBottom: "images/warrior/01062165.img.info.icon._outlink.png",
+		eternalBottom: "images/warrior/01062285.img.info.icon._outlink.png",
+		cursedSpellbook: "images/warrior/01162080.img.info.icon._outlink.png"
+	},
+	bowman: {
+		rootAbyssHat: "images/bowman/01003799.img.info.icon._outlink.png",
+		absolabHat: "images/bowman/01004424.img.info.icon._outlink.png",
+		arcaneHat: "images/bowman/01004810.img.info.icon._outlink.png",
+		eternalHat: "images/bowman/01005982.img.info.icon._outlink.png",
+		rootAbyssTop: "images/bowman/01042256.img.info.icon._outlink.png",
+		eternalTop: "images/bowman/01042435.img.info.icon._outlink.png",
+		rootAbyssBottom: "images/bowman/01062167.img.info.icon._outlink.png",
+		eternalBottom: "images/bowman/01062287.img.info.icon._outlink.png",
+		cursedSpellbook: "images/bowman/01162082.img.info.icon._outlink.png"
+	},
+	magician: {
+		rootAbyssHat: "images/magician/01005303.img.info.icon._outlink.png",
+		absolabHat: "images/magician/01004423.img.info.icon._outlink.png",
+		arcaneHat: "images/magician/01004809.img.info.icon._outlink.png",
+		eternalHat: "images/magician/01005981.img.info.icon._outlink.png",
+		rootAbyssTop: "images/magician/01042393.img.info.icon._outlink.png",
+		eternalTop: "images/magician/01042434.img.info.icon._outlink.png",
+		rootAbyssBottom: "images/magician/01062259.img.info.icon._outlink.png",
+		eternalBottom: "images/magician/01062286.img.info.icon._outlink.png",
+		cursedSpellbook: "images/magician/sbinfo.icon._outlink.png"
+	},
+	pirate: {
+		rootAbyssHat: "images/pirate/01003801.img.info.icon._outlink.png",
+		absolabHat: "images/pirate/01004426.img.info.icon._outlink.png",
+		arcaneHat: "images/pirate/01004812.img.info.icon._outlink.png",
+		eternalHat: "images/pirate/01005984.img.info.icon._outlink.png",
+		rootAbyssTop: "images/pirate/01042258.img.info.icon._outlink.png",
+		eternalTop: "images/pirate/01042437.img.info.icon._outlink.png",
+		rootAbyssBottom: "images/pirate/01062169.img.info.icon._outlink.png",
+		eternalBottom: "images/pirate/01062289.img.info.icon._outlink.png",
+		cursedSpellbook: "images/warrior/01162080.img.info.icon._outlink.png"
+	},
+	thief: {
+		rootAbyssHat: "images/thief/01003800.img.info.icon._outlink.png",
+		absolabHat: "images/thief/01004425.img.info.icon._outlink.png",
+		arcaneHat: "images/thief/01004811.img.info.icon._outlink.png",
+		eternalHat: "images/thief/01005983.img.info.icon._outlink.png",
+		rootAbyssTop: "images/thief/01042257.img.info.icon._outlink.png",
+		eternalTop: "images/thief/01042436.img.info.icon._outlink.png",
+		rootAbyssBottom: "images/thief/01062168.img.info.icon._outlink.png",
+		eternalBottom: "images/thief/01062288.img.info.icon._outlink.png",
+		cursedSpellbook: "images/thief/01162083.img.info.icon._outlink.png"
+	}
+};
+
+const setEffects = {
+	selectHeart: { 
+		blackHeart: 'pitchedSet' 
+	},
+	selectMedal: { 
+		sevenDayMonsterParker: 'monsterParkSet' 
+	},
+	selectEmblem: { 
+		mitrasRage: 'pitchedSet' 
+	},
+	selectWeapon: {
+		fafnirWeapon: 'rootAbyssSet',
+		absolabWeapon: 'absolabSet',
+		arcaneWeapon: 'arcaneSet',
+		genesisWeapon: 'genesisWeapon'
+	},
+	selectFace: {
+		condensedPowerCrystal: 'bossSet',
+		twilightMark: 'dawnSet',
+		berserked: 'pitchedSet'
+	},
+	selectEye: {
+		aquaticLetterEyeAccessory: 'bossSet',
+		blackBeanMark: 'bossSet',
+		papulatusMark: 'bossSet',
+		magicEyepatch: 'pitchedSet'
+	},
+	selectEar: {
+		superiorGolluxEarrings: 'golluxSet',
+		estellaEarrings: 'dawnSet',
+		commandingForceEarrings: 'pitchedSet'
+	},
+	selectBelt: {
+		superiorGolluxBelt: 'golluxSet',
+		dreamyBelt: 'pitchedSet'
+	},
+	selectGlove: {
+		absolabGloves: 'absolabSet',
+		arcaneGloves: 'arcaneSet'
+	},
+	selectCape: {
+		absolabCape: 'absolabSet',
+		arcaneCape: 'arcaneSet'
+	},
+	selectShoe: {
+		absolabShoe: 'absolabSet',
+		arcaneShoe: 'arcaneSet'
+	},
+	selectShoulder: {
+		absolabShoulder: 'absolabSet',
+		arcaneShoulder: 'arcaneSet',
+		eternalShoulder: 'eternalSet'
+	},
+	selectBadge: {
+		crystalVentusBadge: 'bossSet',
+		sevenDaysBadge: 'monsterParkSet',
+		genesisBadge: 'pitchedSet'
+	},
+	selectRing1: {
+		superiorGolluxRing: 'golluxSet',
+		dawnGuardianAngelRing: 'dawnSet',
+		endlessTerror: 'pitchedSet'
+	},
+	selectRing2: {
+		superiorGolluxRing: 'golluxSet',
+		dawnGuardianAngelRing: 'dawnSet',
+		endlessTerror: 'pitchedSet'
+	},
+	selectRing3: {
+		superiorGolluxRing: 'golluxSet',
+		dawnGuardianAngelRing: 'dawnSet',
+		endlessTerror: 'pitchedSet'
+	},
+	selectRing4: {
+		superiorGolluxRing: 'golluxSet',
+		dawnGuardianAngelRing: 'dawnSet',
+		endlessTerror: 'pitchedSet'
+	},
+	selectPendant1: {
+		daybreakPendant: 'dawnSet',
+		dominatorPendant: 'bossSet',
+		superiorGolluxPendant: 'golluxSet',
+		sourceOfSuffering: 'pitchedSet'
+	},
+	selectPendant2: {
+		daybreakPendant: 'dawnSet',
+		dominatorPendant: 'bossSet',
+		superiorGolluxPendant: 'golluxSet',
+		sourceOfSuffering: 'pitchedSet'
+	},
+	selectPocket: {
+		pinkHolyCup: 'bossSet',
+		cursedSpellbook: 'pitchedSet'
+	},
+	selectHat: {
+		rootAbyssHat: 'rootAbyssSet',
+		absolabHat: 'absolabSet',
+		arcaneHat: 'arcaneSet',
+		eternalHat: 'eternalSet'
+	},
+	selectTop: {
+		rootAbyssTop: 'rootAbyssSet',
+		eternalTop: 'eternalSet'
+	},
+	selectBottom: {
+		rootAbyssBottom: 'rootAbyssSet',
+		eternalBottom: 'eternalSet'
+	}
+};
+
+// Set effects arrays [str, dex, int, luk, hp, mp, percentHp, percentMP, att, mAtt, bossDmg, IgnoreDef1, IgnooreDef2, critDmg
+const setEffectStats = {
+	pitchedSet: {
+		0 : [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+		1 : [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+		2 : [ 10, 10, 10, 10, 250, 0, 0, 0, 10, 10, 10, 0, 0, 0 ],
+		3 : [ 20, 20, 20, 20, 500, 0, 0, 0, 20, 20, 10, 10, 0, 0 ],
+		4 : [ 35, 35, 35, 35, 875, 0, 0, 0, 35, 35, 10, 10, 0, 5 ],
+		5 : [ 50, 50, 50, 50, 1250, 0, 0, 0, 50, 50, 20, 10, 0, 5 ],
+		6 : [ 65, 65, 65, 65, 1625, 0, 0, 0, 65, 65, 20, 10, 10, 5 ],
+		7 : [ 80, 80, 80, 80, 2000, 0, 0, 0, 80, 80, 20, 10, 10, 10 ],
+		8 : [ 95, 95, 95, 95, 2375, 0, 0, 0, 95, 95, 30, 10, 10, 10 ],
+		9 : [ 110, 110, 110, 110, 2750, 0, 0, 0, 110, 110, 30, 10, 10, 15 ]
+	},
+	rootAbyssSet: {
+		'str': {
+			0 : [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+			1 : [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+			2 : [ 20, 20, 0, 0, 1000, 1000, 0, 0, 0, 0, 0, 0, 0, 0 ],
+			3 : [ 20, 20, 0, 0, 1000, 1000, 10, 10, 50, 0, 0, 0, 0, 0 ],
+			4 : [ 20, 20, 0, 0, 1000, 1000, 10, 10, 50, 30, 0, 0, 0, 0 ]
+		},
+		'dex': {
+			0 : [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+			1 : [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+			2 : [ 20, 20, 0, 0, 1000, 1000, 0, 0, 0, 0, 0, 0, 0, 0 ],
+			3 : [ 20, 20, 0, 0, 1000, 1000, 10, 10, 50, 0, 0, 0, 0, 0 ],
+			4 : [ 20, 20, 0, 0, 1000, 1000, 10, 10, 50, 30, 0, 0, 0, 0 ]
+		},
+		'int': {
+			0 : [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+			1 : [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+			2 : [ 0, 0, 20, 20, 1000, 1000, 0, 0, 0, 0, 0, 0, 0, 0 ],
+			3 : [ 0, 0, 20, 20, 1000, 1000, 10, 10, 0, 50, 0, 0, 0, 0 ],
+			4 : [ 0, 0, 20, 20, 1000, 1000, 10, 10, 0, 50, 30, 0, 0, 0 ]
+		},
+		'luk': {
+			0 : [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+			1 : [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+			2 : [ 0, 20, 0, 20, 1000, 1000, 0, 0, 0, 0, 0, 0, 0, 0 ],
+			3 : [ 0, 20, 0, 20, 1000, 1000, 10, 10, 50, 0, 0, 0, 0, 0 ],
+			4 : [ 0, 20, 0, 20, 1000, 1000, 10, 10, 50, 30, 0, 0, 0, 0 ]
+		}
+	},
+	absolabSet: {
+		0 : [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+		1 : [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+		2 : [ 0, 0, 0, 0, 1500, 1500, 0, 0, 20, 20, 10, 0, 0, 0 ],
+		3 : [ 30, 30, 30, 30, 1500, 1500, 0, 0, 40, 40, 20, 0, 0, 0 ],
+		4 : [ 30, 30, 30, 30, 1500, 1500, 0, 0, 65, 65, 20, 10, 0, 0 ],
+		5 : [ 30, 30, 30, 30, 1500, 1500, 0, 0, 95, 95, 30, 10, 0, 0 ],
+		6 : [ 30, 30, 30, 30, 1500, 1500, 20, 20, 115, 115, 30, 10, 0, 0 ],
+		7 : [ 30, 30, 30, 30, 1500, 1500, 20, 20, 135, 135, 30, 10, 10, 0 ]
+	},
+	arcaneSet: {
+		0 : [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+		1 : [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+		2 : [ 0, 0, 0, 0, 0, 0, 0, 0, 30, 30, 10, 0, 0, 0 ],
+		3 : [ 0, 0, 0, 0, 0, 0, 0, 0, 60, 60, 10, 10, 0, 0 ],
+		4 : [ 50, 50, 50, 50, 0, 0, 0, 0, 95, 95, 20, 10, 0, 0 ],
+		5 : [ 50, 50, 50, 50, 2000, 2000, 0, 0, 135, 135, 30, 10, 0, 0 ],
+		6 : [ 50, 50, 50, 50, 2000, 2000, 30, 30, 165, 165, 30, 10, 0, 0 ],
+		7 : [ 50, 50, 50, 50, 2000, 2000, 30, 30, 195, 195, 30, 10, 10, 0 ]
+	},
+	eternalSet: {
+		0 : [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+		1 : [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+		2 : [ 0, 0, 0, 0, 2500, 2500, 0, 0, 40, 40, 10, 0, 0, 0 ],
+		3 : [ 50, 50, 50, 50, 2500, 2500, 0, 0, 80, 80, 20, 0, 0, 0 ],
+		4 : [ 50, 50, 50, 50, 2500, 2500, 15, 15, 120, 120, 30, 0, 0, 0 ],
+		5 : [ 50, 50, 50, 50, 2500, 2500, 15, 15, 160, 160, 30, 20, 0, 0 ]
+	},
+	golluxSet: {
+		0 : [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+		1 : [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+		2 : [ 20, 20, 20, 20, 1500, 1500, 0, 0, 0, 0, 0, 0, 0, 0 ],
+		3 : [ 20, 20, 20, 20, 1500, 1500, 13, 13, 35, 35, 0, 0, 0, 0 ],
+		4 : [ 20, 20, 20, 20, 1500, 1500, 13, 13, 35, 35, 30, 30, 0, 0 ]
+	},
+	dawnSet: {
+		0 : [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+		1 : [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+		2 : [ 10, 10, 10, 10, 0, 0, 0, 0, 10, 10, 10, 0, 0, 0 ],
+		3 : [ 20, 20, 20, 20, 500, 0, 0, 0, 20, 20, 10, 0, 0, 0 ],
+		4 : [ 30, 30, 30, 30, 750, 0, 0, 0, 30, 30, 10, 10, 0, 0 ]
+	},
+	bossSet: {
+		0 : [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+		1 : [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+		2 : [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+		3 : [ 10, 10, 10, 10, 0, 0, 5, 5, 5, 5, 0, 0, 0, 0 ],
+		4 : [ 10, 10, 10, 10, 0, 0, 5, 5, 5, 5, 0, 0, 0, 0 ],
+		5 : [ 20, 20, 20, 20, 0, 0, 10, 10, 10, 10, 0, 0, 0, 0 ],
+		6 : [ 20, 20, 20, 20, 0, 0, 10, 10, 10, 10, 0, 0, 0, 0 ],
+		7 : [ 30, 30, 30, 30, 0, 0, 10, 10, 20, 20, 0, 10, 0, 0 ],
+		8 : [ 30, 30, 30, 30, 0, 0, 10, 10, 20, 20, 0, 10, 0, 0 ],
+		9 : [ 45, 45, 45, 45, 0, 0, 10, 10, 30, 30, 10, 10, 0, 0 ]
+	},
+	monsterParkSet: {
+		0 : [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+		1 : [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
+		2 : [ 7, 7, 7, 7, 0, 0, 0, 0, 7, 7, 0, 10, 0, 0 ],
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

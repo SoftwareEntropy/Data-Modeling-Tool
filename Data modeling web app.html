@@ -29,15 +29,19 @@
 	<script src="subweapon.js" type="text/javascript" defer></script>
 	<script src="weapon.js" type="text/javascript" defer></script>
 	<script src="calc.js" type="text/javascript" defer></script>
+	<script src="adele.js" type="text/javascript" defer></script>
 	<!-- Bootstrap 5.3 CDN (Content Delivery Network) -->
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+	<!-- Chart.js JavaScript -->
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom"></script>
+	<!-- <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.min.js"></script> -->
+
 </head>
 
-<body> <!-- Additional: Link skills, Familiars, Pet Equips, Use item Buffs, Equip: Bonus potential, Flames -->
-	<!-- .container px max-width/actual | XXL 1320/1400+ | XL 1140/1200+ | L 960/992+ | M 720/768+ | 540/576+ | 100% for <576 ; .container-fluid = 100%-->
-
+<body> <!-- .container px max-width/actual | XXL 1320/1400+ | XL 1140/1200+ | L 960/992+ | M 720/768+ | 540/576+ | 100% for <576 ; .container-fluid = 100%-->
 	<div class="container row ps-4 ms-1 pe-1 me-4 pt-4" id="characterStatsBox">
 	
 		<!-- Select Class -->
@@ -47,8 +51,8 @@
 				<label for="selectClass" class="col-sm-4 text-center"> Class </label>
 				<div class="col-sm-8">
 					<select class="form-select" id="selectClass" aria-label="Select Class">
-						<option selected value="unselected">Select</option>
-						<option value="adele"> Adele </option>
+						<option hidden value="none">Select</option>
+						<option selected value="adele"> Adele </option>
 						<option value="angelicBuster"> Angelic Buster </option>
 						<option value="aran"> Aran </option>
 						<option value="archMageIceLightning"> Arch Mage (I/L) </option>
@@ -101,11 +105,19 @@
 				</div>
 				<div class="gy-1"></div>
 				<!-- Select Level -->
-				<label for="level" class="col-sm-4 col-form-label text-center"  data-bs-toggle="tooltip" title="Level Range [200-300]"> Level </label>
+				<label for="level" class="col-sm-4 col-form-label text-center"  data-bs-toggle="tooltip" title="Level Range [260-300]"> Level </label>
 				<div class="col-sm-8">
-					<input min="250" max="300" type="number" id="level" class="form-control"/>
+					<input min="260" max="300" type="number" id="level" class="form-control"/>
 				</div> 
 				<div class="row gy-2"></div>
+				<label for="selectServer" class="col-sm-4 text-center"> Server </label>
+				<div class="col-sm-8">
+					<select class="form-select" id="selectServer" aria-label="Select Server">
+						<option selected value="none">Select</option>
+						<option value="Heroic"> Heroic </option>
+						<option value="Interactive"> Interactive </option>
+					</select>
+				</div>
 			</div>
 		</div>
 			
@@ -1108,7 +1120,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -1143,7 +1155,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -1178,7 +1190,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -1262,7 +1274,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -1297,7 +1309,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -1332,7 +1344,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -1415,7 +1427,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -1450,7 +1462,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -1485,7 +1497,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -1568,7 +1580,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -1603,7 +1615,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -1638,7 +1650,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -1721,7 +1733,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -1757,7 +1769,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -1793,7 +1805,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -1875,7 +1887,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -1910,7 +1922,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -1945,7 +1957,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -2027,7 +2039,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -2062,7 +2074,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -2097,7 +2109,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -2179,7 +2191,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -2214,7 +2226,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -2249,7 +2261,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -2333,7 +2345,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -2368,7 +2380,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -2403,7 +2415,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -2492,7 +2504,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -2527,7 +2539,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -2562,7 +2574,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -2663,7 +2675,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -2698,7 +2710,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -2733,7 +2745,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -2834,7 +2846,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -2869,7 +2881,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -2904,7 +2916,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -3005,7 +3017,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -3040,7 +3052,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -3075,7 +3087,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -3173,7 +3185,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -3208,7 +3220,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -3243,7 +3255,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -3327,7 +3339,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -3362,7 +3374,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -3397,7 +3409,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -3519,7 +3531,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -3556,7 +3568,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -3593,7 +3605,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -3674,7 +3686,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -3709,7 +3721,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -3744,7 +3756,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -3825,7 +3837,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -3860,7 +3872,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -3895,7 +3907,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -3977,7 +3989,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -4012,7 +4024,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -4047,7 +4059,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -4149,7 +4161,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -4204,7 +4216,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -4259,7 +4271,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -4430,7 +4442,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -4489,7 +4501,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -4548,7 +4560,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -4655,7 +4667,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -4714,7 +4726,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -4773,7 +4785,7 @@
 											<option value="10%Dex"> 10% Dex </option>
 											<option value="10%Int"> 10% Int </option>
 											<option value="10%Luk"> 10% Luk </option>
-											<option value="10%All"> 9% All Stat </option>
+											<option value="9%All"> 9% All Stat </option>
 											<option value="9%Str"> 9% Str </option>
 											<option value="9%Dex"> 9% Dex </option>
 											<option value="9%Int"> 9% Int </option>
@@ -5156,7 +5168,7 @@
 		</div>
 		
 		<!-- Additional Stats -->
-		<div class="col-md-8 pt-4 text-center text-emphasis bg-tertiary-subtle border border-secondary-subtle rounded-2">
+		<div class="col-md-5 pt-4 text-center text-emphasis bg-tertiary-subtle border border-secondary-subtle rounded-2">
 		<h4 data-bs-toggle="tooltip" data-bs-html="true" title="All additional stats are affected by potentials"> Additional Stats </h4>
 			<div class="row g-2">
 				<label class="col col-sm-2 col-form-label text-end"> STR % </label>
@@ -5213,13 +5225,13 @@
 				</div>
 				<label class="col col-sm-2 col-form-label text-end"> Crit. Rate % </label>
 				<div class="col-sm-2">
-					<input min="0" max="10000" type="number" id="addCritDam" value="0" class="form-control"/>
+					<input min="0" max="10000" type="number" id="addCritRate" value="0" class="form-control"/>
 				</div>
 				<label class="col col-sm-2 col-form-label text-end"> Crit. Dmg % </label>
 				<div class="col-sm-2">
 					<input min="0" max="10000" type="number" id="addCritDam" value="0" class="form-control"/>
 				</div>
-				<label class="col col-sm-2 col-form-label text-end"> Ignore Def. % </label>
+				<label class="col col-sm-2 col-form-label text-end"> Ignore Def % </label>
 				<div class="col-sm-2">
 					<input min="0" max="10000" type="number" id="addIed" value="0" class="form-control"/>
 				</div>
@@ -5230,6 +5242,10 @@
 				<label class="col col-sm-2 col-form-label text-end"> Damage % </label>
 				<div class="col-sm-2">
 					<input min="0" max="10000" type="number" id="addDam" value="0" class="form-control"/>
+				</div>
+				<label class="col col-sm-2 col-form-label text-end"> Mon. Damage % </label>
+				<div class="col-sm-2">
+					<input min="0" max="10000" type="number" id="addMonDam" value="0" class="form-control"/>
 				</div>
 				<label class="col col-sm-2 col-form-label text-end"> Wep. Att. % </label>
 				<div class="col-sm-2">
@@ -5247,7 +5263,7 @@
 				<div class="col-sm-2">
 					<input min="0" max="10000" type="number" id="addFlatMAtt" value="0" class="form-control"/>
 				</div>
-				<label class="col col-sm-2 col-form-label text-end"> - Cooldown (sec) </label>
+				<label class="col col-sm-2 col-form-label text-end"> -Cooldown (sec) </label>
 				<div class="col-sm-2">
 					<input min="0" max="10000" type="number" id="addCooldown" value="0" class="form-control"/>
 				</div>
@@ -5256,54 +5272,54 @@
 		</div>
 		
 		<!-- Symbols -->
-		<div class="col-md-4 pt-4 text-center text-emphasis bg-tertiary-subtle border border-secondary-subtle rounded-2">
+		<div class="col-md-3 pt-4 text-center text-emphasis bg-tertiary-subtle border border-secondary-subtle rounded-2">
 			<div class="row g-2">
 			<h4> Arcane Symbols </h4>
 			<!-- Arcane Symbols -->
-				<label class="col-sm-1 col-form-label text-end" data-bs-toggle="tooltip" data-bs-html="true" title="Vanishing Journey<br><br>Base:<br>30 AF, 300 main stat<br>Demon Avenger: 6300 Hp<br>Xenon: 144 Str/Dex/Luk<br><br>Per Level:<br>+10 AF, +100 main stat<br>Demon Avenger: +2100 Hp<br>Xenon: +48 Str/Dex/Luk">
+				<label class="col-sm-2 col-form-label text-end" data-bs-toggle="tooltip" data-bs-html="true" title="Vanishing Journey<br><br>Base:<br>30 AF, 300 main stat<br>Demon Avenger: 6300 Hp<br>Xenon: 144 Str/Dex/Luk<br><br>Per Level:<br>+10 AF, +100 main stat<br>Demon Avenger: +2100 Hp<br>Xenon: +48 Str/Dex/Luk">
 					<img src="images/symbols/01712001.img.info.icon._outlink.png" />
 				</label>
-				<div class="col-sm-3">
+				<div class="col-sm-4">
 					<select class="form-select" id="vjSymbol">
 						<option value="0" selected> 0 </option>
 					</select>
 				</div>
-				<label class="col-sm-1 col-form-label text-end" data-bs-toggle="tooltip" data-bs-html="true" title="Chu Chu Island<br><br>Base:<br>30 AF, 300 main stat<br>Demon Avenger: 6300 Hp<br>Xenon: 144 Str/Dex/Luk<br><br>Per Level:<br>+10 AF, +100 main stat<br>Demon Avenger: +2100 Hp<br>Xenon: +48 Str/Dex/Luk">
+				<label class="col-sm-2 col-form-label text-end" data-bs-toggle="tooltip" data-bs-html="true" title="Chu Chu Island<br><br>Base:<br>30 AF, 300 main stat<br>Demon Avenger: 6300 Hp<br>Xenon: 144 Str/Dex/Luk<br><br>Per Level:<br>+10 AF, +100 main stat<br>Demon Avenger: +2100 Hp<br>Xenon: +48 Str/Dex/Luk">
 					<img src="images/symbols/01712002.img.info.icon._outlink.png" />
 				</label>
-				<div class="col-sm-3">
+				<div class="col-sm-4">
 					<select class="form-select" id="chuchuSymbol">
 						<option value="0" selected> 0 </option>
 					</select>
 				</div>
-				<label class="col-sm-1 col-form-label text-end" data-bs-toggle="tooltip" data-bs-html="true" title="Lachelein<br><br>Base:<br>30 AF, 300 main stat<br>Demon Avenger: 6300 Hp<br>Xenon: 144 Str/Dex/Luk<br><br>Per Level:<br>+10 AF, +100 main stat<br>Demon Avenger: +2100 Hp<br>Xenon: +48 Str/Dex/Luk">
+				<label class="col-sm-2 col-form-label text-end" data-bs-toggle="tooltip" data-bs-html="true" title="Lachelein<br><br>Base:<br>30 AF, 300 main stat<br>Demon Avenger: 6300 Hp<br>Xenon: 144 Str/Dex/Luk<br><br>Per Level:<br>+10 AF, +100 main stat<br>Demon Avenger: +2100 Hp<br>Xenon: +48 Str/Dex/Luk">
 					<img src="images/symbols/01712003.img.info.icon._outlink.png" />
 				</label>
-				<div class="col-sm-3">
+				<div class="col-sm-4">
 					<select class="form-select" id="lachSymbol">
 						<option value="0" selected> 0 </option>
 					</select>
 				</div>
-				<label class="col-sm-1 col-form-label text-end" data-bs-toggle="tooltip" data-bs-html="true" title="Arcana<br><br>Base:<br>30 AF, 300 main stat<br>Demon Avenger: 6300 Hp<br>Xenon: 144 Str/Dex/Luk<br><br>Per Level:<br>+10 AF, +100 main stat<br>Demon Avenger: +2100 Hp<br>Xenon: +48 Str/Dex/Luk">
+				<label class="col-sm-2 col-form-label text-end" data-bs-toggle="tooltip" data-bs-html="true" title="Arcana<br><br>Base:<br>30 AF, 300 main stat<br>Demon Avenger: 6300 Hp<br>Xenon: 144 Str/Dex/Luk<br><br>Per Level:<br>+10 AF, +100 main stat<br>Demon Avenger: +2100 Hp<br>Xenon: +48 Str/Dex/Luk">
 					<img src="images/symbols/01712004.img.info.icon._outlink.png" />
 				</label>
-				<div class="col-sm-3">
+				<div class="col-sm-4">
 					<select class="form-select" id="arcanaSymbol">
 						<option value="0" selected> 0 </option>
 					</select>
 				</div>
-				<label class="col-sm-1 col-form-label text-end" data-bs-toggle="tooltip" data-bs-html="true" title="Morass<br><br>Base:<br>30 AF, 300 main stat<br>Demon Avenger: 6300 Hp<br>Xenon: 144 Str/Dex/Luk<br><br>Per Level:<br>+10 AF, +100 main stat<br>Demon Avenger: +2100 Hp<br>Xenon: +48 Str/Dex/Luk">
+				<label class="col-sm-2 col-form-label text-end" data-bs-toggle="tooltip" data-bs-html="true" title="Morass<br><br>Base:<br>30 AF, 300 main stat<br>Demon Avenger: 6300 Hp<br>Xenon: 144 Str/Dex/Luk<br><br>Per Level:<br>+10 AF, +100 main stat<br>Demon Avenger: +2100 Hp<br>Xenon: +48 Str/Dex/Luk">
 					<img src="images/symbols/01712005.img.info.icon._outlink.png" />
 				</label>
-				<div class="col-sm-3">
+				<div class="col-sm-4">
 					<select class="form-select" id="morassSymbol">
 						<option value="0" selected> 0 </option>
 					</select>
 				</div>
-				<label class="col-sm-1 col-form-label text-end" data-bs-toggle="tooltip" data-bs-html="true" title="Esfera<br><br>Base:<br>30 AF, 300 main stat<br>Demon Avenger: 6300 Hp<br>Xenon: 144 Str/Dex/Luk<br><br>Per Level:<br>+10 AF, +100 main stat<br>Demon Avenger: +2100 Hp<br>Xenon: +48 Str/Dex/Luk">
+				<label class="col-sm-2 col-form-label text-end" data-bs-toggle="tooltip" data-bs-html="true" title="Esfera<br><br>Base:<br>30 AF, 300 main stat<br>Demon Avenger: 6300 Hp<br>Xenon: 144 Str/Dex/Luk<br><br>Per Level:<br>+10 AF, +100 main stat<br>Demon Avenger: +2100 Hp<br>Xenon: +48 Str/Dex/Luk">
 					<img src="images/symbols/01712006.img.info.icon._outlink.png" />
 				</label>
-				<div class="col-sm-3">
+				<div class="col-sm-4">
 					<select class="form-select" id="esferaSymbol">
 						<option value="0" selected> 0 </option>
 					</select>
@@ -5312,50 +5328,50 @@
 			
 			<!-- Sacred Symbols -->
 			<h4> Sacred Symbols </h4>
-				<label class="col-sm-1 col-form-label text-end" data-bs-toggle="tooltip" data-bs-html="true" title="Cernium<br><br>Base:<br>10 AF, 500 main stat<br>Demon Avenger: 10500 Hp<br>Xenon: 240 Str/Dex/Luk<br><br>Per Level:<br>+10 AF, +200 main stat<br>DA: +4200 Hp<br>Xenon: +96 Str/Dex/Luk">
+				<label class="col-sm-2 col-form-label text-end" data-bs-toggle="tooltip" data-bs-html="true" title="Cernium<br><br>Base:<br>10 SF, 500 main stat<br>Demon Avenger: 10500 Hp<br>Xenon: 240 Str/Dex/Luk<br><br>Per Level:<br>+10 SF, +200 main stat<br>DA: +4200 Hp<br>Xenon: +96 Str/Dex/Luk">
 					<img src="images/symbols/01713000.img.info.icon._outlink.png" />
 				</label>
-				<div class="col-sm-3">
+				<div class="col-sm-4">
 					<select class="form-select" id="cerniumSymbol">
 						<option value="0" selected> 0 </option>
 					</select>
 				</div>
-				<label class="col-sm-1 col-form-label text-end" data-bs-toggle="tooltip" data-bs-html="true" title="Arcus<br><br>Base:<br>10 AF, 500 main stat<br>Demon Avenger: 10500 Hp<br>Xenon: 240 Str/Dex/Luk<br><br>Per Level:<br>+10 AF, +200 main stat<br>DA: +4200 Hp<br>Xenon: +96 Str/Dex/Luk">
+				<label class="col-sm-2 col-form-label text-end" data-bs-toggle="tooltip" data-bs-html="true" title="Arcus<br><br>Base:<br>10 SF, 500 main stat<br>Demon Avenger: 10500 Hp<br>Xenon: 240 Str/Dex/Luk<br><br>Per Level:<br>+10 SF, +200 main stat<br>DA: +4200 Hp<br>Xenon: +96 Str/Dex/Luk">
 					<img src="images/symbols/01713001.img.info.icon._outlink.png" />
 				</label>
-				<div class="col-sm-3">
+				<div class="col-sm-4">
 					<select class="form-select" id="arcusSymbol">
 						<option value="0" selected> 0 </option>
 					</select>
 				</div>
-				<label class="col-sm-1 col-form-label text-end" data-bs-toggle="tooltip" data-bs-html="true" title="Odium<br><br>Base:<br>10 AF, 500 main stat<br>Demon Avenger: 10500 Hp<br>Xenon: 240 Str/Dex/Luk<br><br>Per Level:<br>+10 AF, +200 main stat<br>DA: +4200 Hp<br>Xenon: +96 Str/Dex/Luk">
+				<label class="col-sm-2 col-form-label text-end" data-bs-toggle="tooltip" data-bs-html="true" title="Odium<br><br>Base:<br>10 SF, 500 main stat<br>Demon Avenger: 10500 Hp<br>Xenon: 240 Str/Dex/Luk<br><br>Per Level:<br>+10 SF, +200 main stat<br>DA: +4200 Hp<br>Xenon: +96 Str/Dex/Luk">
 					<img src="images/symbols/01713002.img.info.icon._outlink.png" />
 				</label>
-				<div class="col-sm-3">
+				<div class="col-sm-4">
 					<select class="form-select" id="odiumSymbol">
 						<option value="0" selected> 0 </option>
 					</select>
 				</div>
-				<label class="col-sm-1 col-form-label text-end" data-bs-toggle="tooltip" data-bs-html="true" title="Shangri-La<br><br>Base:<br>10 AF, 500 main stat<br>Demon Avenger: 10500 Hp<br>Xenon: 240 Str/Dex/Luk<br><br>Per Level:<br>+10 AF, +200 main stat<br>DA: +4200 Hp<br>Xenon: +96 Str/Dex/Luk">
+				<label class="col-sm-2 col-form-label text-end" data-bs-toggle="tooltip" data-bs-html="true" title="Shangri-La<br><br>Base:<br>10 SF, 500 main stat<br>Demon Avenger: 10500 Hp<br>Xenon: 240 Str/Dex/Luk<br><br>Per Level:<br>+10 SF, +200 main stat<br>DA: +4200 Hp<br>Xenon: +96 Str/Dex/Luk">
 					<img src="images/symbols/01713003.img.info.icon._outlink.png" />
 				</label>
-				<div class="col-sm-3">
+				<div class="col-sm-4">
 					<select class="form-select" id="shangSymbol">
 						<option value="0" selected> 0 </option>
 					</select>
 				</div>
-				<label class="col-sm-1 col-form-label text-end" data-bs-toggle="tooltip" data-bs-html="true" title="Arteria<br><br>Base:<br>10 AF, 500 main stat<br>Demon Avenger: 10500 Hp<br>Xenon: 240 Str/Dex/Luk<br><br>Per Level:<br>+10 AF, +200 main stat<br>DA: +4200 Hp<br>Xenon: +96 Str/Dex/Luk">
+				<label class="col-sm-2 col-form-label text-end" data-bs-toggle="tooltip" data-bs-html="true" title="Arteria<br><br>Base:<br>10 SF, 500 main stat<br>Demon Avenger: 10500 Hp<br>Xenon: 240 Str/Dex/Luk<br><br>Per Level:<br>+10 SF, +200 main stat<br>DA: +4200 Hp<br>Xenon: +96 Str/Dex/Luk">
 					<img src="images/symbols/01713004.img.info.icon._outlink.png" />
 				</label>
-				<div class="col-sm-3">
+				<div class="col-sm-4">
 					<select class="form-select" id="arteriaSymbol">
 						<option value="0" selected> 0 </option>
 					</select>
 				</div>
-				<label class="col-sm-1 col-form-label text-end" data-bs-toggle="tooltip" data-bs-html="true" title="Carcion<br><br>Base:<br>10 AF, 500 main stat<br>Demon Avenger: 10500 Hp<br>Xenon: 240 Str/Dex/Luk<br><br>Per Level:<br>+10 AF, +200 main stat<br>DA: +4200 Hp<br>Xenon: +96 Str/Dex/Luk">
+				<label class="col-sm-2 col-form-label text-end" data-bs-toggle="tooltip" data-bs-html="true" title="Carcion<br><br>Base:<br>10 SF, 500 main stat<br>Demon Avenger: 10500 Hp<br>Xenon: 240 Str/Dex/Luk<br><br>Per Level:<br>+10 SF, +200 main stat<br>DA: +4200 Hp<br>Xenon: +96 Str/Dex/Luk">
 					<img src="images/symbols/01713005.img.info.icon._outlink.png" />
 				</label>
-				<div class="col-sm-3">
+				<div class="col-sm-4">
 					<select class="form-select" id="carcionSymbol">
 						<option value="0" selected> 0 </option>
 					</select>
@@ -5363,8 +5379,638 @@
 			</div>
 		</div>
 		
-		<div>
-		<br><br><br><br><br><br>
+	</div>
+	
+	<br><br><br><br><br><br>
+	
+	<div class="container row mx-4" id="testBench">
+		<!-- Visible Stats -->
+		<div class="col-md-6 pt-2 text-center text-emphasis bg-tertiary-subtle border border-secondary-subtle rounded-2">
+			<h4> Raw Stats </h4>
+			<div class="row g-2">
+				<div class="row g-1 d-flex justify-content-center">
+					<label class="col col-sm-1 col-form-label text-end" > Range </label>
+					<div class="col-sm-5">
+						<input type="text" class="form-control" id="neutralRange" placeholder="Error" readonly>
+					</div>
+				</div>
+				<label class="col col-sm-1 col-form-label text-end" > STR </label>
+				<div class="col-sm-2">
+					<input type="text" class="form-control" id="neutralStr" placeholder="Error" readonly>
+				</div>
+				<label class="col col-sm-1 col-form-label text-end" > DEX </label>
+				<div class="col-sm-2">
+					<input type="text" class="form-control" id="neutralDex" placeholder="Error" readonly>
+				</div>
+				<label class="col col-sm-1 col-form-label text-end" > INT </label>
+				<div class="col-sm-2">
+					<input type="text" class="form-control" id="neutralInt" placeholder="Error" readonly>
+				</div>
+				<label class="col col-sm-1 col-form-label text-end" > LUK </label>
+				<div class="col-sm-2">
+					<input type="text" class="form-control" id="neutralLuk" placeholder="Error" readonly>
+				</div>
+				<label class="col col-sm-1 col-form-label text-end" > ATT </label>
+				<div class="col-sm-2">
+					<input type="text" class="form-control" id="neutralAtt" placeholder="Error" readonly>
+				</div>
+				<label class="col col-sm-1 col-form-label text-end" > M.ATT </label>
+				<div class="col-sm-2">
+					<input type="text" class="form-control" id="neutralMAtt" placeholder="Error" readonly>
+				</div>
+				<label class="col col-sm-1 col-form-label text-end" > AF </label>
+				<div class="col-sm-2">
+					<input type="text" class="form-control" id="neutralAF" placeholder="Error" readonly>
+				</div>
+				<label class="col col-sm-1 col-form-label text-end" > SF </label>
+				<div class="col-sm-2">
+					<input type="text" class="form-control" id="neutralSF" placeholder="Error" readonly>
+				</div>
+			</div>
+			<div class="row g-2 my-3">
+				<label class="col col-sm-2 col-form-label text-end" > Dmg % </label>
+				<div class="col-sm-2">
+					<input type="text" class="form-control" id="neutralDmg" placeholder="Error" readonly>
+				</div>
+				<label class="col col-sm-2 col-form-label text-end" > Mon. Dmg %</label>
+				<div class="col-sm-2">
+					<input type="text" class="form-control" id="neutralMonDmg" placeholder="Error" readonly>
+				</div>
+				<label class="col col-sm-2 col-form-label text-end" > Boss Dmg %</label>
+				<div class="col-sm-2">
+					<input type="text" class="form-control" id="neutralBossDmg" placeholder="Error" readonly>
+				</div>
+				<label class="col col-sm-2 col-form-label text-end" > Crit. Rate </label>
+				<div class="col-sm-2">
+					<input type="text" class="form-control" id="neutralCritRate" placeholder="Error" readonly>
+				</div>
+				<label class="col col-sm-2 col-form-label text-end" > Crit. Dmg </label>
+				<div class="col-sm-2">
+					<input type="text" class="form-control" id="neutralCritDamage" placeholder="Error" readonly>
+				</div>
+				<label class="col col-sm-2 col-form-label text-end" > Ignore Def. % </label>
+				<div class="col-sm-2">
+					<input type="text" class="form-control" id="neutralIED" placeholder="Error" readonly>
+				</div>
+				<label class="col col-sm-2 col-form-label text-end" > Final Dmg </label>
+				<div class="col-sm-2">
+					<input type="text" class="form-control" id="neutralFD" placeholder="Error" readonly>
+				</div>
+				<label class="col col-sm-2 col-form-label text-end" > Buff Dur. </label>
+				<div class="col-sm-2">
+					<input type="text" class="form-control" id="neutralBuffDuration" placeholder="Error" readonly>
+				</div>
+				<label class="col col-sm-2 col-form-label text-end" > Att Spd </label>
+				<div class="col-sm-2">
+					<input type="text" class="form-control" id="neutralAttSpeed" placeholder="Error" readonly>
+				</div>
+			</div>
+		</div>
+		<!-- Combat Stats -->
+		<div class="col-md-6 pt-2 text-center text-emphasis bg-tertiary-subtle border border-secondary-subtle rounded-2">
+			<h4> Effective Combat Stats </h4>
+			<div class="row g-2">
+				<div class="row g-1 d-flex justify-content-center">
+					<label class="col col-sm-1 col-form-label text-end" > Range </label>
+					<div class="col-sm-5">
+						<input type="text" class="form-control" id="combatRange" placeholder="Error" readonly>
+					</div>
+				</div>
+				<label class="col col-sm-1 col-form-label text-end" > STR </label>
+				<div class="col-sm-2">
+					<input type="text" class="form-control" id="combatStr" placeholder="Error" readonly>
+				</div>
+				<label class="col col-sm-1 col-form-label text-end" > DEX </label>
+				<div class="col-sm-2">
+					<input type="text" class="form-control" id="combatDex" placeholder="Error" readonly>
+				</div>
+				<label class="col col-sm-1 col-form-label text-end" > INT </label>
+				<div class="col-sm-2">
+					<input type="text" class="form-control" id="combatInt" placeholder="Error" readonly>
+				</div>
+				<label class="col col-sm-1 col-form-label text-end" > LUK </label>
+				<div class="col-sm-2">
+					<input type="text" class="form-control" id="combatLuk" placeholder="Error" readonly>
+				</div>
+				<label class="col col-sm-1 col-form-label text-end" > ATT </label>
+				<div class="col-sm-2">
+					<input type="text" class="form-control" id="combatAtt" placeholder="Error" readonly>
+				</div>
+				<label class="col col-sm-1 col-form-label text-end" > M.ATT </label>
+				<div class="col-sm-2">
+					<input type="text" class="form-control" id="combatMAtt" placeholder="Error" readonly>
+				</div>
+				<label class="col col-sm-1 col-form-label text-end" > AF </label>
+				<div class="col-sm-2">
+					<input type="text" class="form-control" id="combatAF" placeholder="Error" readonly>
+				</div>
+				<label class="col col-sm-1 col-form-label text-end" > SF </label>
+				<div class="col-sm-2">
+					<input type="text" class="form-control" id="combatSF" placeholder="Error" readonly>
+				</div>
+			</div>
+			<div class="row g-2 my-3">
+				<label class="col col-sm-2 col-form-label text-end" > Dmg % </label>
+				<div class="col-sm-2">
+					<input type="text" class="form-control" id="combatDmg" placeholder="Error" readonly>
+				</div>
+				<label class="col col-sm-2 col-form-label text-end" > Mon. Dmg %</label>
+				<div class="col-sm-2">
+					<input type="text" class="form-control" id="combatMonDmg" placeholder="Error" readonly>
+				</div>
+				<label class="col col-sm-2 col-form-label text-end" > Boss Dmg %</label>
+				<div class="col-sm-2">
+					<input type="text" class="form-control" id="combatBossDmg" placeholder="Error" readonly>
+				</div>
+				<label class="col col-sm-2 col-form-label text-end" > Crit. Rate </label>
+				<div class="col-sm-2">
+					<input type="text" class="form-control" id="combatCritRate" placeholder="Error" readonly>
+				</div>
+				<label class="col col-sm-2 col-form-label text-end" > Crit. Dmg </label>
+				<div class="col-sm-2">
+					<input type="text" class="form-control" id="combatCritDamage" placeholder="Error" readonly>
+				</div>
+				<label class="col col-sm-2 col-form-label text-end" > Ignore Def. % </label>
+				<div class="col-sm-2">
+					<input type="text" class="form-control" id="combatIED" placeholder="Error" readonly>
+				</div>
+				<label class="col col-sm-2 col-form-label text-end" > Final Dmg </label>
+				<div class="col-sm-2">
+					<input type="text" class="form-control" id="combatFD" placeholder="Error" readonly>
+				</div>
+				<label class="col col-sm-2 col-form-label text-end" > Buff Dur. </label>
+				<div class="col-sm-2">
+					<input type="text" class="form-control" id="combatBuffDuration" placeholder="Error" readonly>
+				</div>
+				<label class="col col-sm-2 col-form-label text-end" > Att Spd </label>
+				<div class="col-sm-2">
+					<input type="text" class="form-control" id="combatAttSpeed" placeholder="Error" readonly>
+				</div>
+			</div>
+		</div>
+		
+		
+		
+		
+		
+		<!-- Adele -->
+		<div class="col-md-12 pt-2 text-center text-emphasis bg-tertiary-subtle border border-secondary-subtle rounded-2">
+			<div class="py-3 text-emphasis bg-tertiary-subtle border border-secondary-subtle rounded-2">
+				<h4> Damage Output (Adele) </h4>
+				<canvas id="line-chart"></canvas>
+			</div>
+			<div class="row py-3">
+				<h3> Skills </h3>
+				<!-- HEXA Cleave -->
+				<div class="col-sm-3 py-2 text-emphasis bg-tertiary-subtle border border-secondary-subtle rounded-2">
+					<div class="row">
+						<div class="col-sm-4 text-end">
+							<a tabindex="0" class="popover-trigger" data-bs-toggle="popover" data-bs-placement="left" data-bs-trigger="focus" data-bs-html="true" data-bs-content="<img src='images/adele/skill_151141000.png'><br><img src='images/adele/skill_400004596.png'>">
+								<img src="images/adele/151141000.icon._outlink.png" style="cursor: pointer;">
+							</a>
+						</div>
+						<div class="col-sm-4 text-start">
+							<button type="button" class="btn btn-outline-light" id="adeleHexaCleave"> Activate </button>
+						</div>
+						<div class="col-sm-4 text-start">
+							<input type="text" class="form-control" id="adeleHexaCleaveInfo" placeholder="Error" readonly data-bs-toggle="tooltip" data-bs-trigger="focus" data-bs-html="true" title="Skill remaining cooldown"/>
+						</div>
+					</div>
+				</div>
+				<!-- Origin: Maestro -->
+				<div class="col-sm-3 py-2 text-emphasis bg-tertiary-subtle border border-secondary-subtle rounded-2">
+					<div class="row">
+						<div class="col-sm-4 text-end">
+							<a tabindex="0" class="popover-trigger" data-bs-toggle="popover" data-bs-placement="left" data-bs-trigger="focus" data-bs-html="true" data-bs-content="<img src='images/adele/skill_151141500.png'>">
+								<img src="images/adele/151141500.icon._outlink.png" style="cursor: pointer;">
+							</a>
+						</div>
+						<div class="col-sm-4 text-start">
+							<button type="button" class="btn btn-outline-light" id="adeleMaestro"> Activate </button>
+						</div>
+						<div class="col-sm-4 text-start">
+							<input type="text" class="form-control" id="adeleMaestroInfo" placeholder="Error" readonly data-bs-toggle="tooltip" data-bs-trigger="focus" data-bs-html="true" title="Skill remaining cooldown"/>
+						</div>
+					</div>
+				</div>
+				<!-- Ruin -->
+				<div class="col-sm-3 py-2 text-emphasis bg-tertiary-subtle border border-secondary-subtle rounded-2">
+					<div class="row">
+						<div class="col-sm-4 text-end">
+							<a tabindex="0" class="popover-trigger" data-bs-toggle="popover" data-bs-placement="left" data-bs-trigger="focus" data-bs-html="true" data-bs-content="<img src='images/adele/skill_400011105.png'><br><img src='images/adele/skill_500004160.png'>">
+								<img src="images/adele/400011105.icon._outlink.png" style="cursor: pointer;">
+							</a>
+						</div>
+						<div class="col-sm-4 text-start">
+							<button type="button" class="btn btn-outline-light" id="adeleRuin"> Activate </button>
+						</div>
+						<div class="col-sm-4 text-start">
+							<input type="text" class="form-control" id="adeleRuinInfo" placeholder="Error" readonly data-bs-toggle="tooltip" data-bs-trigger="focus" data-bs-html="true" title="Skill remaining cooldown"/>
+						</div>
+					</div>
+				</div>
+				<!-- Infinity Blade -->
+				<div class="col-sm-3 py-2 text-emphasis bg-tertiary-subtle border border-secondary-subtle rounded-2">
+					<div class="row">
+						<div class="col-sm-4 text-end">
+							<a tabindex="0" class="popover-trigger" data-bs-toggle="popover" data-bs-placement="left" data-bs-trigger="focus" data-bs-html="true" data-bs-content="<img src='images/adele/skill_400011108.png'><br><img src='images/adele/skill_500004161.png'>">
+								<img src="images/adele/400011108.icon._outlink.png" style="cursor: pointer;">
+							</a>
+						</div>
+						<div class="col-sm-4 text-start">
+							<button type="button" class="btn btn-outline-light" id="adeleInfinityBlade"> Activate </button>
+						</div>
+						<div class="col-sm-4 text-start">
+							<input type="text" class="form-control" id="adeleInfinityBladeInfo" placeholder="Error" readonly data-bs-toggle="tooltip" data-bs-trigger="focus" data-bs-html="true" title="Skill remaining cooldown"/>
+						</div>
+					</div>
+				</div>
+				<!-- Storm -->
+				<div class="col-sm-3 py-2 text-emphasis bg-tertiary-subtle border border-secondary-subtle rounded-2">
+					<div class="row">
+						<div class="col-sm-4 text-end">
+							<a tabindex="0" class="popover-trigger" data-bs-toggle="popover" data-bs-placement="left" data-bs-trigger="focus" data-bs-html="true" data-bs-content="<img src='images/adele/skill_400011136.png'><br><img src='images/adele/skill_500004163.png'>">
+								<img src="images/adele/400011136.icon._outlink.png" style="cursor: pointer;">
+							</a>
+						</div>
+						<div class="col-sm-4 text-start">
+							<button type="button" class="btn btn-outline-light" id="adeleStorm"> Activate </button>
+						</div>
+						<div class="col-sm-4 text-start">
+							<input type="text" class="form-control" id="adeleStormInfo" placeholder="Error" readonly data-bs-toggle="tooltip" data-bs-trigger="focus" data-bs-html="true" title="Skill remaining cooldown"/>
+						</div>
+					</div>
+				</div>
+				<!-- Aether Bloom -->
+				<div class="col-sm-3 py-2 text-emphasis bg-tertiary-subtle border border-secondary-subtle rounded-2">
+					<div class="row">
+						<div class="col-sm-4 text-end">
+							<a tabindex="0" class="popover-trigger" data-bs-toggle="popover" data-bs-placement="left" data-bs-trigger="focus" data-bs-html="true" data-bs-content="<img src='images/adele/skill_151121003.png'><br><img src='images/adele/skill_400004598.png'><br><img src='images/adele/skill_151120036.png'>">
+								<img src="images/adele/151121003.icon._outlink.png" style="cursor: pointer;">
+							</a>
+						</div>
+						<div class="col-sm-4 text-start">
+							<button type="button" class="btn btn-outline-light" id="adeleAetherBloom"> Activate </button>
+						</div>
+						<div class="col-sm-4 text-start">
+							<input type="text" class="form-control" id="adeleAetherBloomInfo" placeholder="Error" readonly data-bs-toggle="tooltip" data-bs-trigger="focus" data-bs-html="true" title="Skill remaining cooldown"/>
+						</div>
+					</div>
+				</div>
+				<!-- Grave Proclamation -->
+				<div class="col-sm-3 py-2 text-emphasis bg-tertiary-subtle border border-secondary-subtle rounded-2">
+					<div class="row">
+						<div class="col-sm-4 text-end">
+							<a tabindex="0" class="popover-trigger" data-bs-toggle="popover" data-bs-placement="left" data-bs-trigger="focus" data-bs-html="true" data-bs-content="<img src='images/adele/skill_151121001.png'><br><img src='images/adele/skill_400004597.png'>">
+								<img src="images/adele/151121001.icon._outlink.png" style="cursor: pointer;">
+							</a>
+						</div>
+						<div class="col-sm-4 text-start">
+							<button type="button" class="btn btn-outline-light" id="adeleGraveProclamation"> Activate </button>
+						</div>
+						<div class="col-sm-4 text-start">
+							<input type="text" class="form-control" id="adeleGraveProclamationInfo" placeholder="Error" readonly data-bs-toggle="tooltip" data-bs-trigger="focus" data-bs-html="true" title="Skill remaining cooldown"/>
+						</div>
+					</div>
+				</div>
+				<!-- Plummet -->
+				<div class="col-sm-3 py-2 text-emphasis bg-tertiary-subtle border border-secondary-subtle rounded-2">
+					<div class="row">
+						<div class="col-sm-4 text-end">
+							<a tabindex="0" class="popover-trigger" data-bs-toggle="popover" data-bs-placement="left" data-bs-trigger="focus" data-bs-html="true" data-bs-content="<img src='images/adele/skill_151121002.png'><br><img src='images/adele/skill_400004595.png'>">
+								<img src="images/adele/151121002.icon._outlink.png" style="cursor: pointer;">
+							</a>
+						</div>
+						<div class="col-sm-4 text-start">
+							<button type="button" class="btn btn-outline-light" id="adelePlummet"> Activate </button>
+						</div>
+						<div class="col-sm-4 text-start">
+							<input type="text" class="form-control" id="adelePlummetInfo" placeholder="Error" readonly data-bs-toggle="tooltip" data-bs-trigger="focus" data-bs-html="true" title="Skill remaining cooldown"/>
+						</div>
+					</div>
+				</div>
+				<!-- Noble Summons -->
+				<div class="col-sm-3 py-2 text-emphasis bg-tertiary-subtle border border-secondary-subtle rounded-2">
+					<div class="row">
+						<div class="col-sm-4 text-end">
+							<a tabindex="0" class="popover-trigger" data-bs-toggle="popover" data-bs-placement="left" data-bs-trigger="focus" data-bs-html="true" data-bs-content="<img src='images/adele/skill_151111002.png'><br><img src='images/adele/skill_400004593.png'>">
+								<img src="images/adele/151111002.icon._outlink.png" style="cursor: pointer;">
+							</a>
+						</div>
+						<div class="col-sm-4 text-start">
+							<button type="button" class="btn btn-outline-light" id="adeleNobleSummons"> Activate </button>
+						</div>
+						<div class="col-sm-4 text-start">
+							<input type="text" class="form-control" id="adeleNobleSummonsInfo" placeholder="Error" readonly data-bs-toggle="tooltip" data-bs-trigger="focus" data-bs-html="true" title="Skill remaining cooldown"/>
+						</div>
+					</div>
+				</div>
+				<!-- Reign of Destruction -->
+				<div class="col-sm-3 py-2 text-emphasis bg-tertiary-subtle border border-secondary-subtle rounded-2">
+					<div class="row">
+						<div class="col-sm-4 text-end">
+							<a tabindex="0" class="popover-trigger" data-bs-toggle="popover" data-bs-placement="left" data-bs-trigger="focus" data-bs-html="true" data-bs-content="<img src='images/adele/skill_151111001.png'><br><img src='images/adele/skill_400004595.png'><br><img src='images/adele/skill_151120035.png'>">
+								<img src="images/adele/151111001.icon._outlink.png" style="cursor: pointer;">
+							</a>
+						</div>
+						<div class="col-sm-4 text-start">
+							<button type="button" class="btn btn-outline-light" id="adeleReignOfDestruction"> Activate </button>
+						</div>
+						<div class="col-sm-4 text-start">
+							<input type="text" class="form-control" id="adeleReignOfDestructionInfo" placeholder="Error" readonly data-bs-toggle="tooltip" data-bs-trigger="focus" data-bs-html="true" title="Skill remaining cooldown"/>
+						</div>
+					</div>
+				</div>
+				<!-- Resonance Rush -->
+				<div class="col-sm-3 py-2 text-emphasis bg-tertiary-subtle border border-secondary-subtle rounded-2">
+					<div class="row">
+						<div class="col-sm-4 text-end">
+							<a tabindex="0" class="popover-trigger" data-bs-toggle="popover" data-bs-placement="left" data-bs-trigger="focus" data-bs-html="true" data-bs-content="<img src='images/adele/skill_151101003.png'><br><img src='images/adele/skill_400004592.png'><br><img src='images/adele/skill_151120034.png'>">
+								<img src="images/adele/151101003.icon._outlink.png" style="cursor: pointer;">
+							</a>
+						</div>
+						<div class="col-sm-4 text-start">
+							<button type="button" class="btn btn-outline-light" id="adeleResonanceRush"> Activate </button>
+						</div>
+						<div class="col-sm-4 text-start">
+							<input type="text" class="form-control" id="adeleResonanceRushInfo" placeholder="Error" readonly data-bs-toggle="tooltip" data-bs-trigger="focus" data-bs-html="true" title="Skill remaining cooldown"/>
+						</div>
+					</div>
+				</div>
+				<!-- Hexa Magic Dispatch -->
+				<div class="col-sm-3 py-2 text-emphasis bg-tertiary-subtle border border-secondary-subtle rounded-2">
+					<div class="row">
+						<div class="col-sm-4 text-end">
+							<a tabindex="0" class="popover-trigger" data-bs-toggle="popover" data-bs-placement="left" data-bs-trigger="focus" data-bs-html="true" data-bs-content="<img src='images/adele/skill_151141002.png'><br><img src='images/adele/skill_400004590.png'><br><img src='images/adele/skill_151001001.png'>">
+								<img src="images/adele/151141002.icon._outlink.png" style="cursor: pointer;">
+							</a>
+						</div>
+						<div class="col-sm-4 text-start">
+							<button type="button" class="btn btn-outline-light" id="adeleHexaMagicDispatch"> Activate </button>
+						</div>
+						<div class="col-sm-4 text-start">
+							<input type="text" class="form-control" id="adeleHexaMagicDispatchInfo" placeholder="Error" readonly data-bs-toggle="tooltip" data-bs-trigger="focus" data-bs-html="true" title="Skill remaining cooldown"/>
+						</div>
+					</div>
+				</div>
+				<!-- Shardbreaker -->
+				<div class="col-sm-3 py-2 text-emphasis bg-tertiary-subtle border border-secondary-subtle rounded-2">
+					<div class="row">
+						<div class="col-sm-4 text-end">
+							<a tabindex="0" class="popover-trigger" data-bs-toggle="popover" data-bs-placement="left" data-bs-trigger="focus" data-bs-html="true" data-bs-content="<img src='images/adele/skill_151121041.png'><br><img src='images/adele/skill_400004592.png'>">
+								<img src="images/adele/151121041.icon._outlink.png" style="cursor: pointer;">
+							</a>
+						</div>
+						<div class="col-sm-4 text-start">
+							<button type="button" class="btn btn-outline-light" id="adeleShardbreaker"> Activate </button>
+						</div>
+						<div class="col-sm-4 text-start">
+							<input type="text" class="form-control" id="adeleShardbreakerInfo" placeholder="Error" readonly data-bs-toggle="tooltip" data-bs-trigger="focus" data-bs-html="true" title="Skill remaining cooldown"/>
+						</div>
+					</div>
+				</div>
+				<!-- Hunting Decree -->
+				<div class="col-sm-3 py-2 text-emphasis bg-tertiary-subtle border border-secondary-subtle rounded-2">
+					<div class="row">
+						<div class="col-sm-4 text-end">
+							<a tabindex="0" class="popover-trigger" data-bs-toggle="popover" data-bs-placement="left" data-bs-trigger="focus" data-bs-html="true" data-bs-content="<img src='images/adele/skill_151111003.png'><br><img src='images/adele/skill_400004597.png'>">
+								<img src="images/adele/151111003.icon._outlink.png" style="cursor: pointer;">
+							</a>
+						</div>
+						<div class="col-sm-4 text-start">
+							<button type="button" class="btn btn-outline-light" id="adeleHuntingDecree" disabled> Automatic </button>
+						</div>
+						<div class="col-sm-4 text-start">
+							<input type="text" class="form-control" id="adeleHuntingDecreeInfo" placeholder="Error" readonly data-bs-toggle="tooltip" data-bs-trigger="focus" data-bs-html="true" title="Skill remaining cooldown"/>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+			
+			<div class="row py-3">
+				<h3> Buffs </h3>
+				<!-- Ring of Restraint -->
+				<div class="col-sm-3 py-2 text-emphasis bg-tertiary-subtle border border-secondary-subtle rounded-2">
+					<div class="row">
+						<div class="col-sm-4 text-end">
+							<a tabindex="0" class="popover-trigger" data-bs-toggle="popover" data-bs-placement="left" data-bs-trigger="focus" data-bs-html="true" data-bs-content="<img src='images/adele/skill_80001455.png'>">
+								<img src="images/adele/80001455.icon._outlink.png" style="cursor: pointer;">
+							</a>
+						</div>
+						<div class="col-sm-4 text-start">
+							<button type="button" class="btn btn-outline-light" id="adeleRingOfRestraint"> Activate </button>
+						</div>
+						<div class="col-sm-4 text-start">
+							<input type="text" class="form-control" id="adeleRingOfRestraintInfo" placeholder="Error" readonly data-bs-toggle="tooltip" data-bs-trigger="focus" data-bs-html="true" title="Skill remaining cooldown"/>
+						</div>
+					</div>
+				</div>
+				<!-- Weapon Jump -->
+				<div class="col-sm-3 py-2 text-emphasis bg-tertiary-subtle border border-secondary-subtle rounded-2">
+					<div class="row">
+						<div class="col-sm-4 text-end">
+							<a tabindex="0" class="popover-trigger" data-bs-toggle="popover" data-bs-placement="left" data-bs-trigger="focus" data-bs-html="true" data-bs-content="<img src='images/adele/skill_80001470.png'>">
+								<img src="images/adele/80001470.icon._outlink.png" style="cursor: pointer;">
+							</a>
+						</div>
+						<div class="col-sm-4 text-start">
+							<button type="button" class="btn btn-outline-light" id="adeleWeaponJumpRing"> Activate </button>
+						</div>
+						<div class="col-sm-4 text-start">
+							<input type="text" class="form-control" id="adeleWeaponJumpRingInfo" placeholder="Error" readonly data-bs-toggle="tooltip" data-bs-trigger="focus" data-bs-html="true" title="Skill remaining cooldown"/>
+						</div>
+					</div>
+				</div>
+				<!-- Link: Angelic Buster -->
+				<div class="col-sm-3 py-2 text-emphasis bg-tertiary-subtle border border-secondary-subtle rounded-2">
+					<div class="row">
+						<div class="col-sm-4 text-end">
+							<a tabindex="0" class="popover-trigger" data-bs-toggle="popover" data-bs-placement="left" data-bs-trigger="focus" data-bs-html="true" data-bs-content="<img src='images/adele/skill_80001155.png'>">
+								<img src="images/adele/80001155.icon._outlink.png" style="cursor: pointer;">
+							</a>
+						</div>
+						<div class="col-sm-4 text-start">
+							<button type="button" class="btn btn-outline-light" id="adeleTermsAndConditions"> Activate </button>
+						</div>
+						<div class="col-sm-4 text-start">
+							<input type="text" class="form-control" id="adeleTermsAndConditionsInfo" placeholder="Error" readonly data-bs-toggle="tooltip" data-bs-trigger="focus" data-bs-html="true" title="Skill remaining cooldown"/>
+						</div>
+					</div>
+				</div>
+				<!-- Divine Wrath -->
+				<div class="col-sm-3 py-2 text-emphasis bg-tertiary-subtle border border-secondary-subtle rounded-2">
+					<div class="row">
+						<div class="col-sm-4 text-end">
+							<a tabindex="0" class="popover-trigger" data-bs-toggle="popover" data-bs-placement="left" data-bs-trigger="focus" data-bs-html="true" data-bs-content="<img src='images/adele/skill_151121042.png'>">
+								<img src="images/adele/151121042.icon._outlink.png" style="cursor: pointer;">
+							</a>
+						</div>
+						<div class="col-sm-4 text-start">
+							<button type="button" class="btn btn-outline-light" id="adeleTermsAndConditions"> Activate </button>
+						</div>
+						<div class="col-sm-4 text-start">
+							<input type="text" class="form-control" id="adeleTermsAndConditionsInfo" placeholder="Error" readonly data-bs-toggle="tooltip" data-bs-trigger="focus" data-bs-html="true" title="Skill remaining cooldown"/>
+						</div>
+					</div>
+				</div>
+				<!-- Legacy Restoration -->
+				<div class="col-sm-3 py-2 text-emphasis bg-tertiary-subtle border border-secondary-subtle rounded-2">
+					<div class="row">
+						<div class="col-sm-4 text-end">
+							<a tabindex="0" class="popover-trigger" data-bs-toggle="popover" data-bs-placement="left" data-bs-trigger="focus" data-bs-html="true" data-bs-content="<img src='images/adele/skill_500061065.png'><br><img src='images/adele/skill_500004162.png'>">
+								<img src="images/adele/500061065.icon._outlink.png" style="cursor: pointer;">
+							</a>
+						</div>
+						<div class="col-sm-4 text-start">
+							<button type="button" class="btn btn-outline-light" id="adeleLegacyRestoration"> Activate </button>
+						</div>
+						<div class="col-sm-4 text-start">
+							<input type="text" class="form-control" id="adeleLegacyRestorationInfo" placeholder="Error" readonly data-bs-toggle="tooltip" data-bs-trigger="focus" data-bs-html="true" title="Skill remaining cooldown"/>
+						</div>
+					</div>
+				</div>
+				<!-- Grandis Goddess's Blessing -->
+				<div class="col-sm-3 py-2 text-emphasis bg-tertiary-subtle border border-secondary-subtle rounded-2">
+					<div class="row">
+						<div class="col-sm-4 text-end">
+							<a tabindex="0" class="popover-trigger" data-bs-toggle="popover" data-bs-placement="left" data-bs-trigger="focus" data-bs-html="true" data-bs-content="<img src='images/adele/skill_400001046.png'>">
+								<img src="images/adele/400001046.icon._outlink.png" style="cursor: pointer;">
+							</a>
+						</div>
+						<div class="col-sm-4 text-start">
+							<button type="button" class="btn btn-outline-light" id="adeleGrandisGoddessBlessing"> Activate </button>
+						</div>
+						<div class="col-sm-4 text-start">
+							<input type="text" class="form-control" id="adeleGrandisGoddessBlessingInfo" placeholder="Error" readonly data-bs-toggle="tooltip" data-bs-trigger="focus" data-bs-html="true" title="Skill remaining cooldown"/>
+						</div>
+					</div>
+				</div>
+				<!-- Weapon Aura -->
+				<div class="col-sm-3 py-2 text-emphasis bg-tertiary-subtle border border-secondary-subtle rounded-2">
+					<div class="row">
+						<div class="col-sm-4 text-end">
+							<a tabindex="0" class="popover-trigger" data-bs-toggle="popover" data-bs-placement="left" data-bs-trigger="focus" data-bs-html="true" data-bs-content="<img src='images/adele/skill_400011000.png'>">
+								<img src="images/adele/400011000.icon._outlink.png" style="cursor: pointer;">
+							</a>
+						</div>
+						<div class="col-sm-4 text-start">
+							<button type="button" class="btn btn-outline-light" id="adeleWeaponAura"> Activate </button>
+						</div>
+						<div class="col-sm-4 text-start">
+							<input type="text" class="form-control" id="adeleWeaponAuraInfo" placeholder="Error" readonly data-bs-toggle="tooltip" data-bs-trigger="focus" data-bs-html="true" title="Skill remaining cooldown"/>
+						</div>
+					</div>
+				</div>
+				<!-- Impenetrable Skin -->
+				<div class="col-sm-3 py-2 text-emphasis bg-tertiary-subtle border border-secondary-subtle rounded-2">
+					<div class="row">
+						<div class="col-sm-4 text-end">
+							<a tabindex="0" class="popover-trigger" data-bs-toggle="popover" data-bs-placement="left" data-bs-trigger="focus" data-bs-html="true" data-bs-content="<img src='images/adele/skill_400011066.png'>">
+								<img src="images/adele/400011066.icon._outlink.png" style="cursor: pointer;">
+							</a>
+						</div>
+						<div class="col-sm-4 text-start">
+							<button type="button" class="btn btn-outline-light" id="adeleImpenetrableSkin"> Activate </button>
+						</div>
+						<div class="col-sm-4 text-start">
+							<input type="text" class="form-control" id="adeleImpenetrableSkinInfo" placeholder="Error" readonly data-bs-toggle="tooltip" data-bs-trigger="focus" data-bs-html="true" title="Skill remaining cooldown"/>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+			
+			<div class="row py-3">
+				<h3> Passives </h3>
+				<!-- Skills -->
+				<div class="col-sm-12 py-2 text-emphasis bg-tertiary-subtle border border-secondary-subtle rounded-2">
+					<div class="col text-center">
+						<!-- Hypers -->
+						<a tabindex="0" class="popover-trigger" data-bs-toggle="popover" data-bs-placement="left" data-bs-trigger="focus" data-bs-html="true" data-bs-content="<img src='images/adele/skill_151120031.png'>">
+							<img src="images/adele/151120031.icon._outlink.png" style="cursor: pointer;">
+						</a>
+						<a tabindex="0" class="popover-trigger" data-bs-toggle="popover" data-bs-placement="left" data-bs-trigger="focus" data-bs-html="true" data-bs-content="<img src='images/adele/skill_151120032.png'>">
+							<img src="images/adele/151120032.icon._outlink.png" style="cursor: pointer;">
+						</a>
+						<a tabindex="0" class="popover-trigger" data-bs-toggle="popover" data-bs-placement="left" data-bs-trigger="focus" data-bs-html="true" data-bs-content="<img src='images/adele/skill_151120033.png'>">
+							<img src="images/adele/151120033.icon._outlink.png" style="cursor: pointer;">
+						</a>
+						<a tabindex="0" class="popover-trigger" data-bs-toggle="popover" data-bs-placement="left" data-bs-trigger="focus" data-bs-html="true" data-bs-content="<img src='images/adele/skill_151120034.png'>">
+							<img src="images/adele/151120034.icon._outlink.png" style="cursor: pointer;">
+						</a>
+						<a tabindex="0" class="popover-trigger" data-bs-toggle="popover" data-bs-placement="left" data-bs-trigger="focus" data-bs-html="true" data-bs-content="<img src='images/adele/skill_151120035.png'>">
+							<img src="images/adele/151120035.icon._outlink.png" style="cursor: pointer;">
+						</a>
+						<a tabindex="0" class="popover-trigger" data-bs-toggle="popover" data-bs-placement="left" data-bs-trigger="focus" data-bs-html="true" data-bs-content="<img src='images/adele/skill_151120036.png'>">
+							<img src="images/adele/151120036.icon._outlink.png" style="cursor: pointer;">
+						</a>
+						<a tabindex="0" class="popover-trigger" data-bs-toggle="popover" data-bs-placement="left" data-bs-trigger="focus" data-bs-html="true" data-bs-content="<img src='images/adele/skill_151120037.png'>">
+							<img src="images/adele/151120037.icon._outlink.png" style="cursor: pointer;">
+						</a>
+						<a tabindex="0" class="popover-trigger" data-bs-toggle="popover" data-bs-placement="left" data-bs-trigger="focus" data-bs-html="true" data-bs-content="<img src='images/adele/skill_151120038.png'>">
+							<img src="images/adele/151120038.icon._outlink.png" style="cursor: pointer;">
+						</a>
+						<a tabindex="0" class="popover-trigger" data-bs-toggle="popover" data-bs-placement="left" data-bs-trigger="focus" data-bs-html="true" data-bs-content="<img src='images/adele/skill_151120039.png'>">
+							<img src="images/adele/151120039.icon._outlink.png" style="cursor: pointer;">
+						</a>
+						<!-- 4th Job -->
+						<a tabindex="0" class="popover-trigger" data-bs-toggle="popover" data-bs-placement="left" data-bs-trigger="focus" data-bs-html="true" data-bs-content="<img src='images/adele/skill_151141003.png'><br><img src='images/adele/skill_151101013.png'><br><img src='images/adele/skill_400004590.png'>">
+							<img src="images/adele/151141003.icon._outlink.png" style="cursor: pointer;">
+						</a>
+						<a tabindex="0" class="popover-trigger" data-bs-toggle="popover" data-bs-placement="left" data-bs-trigger="focus" data-bs-html="true" data-bs-content="<img src='images/adele/skill_151101006.png'><br><img src='images/adele/skill_400004593.png'>">
+							<img src="images/adele/151101006.icon._outlink.png" style="cursor: pointer;">
+						</a>
+						<a tabindex="0" class="popover-trigger" data-bs-toggle="popover" data-bs-placement="left" data-bs-trigger="focus" data-bs-html="true" data-bs-content="<img src='images/adele/skill_151120012.png'>">
+							<img src="images/adele/151120012.icon._outlink.png" style="cursor: pointer;">
+						</a>
+						<a tabindex="0" class="popover-trigger" data-bs-toggle="popover" data-bs-placement="left" data-bs-trigger="focus" data-bs-html="true" data-bs-content="<img src='images/adele/skill_151120007.png'>">
+							<img src="images/adele/151120007.icon._outlink.png" style="cursor: pointer;">
+						</a>
+						<a tabindex="0" class="popover-trigger" data-bs-toggle="popover" data-bs-placement="left" data-bs-trigger="focus" data-bs-html="true" data-bs-content="<img src='images/adele/skill_151120008.png'>">
+							<img src="images/adele/151120008.icon._outlink.png" style="cursor: pointer;">
+						</a>
+						<a tabindex="0" class="popover-trigger" data-bs-toggle="popover" data-bs-placement="left" data-bs-trigger="focus" data-bs-html="true" data-bs-content="<img src='images/adele/skill_151120009.png'>">
+							<img src="images/adele/151120009.icon._outlink.png" style="cursor: pointer;">
+						</a>
+						<a tabindex="0" class="popover-trigger" data-bs-toggle="popover" data-bs-placement="left" data-bs-trigger="focus" data-bs-html="true" data-bs-content="<img src='images/adele/skill_151120010.png'>">
+							<img src="images/adele/151120010.icon._outlink.png" style="cursor: pointer;">
+						</a>
+						<a tabindex="0" class="popover-trigger" data-bs-toggle="popover" data-bs-placement="left" data-bs-trigger="focus" data-bs-html="true" data-bs-content="<img src='images/adele/skill_151110007.png'>">
+							<img src="images/adele/151110007.icon._outlink.png" style="cursor: pointer;">
+						</a>
+						<a tabindex="0" class="popover-trigger" data-bs-toggle="popover" data-bs-placement="left" data-bs-trigger="focus" data-bs-html="true" data-bs-content="<img src='images/adele/skill_151100016.png'>">
+							<img src="images/adele/151100016.icon._outlink.png" style="cursor: pointer;">
+						</a>
+						<a tabindex="0" class="popover-trigger" data-bs-toggle="popover" data-bs-placement="left" data-bs-trigger="focus" data-bs-html="true" data-bs-content="<img src='images/adele/skill_150020079.png'>">
+							<img src="images/adele/150020079.icon._outlink.png" style="cursor: pointer;">
+						</a>
+						<a tabindex="0" class="popover-trigger" data-bs-toggle="popover" data-bs-placement="left" data-bs-trigger="focus" data-bs-html="true" data-bs-content="<img src='images/adele/skill_150020006.png'>">
+							<img src="images/adele/150020006.icon._outlink.png" style="cursor: pointer;">
+						</a>
+						
+						
+						<!-- Buffs assume 100% uptime -->
+						<a tabindex="0" class="popover-trigger" data-bs-toggle="popover" data-bs-placement="left" data-bs-trigger="focus" data-bs-html="true" data-bs-content="<img src='images/adele/skill_151101005.png'>">
+							<img src="images/adele/151101005.icon._outlink.png" style="cursor: pointer;">
+						</a>
+						<a tabindex="0" class="popover-trigger" data-bs-toggle="popover" data-bs-placement="left" data-bs-trigger="focus" data-bs-html="true" data-bs-content="<img src='images/adele/skill_151121005.png'>">
+							<img src="images/adele/151121005.icon._outlink.png" style="cursor: pointer;">
+						</a>
+						<a tabindex="0" class="popover-trigger" data-bs-toggle="popover" data-bs-placement="left" data-bs-trigger="focus" data-bs-html="true" data-bs-content="<img src='images/adele/skill_150021005.png'>">
+							<img src="images/adele/150021005.icon._outlink.png" style="cursor: pointer;">
+						</a>
+						
+						
+					</div>
+				</div>
+				
+				
+				
+			</div>
+			
+			
+			<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 		</div>
 		
 	</div>

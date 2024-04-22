@@ -1,8 +1,8 @@
 /* hold equipment stats */
-var ring1JobStat = 0; var ring1AllStat = 0; var ring1Hp = 0; var ring1Mp = 0; var ring1Att = 0; var ring1MAtt = 0;
-var ring2JobStat = 0; var ring2AllStat = 0; var ring2Hp = 0; var ring2Mp = 0; var ring2Att = 0; var ring2MAtt = 0;
-var ring3JobStat = 0; var ring3AllStat = 0; var ring3Hp = 0; var ring3Mp = 0; var ring3Att = 0; var ring3MAtt = 0;
-var ring4JobStat = 0; var ring4AllStat = 0; var ring4Hp = 0; var ring4Mp = 0; var ring4Att = 0; var ring4MAtt = 0;
+var ring1JobStat = 0; var ring1AllStat = 0; var ring1Hp = 0; var ring1Mp = 0; var ring1Att = 0; var ring1MAtt = 0; var ring1Boss = 0; var ring1Ied = 0;
+var ring2JobStat = 0; var ring2AllStat = 0; var ring2Hp = 0; var ring2Mp = 0; var ring2Att = 0; var ring2MAtt = 0; var ring2Boss = 0; var ring2Ied = 0;
+var ring3JobStat = 0; var ring3AllStat = 0; var ring3Hp = 0; var ring3Mp = 0; var ring3Att = 0; var ring3MAtt = 0; var ring3Boss = 0; var ring3Ied = 0;
+var ring4JobStat = 0; var ring4AllStat = 0; var ring4Hp = 0; var ring4Mp = 0; var ring4Att = 0; var ring4MAtt = 0; var ring4Boss = 0; var ring4Ied = 0;
 
 var ring1potLabel = document.getElementById("ring1label");
 var ring1pot1 = document.getElementById("ring1Pot1");
@@ -65,42 +65,42 @@ function updateRingStarForceOptions() {
 	starForceSelect3.innerHTML = "";
 	starForceSelect4.innerHTML = "";
     var options;
-	updateRingOptions(selectedRing1, ring1LvLabel, ring1LvSelector, ring1potLabel, ring1pot1, ring1pot2, ring1pot3, selectDropdown2, selectDropdown3, selectDropdown4, ring1EquipImage, starForceSelect1);
-	updateRingOptions(selectedRing2, ring2LvLabel, ring2LvSelector, ring2potLabel, ring2pot1, ring2pot2, ring2pot3, selectDropdown1, selectDropdown3, selectDropdown4, ring2EquipImage, starForceSelect2);
-	updateRingOptions(selectedRing3, ring3LvLabel, ring3LvSelector, ring3potLabel, ring3pot1, ring3pot2, ring3pot3, selectDropdown1, selectDropdown2, selectDropdown4, ring3EquipImage, starForceSelect3);
-	updateRingOptions(selectedRing4, ring4LvLabel, ring4LvSelector, ring4potLabel, ring4pot1, ring4pot2, ring4pot3, selectDropdown1, selectDropdown2, selectDropdown3, ring4EquipImage, starForceSelect4);
+	updateRingOptions(selectedRing1, ring1LvLabel, ring1LvSelector, ring1potLabel, ring1pot1, ring1pot2, ring1pot3, selectDropdown2, selectDropdown3, selectDropdown4, ring1EquipImage, starForceSelect1, ring1LvSelector);
+	updateRingOptions(selectedRing2, ring2LvLabel, ring2LvSelector, ring2potLabel, ring2pot1, ring2pot2, ring2pot3, selectDropdown1, selectDropdown3, selectDropdown4, ring2EquipImage, starForceSelect2, ring2LvSelector);
+	updateRingOptions(selectedRing3, ring3LvLabel, ring3LvSelector, ring3potLabel, ring3pot1, ring3pot2, ring3pot3, selectDropdown1, selectDropdown2, selectDropdown4, ring3EquipImage, starForceSelect3, ring3LvSelector);
+	updateRingOptions(selectedRing4, ring4LvLabel, ring4LvSelector, ring4potLabel, ring4pot1, ring4pot2, ring4pot3, selectDropdown1, selectDropdown2, selectDropdown3, ring4EquipImage, starForceSelect4, ring4LvSelector);
 	updateRingStarForceStats();
 }
 
 /* Update ring options */
-function updateRingOptions(selection, lvLabel, lvSelector, potLabel, pot1, pot2, pot3, other1, other2, other3, ringImage, sfSelector){
+function updateRingOptions(selection, lvLabel, lvSelector, potLabel, pot1, pot2, pot3, other1, other2, other3, ringImage, sfSelector, ozRingSelector){
 	options = [25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0];
 	lvLabel.style.display = 'none'; lvSelector.hidden = true;
 	potLabel.style.display = 'block'; pot1.hidden = false; pot2.hidden = false; pot3.hidden = false;
 	switch(selection) {
         case "kannasTreasure":
             ringImage.src = "images/common/01113155.img.info.icon._outlink.png";
-			other1.options[1].style.display = "none"; other2.options[1].style.display = "none"; other3.options[1].style.display = "none";
+			other1.options[1].style.display = "none"; other2.options[1].style.display = "none"; other3.options[1].style.display = "none"; ozRingSelector.value = "none";
 			break;
 		case "meisterRing":
             ringImage.src = "images/common/01113055.img.info.icon._outlink.png";
-			other1.options[2].style.display = "none"; other2.options[2].style.display = "none"; other3.options[2].style.display = "none";
+			other1.options[2].style.display = "none"; other2.options[2].style.display = "none"; other3.options[2].style.display = "none"; ozRingSelector.value = "none";
 			break;	
         case "reinforcedGolluxRing":
             ringImage.src = "images/common/01113074.img.info.icon._outlink.png";
-			other1.options[3].style.display = "none"; other2.options[3].style.display = "none"; other3.options[3].style.display = "none";
+			other1.options[3].style.display = "none"; other2.options[3].style.display = "none"; other3.options[3].style.display = "none"; ozRingSelector.value = "none";
 			break;
 		case "superiorGolluxRing":
             ringImage.src = "images/common/01113075.img.info.icon._outlink.png";
-			other1.options[4].style.display = "none"; other2.options[4].style.display = "none"; other3.options[4].style.display = "none";
+			other1.options[4].style.display = "none"; other2.options[4].style.display = "none"; other3.options[4].style.display = "none"; ozRingSelector.value = "none";
 			break;
 		case "dawnGuardianAngelRing":
             ringImage.src = "images/common/01113316.img.info.icon._outlink.png";
-			other1.options[5].style.display = "none"; other2.options[5].style.display = "none"; other3.options[5].style.display = "none";
+			other1.options[5].style.display = "none"; other2.options[5].style.display = "none"; other3.options[5].style.display = "none"; ozRingSelector.value = "none";
 			break;
 		case "endlessTerror":
             ringImage.src = "images/common/01113306.img.info.icon._outlink.png";
-			other1.options[6].style.display = "none"; other2.options[6].style.display = "none"; other3.options[6].style.display = "none";
+			other1.options[6].style.display = "none"; other2.options[6].style.display = "none"; other3.options[6].style.display = "none"; ozRingSelector.value = "none";
 			break;
 		case "ringOfRestraint":
 			options = [0];

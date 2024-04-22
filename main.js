@@ -1,5 +1,3 @@
-
-var levelElem = document.getElementById("level");
 var strElem = document.getElementById("strAP");
 var dexElem = document.getElementById("dexAP");
 var intElem = document.getElementById("intAP");
@@ -7,7 +5,7 @@ var lukElem = document.getElementById("lukAP");
 var hpElem = document.getElementById("hpAP");
 var mpElem = document.getElementById("mpAP");
 
-document.getElementById("level").defaultValue = "200"
+document.getElementById("level").defaultValue = "260"
 document.getElementById("strAP").defaultValue = "0"
 document.getElementById("dexAP").defaultValue = "0"
 document.getElementById("intAP").defaultValue = "0"
@@ -15,7 +13,7 @@ document.getElementById("lukAP").defaultValue = "0"
 document.getElementById("hpAP").defaultValue = "0"
 document.getElementById("mpAP").defaultValue = "0"
 
-var selectedLevel = parseInt(levelElem.value);
+var selectedLevel = parseInt(document.getElementById("level").value);
 var totalAp;
 
 updateApPoints();
@@ -30,19 +28,19 @@ const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]
 const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 
 /* Event Listeners for Level change */
-levelElem.addEventListener('blur', validateRange);
-levelElem.addEventListener('blur', updateApPoints);
-levelElem.addEventListener('blur', resetHyperStatsToZero);
-levelElem.addEventListener('blur', updateHyperStatPoints);
-levelElem.addEventListener('blur', calculateHyperStatPoints);
+document.getElementById("level").addEventListener('change', validateRange);
+document.getElementById("level").addEventListener('change', updateApPoints);
+document.getElementById("level").addEventListener('change', resetHyperStatsToZero);
+document.getElementById("level").addEventListener('change', updateHyperStatPoints);
+document.getElementById("level").addEventListener('change', calculateHyperStatPoints);
 
 /* Event Listeners for stat change */
-strElem.addEventListener('blur', calculateAttributePoints);
-dexElem.addEventListener('blur', calculateAttributePoints);
-intElem.addEventListener('blur', calculateAttributePoints);
-lukElem.addEventListener('blur', calculateAttributePoints);
-hpElem.addEventListener('blur', calculateAttributePoints);
-mpElem.addEventListener('blur', calculateAttributePoints);
+strElem.addEventListener('change', calculateAttributePoints);
+dexElem.addEventListener('change', calculateAttributePoints);
+intElem.addEventListener('change', calculateAttributePoints);
+lukElem.addEventListener('change', calculateAttributePoints);
+hpElem.addEventListener('change', calculateAttributePoints);
+mpElem.addEventListener('change', calculateAttributePoints);
 
 /* Inner ability */
 selectinnerAbility1.addEventListener('change', updateInner);
@@ -50,18 +48,12 @@ selectinnerAbility2.addEventListener('change', updateInner);
 selectinnerAbility3.addEventListener('change', updateInner);
 
 /* Traits */
-var dilligence = document.getElementById("dilligence");
-var insight = document.getElementById("insight");
-var empathy = document.getElementById("empathy");
-var charm = document.getElementById("charm");
-var ambition = document.getElementById("ambition");
-var willpower = document.getElementById("willpower");
-dilligence.addEventListener('blur', validateRange);
-insight.addEventListener('blur', validateRange);
-empathy.addEventListener('blur', validateRange);
-charm.addEventListener('blur', validateRange);
-ambition.addEventListener('blur', validateRange);
-willpower.addEventListener('blur', validateRange);
+document.getElementById("dilligence").addEventListener('change', validateRange);
+document.getElementById("insight").addEventListener('change', validateRange);
+document.getElementById("empathy").addEventListener('change', validateRange);
+document.getElementById("charm").addEventListener('change', validateRange);
+document.getElementById("ambition").addEventListener('change', validateRange);
+document.getElementById("willpower").addEventListener('change', validateRange);
 
 /* Hyper stat elements */
 var hspPointsElem = document.getElementById("hsPoints");
@@ -102,6 +94,12 @@ attAllocated.addEventListener('change', calculateHyperStatPoints);
 expAllocated.addEventListener('change', calculateHyperStatPoints);
 arcaneForceAllocated.addEventListener('change', calculateHyperStatPoints);
 
+/* Event Listener to validate other form fields */
+const dataInputElements = document.querySelectorAll('.form-control');
+dataInputElements.forEach(element => {
+    element.addEventListener('change', validateRange);
+});
+
 calculateHyperStatPoints();
 legionBoard();
 createSymbolSelections();
@@ -123,7 +121,7 @@ function validateRange() {
 function updateApPoints() {
 	validateRange.call(this);
 	var apPointsElem = document.getElementById("apPoints");
-	var selectedLevel = parseInt(levelElem.value);
+	var selectedLevel = parseInt(document.getElementById("level").value);
 	totalAp = 5 + 5 + (selectedLevel * 5);
 	apPointsElem.placeholder = totalAp + " points available";
 	strElem.value = 0;
@@ -164,7 +162,7 @@ function calculateAttributePoints() {
 
 /* Calculate and set allowable hyper stat points based on selected level */
 function updateHyperStatPoints() {
-	var selectedLevel = parseInt(levelElem.value);
+	var selectedLevel = parseInt(document.getElementById("level").value);
 	var hsPointsElem = document.getElementById("hsPoints");
 	if (selectedLevel >= 200 && selectedLevel <= 209) {
 		hyperStatPoints = (9 * selectedLevel - 1461);
@@ -412,38 +410,22 @@ function calculateHyperStatPoints() {
 
 /* Create legion board level options */
 function legionBoard() {
-	var strLeg = document.getElementById("legionStr");
-	createSelections(strLeg, 15, 0);
-	var dexLeg = document.getElementById("legionDex");
-	createSelections(dexLeg, 15, 0);
-	var intLeg = document.getElementById("legionInt");
-	createSelections(intLeg, 15, 0);
-	var lukLeg = document.getElementById("legionLuk");
-	createSelections(lukLeg, 15, 0);
-	var hpLeg = document.getElementById("legionHp");
-	createSelections(hpLeg, 15, 0);
-	var mpLeg = document.getElementById("legionMp");
-	createSelections(mpLeg, 15, 0);
-	var attLeg = document.getElementById("legionAtt");
-	createSelections(attLeg, 15, 0);
-	var mattLeg = document.getElementById("legionMagAtt");
-	createSelections(mattLeg, 15, 0);
-	var abLeg = document.getElementById("legionAbnormal");
-	createSelections(abLeg, 40, 0);
-	var xpLeg = document.getElementById("legionExp");
-	createSelections(xpLeg, 40, 0);
-	var crLeg = document.getElementById("legionCritRate");
-	createSelections(crLeg, 40, 0);
-	var bssLeg = document.getElementById("legionBoss");
-	createSelections(bssLeg, 40, 0);
-	var nmLeg = document.getElementById("legionNormMonDam");
-	createSelections(nmLeg, 40, 0);
-	var bdLeg = document.getElementById("legionBuffDuration");
-	createSelections(bdLeg, 40, 0);
-	var iedLeg = document.getElementById("legionIed");
-	createSelections(iedLeg, 40, 0);
-	var cdLeg = document.getElementById("legionCritDam");
-	createSelections(cdLeg, 40, 0);
+	createSelections(document.getElementById("legionStr"), 15, 0);
+	createSelections(document.getElementById("legionDex"), 15, 0);
+	createSelections(document.getElementById("legionInt"), 15, 0);
+	createSelections(document.getElementById("legionLuk"), 15, 0);
+	createSelections(document.getElementById("legionHp"), 15, 0);
+	createSelections(document.getElementById("legionMp"), 15, 0);
+	createSelections(document.getElementById("legionAtt"), 15, 0);
+	createSelections(document.getElementById("legionMagAtt"), 15, 0);
+	createSelections(document.getElementById("legionAbnormal"), 40, 0);
+	createSelections(document.getElementById("legionExp"), 40, 0);
+	createSelections(document.getElementById("legionCritRate"), 40, 0);
+	createSelections(document.getElementById("legionBoss"), 40, 0);
+	createSelections(document.getElementById("legionNormMonDam"), 40, 0);
+	createSelections(document.getElementById("legionBuffDuration"), 40, 0);
+	createSelections(document.getElementById("legionIed"), 40, 0);
+	createSelections(document.getElementById("legionCritDam"), 40, 0);
 }
 
 /* Create descending level options for element */
@@ -483,30 +465,18 @@ function countLegionBoardSquares() {
 }
 
 function createSymbolSelections() {
-	var vjSymbol = document.getElementById("vjSymbol");
-	var chuchuSymbol = document.getElementById("chuchuSymbol");
-	var lachSymbol = document.getElementById("lachSymbol");
-	var arcanaSymbol = document.getElementById("arcanaSymbol");
-	var morassSymbol = document.getElementById("morassSymbol");
-	var esferaSymbol = document.getElementById("esferaSymbol");
-	createSelections(vjSymbol, 20, 20);
-	createSelections(chuchuSymbol, 20, 20);
-	createSelections(lachSymbol, 20, 20);
-	createSelections(arcanaSymbol, 20, 20);
-	createSelections(morassSymbol, 20, 20);
-	createSelections(esferaSymbol, 20, 20);
-	var cerniumSymbol = document.getElementById("cerniumSymbol");
-	var arcusSymbol = document.getElementById("arcusSymbol");
-	var odiumSymbol = document.getElementById("odiumSymbol");
-	var shangSymbol = document.getElementById("shangSymbol");
-	var arteriaSymbol = document.getElementById("arteriaSymbol");
-	var carcionSymbol = document.getElementById("carcionSymbol");
-	createSelections(cerniumSymbol, 11, 11);
-	createSelections(arcusSymbol, 11, 11);
-	createSelections(odiumSymbol, 11, 11);
-	createSelections(shangSymbol, 11, 11);
-	createSelections(arteriaSymbol, 11, 11);
-	createSelections(carcionSymbol, 11, 11);
+	createSelections(document.getElementById("vjSymbol"), 20, 20);
+	createSelections(document.getElementById("chuchuSymbol"), 20, 20);
+	createSelections(document.getElementById("lachSymbol"), 20, 20);
+	createSelections(document.getElementById("arcanaSymbol"), 20, 20);
+	createSelections(document.getElementById("morassSymbol"), 20, 20);
+	createSelections(document.getElementById("esferaSymbol"), 20, 20);
+	createSelections(document.getElementById("cerniumSymbol"), 11, 11);
+	createSelections(document.getElementById("arcusSymbol"), 11, 11);
+	createSelections(document.getElementById("odiumSymbol"), 11, 11);
+	createSelections(document.getElementById("shangSymbol"), 11, 11);
+	createSelections(document.getElementById("arteriaSymbol"), 11, 11);
+	createSelections(document.getElementById("carcionSymbol"), 11, 11);
 }
 
 function updateInner() {
