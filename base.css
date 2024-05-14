@@ -23,6 +23,14 @@ ul {
     max-width: none !important;
 }
 
+.form-control, .col-form-label {
+    font-size: 0.9rem !important;
+}
+
+.btn {
+    font-size: 0.9rem !important;
+}
+
 #equipmentBox {
 	position: relative;  /*keeps children within box*/
 	display: block;

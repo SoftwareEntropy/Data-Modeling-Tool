@@ -486,17 +486,15 @@ function updateInner() {
     var ability1options = document.getElementById("selectinnerAbility1").options;
     var ability2options = document.getElementById("selectinnerAbility2").options;
     var ability3options = document.getElementById("selectinnerAbility3").options;
-	/* Reset */
 	for (var i = 0; i < ability1options.length; i++) {
         ability1options[i].style.display = '';
     }
-    for (var i = 0; i < ability2options.length; i++) {
+	for (var i = 0; i < ability2options.length; i++) {
         ability2options[i].style.display = '';
     }
-    for (var i = 0; i < ability3options.length; i++) {
-        ability3options[i].style.display = '';
-    }
-	/* Prevent duplicate values */
+	for (var i = 0; i < ability3options.length; i++) {
+		ability3options[i].style.display = '';
+	}
     if (ability1.value != "none") {
         for (var i = 0; i < ability2options.length; i++) {
             var option = ability2options[i];
@@ -525,7 +523,6 @@ function updateInner() {
             }
         }
     }
-
     if (ability3.value != "none") {
         for (var i = 0; i < ability2options.length; i++) {
             var option = ability2options[i];

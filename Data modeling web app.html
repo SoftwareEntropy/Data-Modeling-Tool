@@ -48,7 +48,7 @@
 		<div class="col-md-3 pt-2 text-center text-emphasis bg-tertiary-subtle border border-secondary-subtle rounded-2">
 			<h4> Character </h4>
 			<div class="row g-2">
-				<label for="selectClass" class="col-sm-4 text-center"> Class </label>
+				<label for="selectClass" class="col-sm-4 col-form-label text-center"> Class </label>
 				<div class="col-sm-8">
 					<select class="form-select" id="selectClass" aria-label="Select Class">
 						<option hidden value="none">Select</option>
@@ -110,7 +110,7 @@
 					<input min="260" max="300" type="number" id="level" class="form-control"/>
 				</div> 
 				<div class="row gy-2"></div>
-				<label for="selectServer" class="col-sm-4 text-center"> Server </label>
+				<label for="selectServer" class="col-sm-4 col-form-label text-center"> Server </label>
 				<div class="col-sm-8">
 					<select class="form-select" id="selectServer" aria-label="Select Server">
 						<option selected value="none">Select</option>
@@ -4835,19 +4835,11 @@
 							<br><br>Notes:<br>1) Additional stats such as flames, scrolls, and bonus potential are
 							currently not included in this section due to their wide variances. Instead, include
 							those stats on the 'Additional Stats' section if interested.
-							<br><br>2) Certain equipment slots that normally contain class specific items, 
-							such as weapons, hats, tops, and bottoms, may display a placeholder image for their 
-							respective sets for simplicity. During calculations, the appropriate equipment stats
-							and multipliers for that class will be applied.
-							<br><br>3) For classes with multiple weapon choices, such as one-handed sword
-							and shield, or two-handed sword with medallion, the selected sub-weapon option will
-							indicate the setup. Eg. choosing a shield will assume a one-handed weapon. Choosing
-							a setup not applicable for the class will omit sub-weapon stats.
-							<br><br>4) Kanna does not have a secondary weapon. Instead, Haku's fan stats will be retrieved
+							<br><br>2) Kanna does not have a secondary weapon. Instead, Haku's fan stats will be retrieved
 							from the sub-weapon selection.
-							<br><br>5) Heart selection assumes appropriate android is equipped. This means set effects, such
+							<br><br>3) Heart selection assumes appropriate android is equipped. This means set effects, such
 							as the wondroid +5 attack buff, and pitched boss set effect for black heart is applied.
-							<br><br>6) Xenon assumes using thief equipment set
+							<br><br>4) Xenon assumes using thief equipment set.
 						</div>
 					<!-- Modal footer -->
 						<div class="modal-footer">
@@ -5557,7 +5549,11 @@
 		<div class="col-md-12 pt-2 text-center text-emphasis bg-tertiary-subtle border border-secondary-subtle rounded-2">
 			<div class="py-3 text-emphasis bg-tertiary-subtle border border-secondary-subtle rounded-2">
 				<h4> Damage Output (Adele) </h4>
-				<canvas id="line-chart"></canvas>
+				<div style="position: relative;">
+					<canvas id="line-chart">
+					</canvas>
+					<button type="button" class="btn btn-outline-light" id="adeleUndo" disabled style="position: absolute; top: -20px; right: 30px;">Undo</button>
+				</div>
 			</div>
 			<div class="row py-3">
 				<h3> Skills </h3>
@@ -5573,7 +5569,55 @@
 							<button type="button" class="btn btn-outline-light" id="adeleHexaCleave"> Activate </button>
 						</div>
 						<div class="col-sm-4 text-start">
-							<input type="text" class="form-control" id="adeleHexaCleaveInfo" placeholder="Error" readonly data-bs-toggle="tooltip" data-bs-trigger="focus" data-bs-html="true" title="Skill remaining cooldown"/>
+							<input type="text" class="form-control" id="adeleHexaCleaveInfo" placeholder="Available" readonly data-bs-toggle="tooltip" data-bs-trigger="focus" data-bs-html="true" title="Skill remaining cooldown"/>
+						</div>
+					</div>
+				</div>
+				<!-- Reign of Destruction -->
+				<div class="col-sm-3 py-2 text-emphasis bg-tertiary-subtle border border-secondary-subtle rounded-2">
+					<div class="row">
+						<div class="col-sm-4 text-end">
+							<a tabindex="0" class="popover-trigger" data-bs-toggle="popover" data-bs-placement="left" data-bs-trigger="focus" data-bs-html="true" data-bs-content="<img src='images/adele/skill_151111001.png'><br><img src='images/adele/skill_400004595.png'><br><img src='images/adele/skill_151120035.png'>">
+								<img src="images/adele/151111001.icon._outlink.png" style="cursor: pointer;">
+							</a>
+						</div>
+						<div class="col-sm-4 text-start">
+							<button type="button" class="btn btn-outline-light" id="adeleReignOfDestruction"> Activate </button>
+						</div>
+						<div class="col-sm-4 text-start">
+							<input type="text" class="form-control" id="adeleReignOfDestructionInfo" placeholder="Error" readonly data-bs-toggle="tooltip" data-bs-trigger="focus" data-bs-html="true" title="Skill remaining cooldown"/>
+						</div>
+					</div>
+				</div>
+				<!-- Hexa Magic Dispatch -->
+				<div class="col-sm-3 py-2 text-emphasis bg-tertiary-subtle border border-secondary-subtle rounded-2">
+					<div class="row">
+						<div class="col-sm-4 text-end">
+							<a tabindex="0" class="popover-trigger" data-bs-toggle="popover" data-bs-placement="left" data-bs-trigger="focus" data-bs-html="true" data-bs-content="<img src='images/adele/skill_151141002.png'><br><img src='images/adele/skill_400004590.png'><br><img src='images/adele/skill_151001001.png'>">
+								<img src="images/adele/151141002.icon._outlink.png" style="cursor: pointer;">
+							</a>
+						</div>
+						<div class="col-sm-4 text-start">
+							<button type="button" class="btn btn-outline-light" id="adeleHexaMagicDispatch"> Activate </button>
+						</div>
+						<div class="col-sm-4 text-start">
+							<input type="text" class="form-control" id="adeleHexaMagicDispatchInfo" placeholder="Error" readonly data-bs-toggle="tooltip" data-bs-trigger="focus" data-bs-html="true" title="Skill remaining cooldown"/>
+						</div>
+					</div>
+				</div>
+				<!-- Shardbreaker -->
+				<div class="col-sm-3 py-2 text-emphasis bg-tertiary-subtle border border-secondary-subtle rounded-2">
+					<div class="row">
+						<div class="col-sm-4 text-end">
+							<a tabindex="0" class="popover-trigger" data-bs-toggle="popover" data-bs-placement="left" data-bs-trigger="focus" data-bs-html="true" data-bs-content="<img src='images/adele/skill_151121041.png'><br><img src='images/adele/skill_400004592.png'>">
+								<img src="images/adele/151121041.icon._outlink.png" style="cursor: pointer;">
+							</a>
+						</div>
+						<div class="col-sm-4 text-start">
+							<button type="button" class="btn btn-outline-light" id="adeleShardbreaker"> Activate </button>
+						</div>
+						<div class="col-sm-4 text-start">
+							<input type="text" class="form-control" id="adeleShardbreakerInfo" placeholder="Error" readonly data-bs-toggle="tooltip" data-bs-trigger="focus" data-bs-html="true" title="Skill remaining cooldown"/>
 						</div>
 					</div>
 				</div>
@@ -5641,6 +5685,22 @@
 						</div>
 					</div>
 				</div>
+				<!-- Noble Summons -->
+				<div class="col-sm-3 py-2 text-emphasis bg-tertiary-subtle border border-secondary-subtle rounded-2">
+					<div class="row">
+						<div class="col-sm-4 text-end">
+							<a tabindex="0" class="popover-trigger" data-bs-toggle="popover" data-bs-placement="left" data-bs-trigger="focus" data-bs-html="true" data-bs-content="<img src='images/adele/skill_151111002.png'><br><img src='images/adele/skill_400004593.png'>">
+								<img src="images/adele/151111002.icon._outlink.png" style="cursor: pointer;">
+							</a>
+						</div>
+						<div class="col-sm-4 text-start">
+							<button type="button" class="btn btn-outline-light" id="adeleNobleSummons"> Activate </button>
+						</div>
+						<div class="col-sm-4 text-start">
+							<input type="text" class="form-control" id="adeleNobleSummonsInfo" placeholder="Error" readonly data-bs-toggle="tooltip" data-bs-trigger="focus" data-bs-html="true" title="Skill remaining cooldown"/>
+						</div>
+					</div>
+				</div>
 				<!-- Aether Bloom -->
 				<div class="col-sm-3 py-2 text-emphasis bg-tertiary-subtle border border-secondary-subtle rounded-2">
 					<div class="row">
@@ -5657,19 +5717,19 @@
 						</div>
 					</div>
 				</div>
-				<!-- Grave Proclamation -->
+				<!-- Resonance Rush -->
 				<div class="col-sm-3 py-2 text-emphasis bg-tertiary-subtle border border-secondary-subtle rounded-2">
 					<div class="row">
 						<div class="col-sm-4 text-end">
-							<a tabindex="0" class="popover-trigger" data-bs-toggle="popover" data-bs-placement="left" data-bs-trigger="focus" data-bs-html="true" data-bs-content="<img src='images/adele/skill_151121001.png'><br><img src='images/adele/skill_400004597.png'>">
-								<img src="images/adele/151121001.icon._outlink.png" style="cursor: pointer;">
+							<a tabindex="0" class="popover-trigger" data-bs-toggle="popover" data-bs-placement="left" data-bs-trigger="focus" data-bs-html="true" data-bs-content="<img src='images/adele/skill_151101003.png'><br><img src='images/adele/skill_400004592.png'><br><img src='images/adele/skill_151120034.png'>">
+								<img src="images/adele/151101003.icon._outlink.png" style="cursor: pointer;">
 							</a>
 						</div>
 						<div class="col-sm-4 text-start">
-							<button type="button" class="btn btn-outline-light" id="adeleGraveProclamation"> Activate </button>
+							<button type="button" class="btn btn-outline-light" id="adeleResonanceRush"> Activate </button>
 						</div>
 						<div class="col-sm-4 text-start">
-							<input type="text" class="form-control" id="adeleGraveProclamationInfo" placeholder="Error" readonly data-bs-toggle="tooltip" data-bs-trigger="focus" data-bs-html="true" title="Skill remaining cooldown"/>
+							<input type="text" class="form-control" id="adeleResonanceRushInfo" placeholder="Available" readonly data-bs-toggle="tooltip" data-bs-trigger="focus" data-bs-html="true" title="Skill remaining cooldown"/>
 						</div>
 					</div>
 				</div>
@@ -5689,83 +5749,19 @@
 						</div>
 					</div>
 				</div>
-				<!-- Noble Summons -->
+				<!-- Grave Proclamation -->
 				<div class="col-sm-3 py-2 text-emphasis bg-tertiary-subtle border border-secondary-subtle rounded-2">
 					<div class="row">
 						<div class="col-sm-4 text-end">
-							<a tabindex="0" class="popover-trigger" data-bs-toggle="popover" data-bs-placement="left" data-bs-trigger="focus" data-bs-html="true" data-bs-content="<img src='images/adele/skill_151111002.png'><br><img src='images/adele/skill_400004593.png'>">
-								<img src="images/adele/151111002.icon._outlink.png" style="cursor: pointer;">
+							<a tabindex="0" class="popover-trigger" data-bs-toggle="popover" data-bs-placement="left" data-bs-trigger="focus" data-bs-html="true" data-bs-content="<img src='images/adele/skill_151121001.png'><br><img src='images/adele/skill_400004597.png'>">
+								<img src="images/adele/151121001.icon._outlink.png" style="cursor: pointer;">
 							</a>
 						</div>
 						<div class="col-sm-4 text-start">
-							<button type="button" class="btn btn-outline-light" id="adeleNobleSummons"> Activate </button>
+							<button type="button" class="btn btn-outline-light" id="adeleGraveProclamation"> Activate </button>
 						</div>
 						<div class="col-sm-4 text-start">
-							<input type="text" class="form-control" id="adeleNobleSummonsInfo" placeholder="Error" readonly data-bs-toggle="tooltip" data-bs-trigger="focus" data-bs-html="true" title="Skill remaining cooldown"/>
-						</div>
-					</div>
-				</div>
-				<!-- Reign of Destruction -->
-				<div class="col-sm-3 py-2 text-emphasis bg-tertiary-subtle border border-secondary-subtle rounded-2">
-					<div class="row">
-						<div class="col-sm-4 text-end">
-							<a tabindex="0" class="popover-trigger" data-bs-toggle="popover" data-bs-placement="left" data-bs-trigger="focus" data-bs-html="true" data-bs-content="<img src='images/adele/skill_151111001.png'><br><img src='images/adele/skill_400004595.png'><br><img src='images/adele/skill_151120035.png'>">
-								<img src="images/adele/151111001.icon._outlink.png" style="cursor: pointer;">
-							</a>
-						</div>
-						<div class="col-sm-4 text-start">
-							<button type="button" class="btn btn-outline-light" id="adeleReignOfDestruction"> Activate </button>
-						</div>
-						<div class="col-sm-4 text-start">
-							<input type="text" class="form-control" id="adeleReignOfDestructionInfo" placeholder="Error" readonly data-bs-toggle="tooltip" data-bs-trigger="focus" data-bs-html="true" title="Skill remaining cooldown"/>
-						</div>
-					</div>
-				</div>
-				<!-- Resonance Rush -->
-				<div class="col-sm-3 py-2 text-emphasis bg-tertiary-subtle border border-secondary-subtle rounded-2">
-					<div class="row">
-						<div class="col-sm-4 text-end">
-							<a tabindex="0" class="popover-trigger" data-bs-toggle="popover" data-bs-placement="left" data-bs-trigger="focus" data-bs-html="true" data-bs-content="<img src='images/adele/skill_151101003.png'><br><img src='images/adele/skill_400004592.png'><br><img src='images/adele/skill_151120034.png'>">
-								<img src="images/adele/151101003.icon._outlink.png" style="cursor: pointer;">
-							</a>
-						</div>
-						<div class="col-sm-4 text-start">
-							<button type="button" class="btn btn-outline-light" id="adeleResonanceRush"> Activate </button>
-						</div>
-						<div class="col-sm-4 text-start">
-							<input type="text" class="form-control" id="adeleResonanceRushInfo" placeholder="Error" readonly data-bs-toggle="tooltip" data-bs-trigger="focus" data-bs-html="true" title="Skill remaining cooldown"/>
-						</div>
-					</div>
-				</div>
-				<!-- Hexa Magic Dispatch -->
-				<div class="col-sm-3 py-2 text-emphasis bg-tertiary-subtle border border-secondary-subtle rounded-2">
-					<div class="row">
-						<div class="col-sm-4 text-end">
-							<a tabindex="0" class="popover-trigger" data-bs-toggle="popover" data-bs-placement="left" data-bs-trigger="focus" data-bs-html="true" data-bs-content="<img src='images/adele/skill_151141002.png'><br><img src='images/adele/skill_400004590.png'><br><img src='images/adele/skill_151001001.png'>">
-								<img src="images/adele/151141002.icon._outlink.png" style="cursor: pointer;">
-							</a>
-						</div>
-						<div class="col-sm-4 text-start">
-							<button type="button" class="btn btn-outline-light" id="adeleHexaMagicDispatch"> Activate </button>
-						</div>
-						<div class="col-sm-4 text-start">
-							<input type="text" class="form-control" id="adeleHexaMagicDispatchInfo" placeholder="Error" readonly data-bs-toggle="tooltip" data-bs-trigger="focus" data-bs-html="true" title="Skill remaining cooldown"/>
-						</div>
-					</div>
-				</div>
-				<!-- Shardbreaker -->
-				<div class="col-sm-3 py-2 text-emphasis bg-tertiary-subtle border border-secondary-subtle rounded-2">
-					<div class="row">
-						<div class="col-sm-4 text-end">
-							<a tabindex="0" class="popover-trigger" data-bs-toggle="popover" data-bs-placement="left" data-bs-trigger="focus" data-bs-html="true" data-bs-content="<img src='images/adele/skill_151121041.png'><br><img src='images/adele/skill_400004592.png'>">
-								<img src="images/adele/151121041.icon._outlink.png" style="cursor: pointer;">
-							</a>
-						</div>
-						<div class="col-sm-4 text-start">
-							<button type="button" class="btn btn-outline-light" id="adeleShardbreaker"> Activate </button>
-						</div>
-						<div class="col-sm-4 text-start">
-							<input type="text" class="form-control" id="adeleShardbreakerInfo" placeholder="Error" readonly data-bs-toggle="tooltip" data-bs-trigger="focus" data-bs-html="true" title="Skill remaining cooldown"/>
+							<input type="text" class="form-control" id="adeleGraveProclamationInfo" placeholder="Error" readonly data-bs-toggle="tooltip" data-bs-trigger="focus" data-bs-html="true" title="Skill remaining cooldown"/>
 						</div>
 					</div>
 				</div>
@@ -5781,7 +5777,7 @@
 							<button type="button" class="btn btn-outline-light" id="adeleHuntingDecree" disabled> Automatic </button>
 						</div>
 						<div class="col-sm-4 text-start">
-							<input type="text" class="form-control" id="adeleHuntingDecreeInfo" placeholder="Error" readonly data-bs-toggle="tooltip" data-bs-trigger="focus" data-bs-html="true" title="Skill remaining cooldown"/>
+							<input type="text" class="form-control" id="adeleHuntingDecreeInfo" placeholder="Auto" readonly data-bs-toggle="tooltip" data-bs-trigger="focus" data-bs-html="true" title="Skill remaining cooldown"/>
 						</div>
 					</div>
 				</div>
@@ -5847,10 +5843,10 @@
 							</a>
 						</div>
 						<div class="col-sm-4 text-start">
-							<button type="button" class="btn btn-outline-light" id="adeleTermsAndConditions"> Activate </button>
+							<button type="button" class="btn btn-outline-light" id="adeleDivineWrath"> Activate </button>
 						</div>
 						<div class="col-sm-4 text-start">
-							<input type="text" class="form-control" id="adeleTermsAndConditionsInfo" placeholder="Error" readonly data-bs-toggle="tooltip" data-bs-trigger="focus" data-bs-html="true" title="Skill remaining cooldown"/>
+							<input type="text" class="form-control" id="adeleDivineWrathInfo" placeholder="Error" readonly data-bs-toggle="tooltip" data-bs-trigger="focus" data-bs-html="true" title="Skill remaining cooldown"/>
 						</div>
 					</div>
 				</div>
@@ -5862,7 +5858,7 @@
 								<img src="images/adele/500061065.icon._outlink.png" style="cursor: pointer;">
 							</a>
 						</div>
-						<div class="col-sm-4 text-start">
+						<div class="col-sm-4 text-start ">
 							<button type="button" class="btn btn-outline-light" id="adeleLegacyRestoration"> Activate </button>
 						</div>
 						<div class="col-sm-4 text-start">

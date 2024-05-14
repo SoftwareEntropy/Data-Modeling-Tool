@@ -532,6 +532,15 @@ function updateWeaponData() {
 		weaponEquipImage.src = charData.weaponImages[selectWeapon];
 		bossDmg += parseInt(weaponBoss);
 		ied.push(parseInt(weaponIed));
+	} else {
+		document.getElementById("weaponStr").innerHTML = 0;
+		document.getElementById("weaponDex").innerHTML = 0;
+		document.getElementById("weaponInt").innerHTML = 0;
+		document.getElementById("weaponLuk").innerHTML = 0;
+		document.getElementById("weaponHp").innerHTML = 0;
+		document.getElementById("weaponMp").innerHTML = 0;
+		document.getElementById("weaponAtt").innerHTML = 0;
+		document.getElementById("weaponMAtt").innerHTML = 0;
 	}
 }
 
@@ -712,7 +721,7 @@ function editEquipmentImages() {
     let bottomEquipImage = document.getElementById("bottomImage2");
 	let selectedPocket = document.getElementById("selectPocket").value;
     let pocketEquipImage = document.getElementById("pocketImage2");
-	if (armorImages[charClass]) {
+	if (armorImages[classType]) {
         if (selectedHat != "none") {
 			hatEquipImage.src = armorImages[classType][selectedHat] || "";
 		}
@@ -1115,41 +1124,39 @@ function updateStatsTable() {
 	document.getElementById("neutralRange").placeholder = lowerShownDamageRange + " - " + upperShownDamageRange;
 }
 
-function applyCooldownReduction(inputCD, resettable) { //resettable only <4th job, (Excl. hyper, 6th, 5th, and specifically excluded skills)
-    // Convert cdReductionSecond to milliseconds
-    let cdReductionMS = cdReductionSecond * 1000;
-    // Calculate the initial new cooldown
-    let newCD = inputCD * (1 - cdReductionPercent);
-	if (resettable) {
-		newCD = inputCD * (1 - (cdReductionPercent + cdSkipChance * 0.01));
+function applyCooldownReduction(inputCD, resettable) {
+	//get new cooldown after percent reduction
+	let newCD = inputCD * (1 - cdReductionPercent / 100);
+	let cdReductionMillis = cdReductionSec * 1000;
+	if (newCD - cdReductionMillis > 10000) {
+		return newCD - cdReductionMillis;
+	} else {
+		//if cooldown minus 10000 is > 0, find safe reduction
+		if (newCD - 10000 > 0) {
+			let safeReduction = newCd - 10000;
+			newCD -= safeReduction;
+			//get milliseconds to convert to percent reduction
+			let millisPercent = cdReductionMillis - safeReduction;
+			//convert reduction at rate of 1000 ms to 5% reduction
+			let percentageReduction = 1 - ((millisPercent) * 0.00005);
+			newCD *= percentageReduction;
+		} else { //if cooldown minus 10000 is < 0, apply only percentage reduction	
+			let percentageReduction = 1 - ((cdReductionMillis) * 0.00005);
+			newCD *= percentageReduction;
+		}
 	}
-    // Check if direct subtraction would fall below 10,000 milliseconds
-    if (newCD - cdReductionMS < 10000) {
-        // Determine how much of the reduction would bring the cooldown below 10,000 ms
-        let safeReduction = newCD - 10000; // This is the amount we can safely reduce without going below 10,000 ms
-        let excessReduction = cdReductionMS - safeReduction; // The rest needs to be adjusted
-        // Apply safe reduction
-        newCD -= safeReduction;
-        // Apply the percentage reduction for the excess
-        let excessReductionInSeconds = excessReduction / 1000; // Convert excess milliseconds back to seconds
-        let percentageReduction = 1 - (excessReductionInSeconds * 0.0005); // Each 0.01 second adds 0.05% reduction
-        newCD *= percentageReduction; // Apply percentage reduction
-    } else {
-        // Safe to subtract cdReductionMS directly
-        newCD -= cdReductionMS;
-    }
-    // Ensure the cooldown doesn't drop below 5000 milliseconds
-    if (newCD <= 5000) {
-        newCD = 5000;
-    }
-    // Return the final cooldown in milliseconds
-    return Math.floor(newCD);
+	if (newCD < 5000) {
+		return 5000;
+	}
+	return Math.floor(newCD);
 }
 
 function applyAttackSpeed(inputDelay) {
+	var multiplier = 1;
 	if (weaponAttackSpeed > 10) {
-		return Math.floor(100 * 10 / 16);
+		multiplier = Math.floor(100 * 10 / 16);
 	} else {
-		return Math.floor(100 * (20 - weaponAttackSpeed) / 16);
+		multiplier = Math.floor(100 * (20 - weaponAttackSpeed) / 16);
 	}
+	return Math.floor(inputDelay * (multiplier / 100));
 }
